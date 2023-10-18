@@ -16,11 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic import RedirectView, include
+from django.views.generic import RedirectView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("trip.urls")),
     path('favicon.ico', RedirectView.as_view(url='/static/trip_app/favicon.ico', permanent=True)),
-    path("", include('trip.urls')),
-]
+   
+] 
