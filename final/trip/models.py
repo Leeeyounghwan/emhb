@@ -1,9 +1,16 @@
 from django.db import models
+from datetime import datetime
 from django.contrib.auth.models import AbstractUser
 # Create your models here.
+
+def upload_to(instance, filename):
+    today = datetime.now()
+    table_name = instance._meta.db_table  # 테이블명 가져오기
+    return 'images/{0}/{1}/{2}/{3}'.format(table_name, today.year, today.month, today.day, filename)
+
 class User(AbstractUser):
     nickname = models.CharField(max_length=40)
-    profile_image = models.ImageField(upload_to="", null=True)
+    profile_image = models.ImageField(upload_to=upload_to, null=True)
     review = models.IntegerField(default=0)
     number_of_written = models.IntegerField(default=0)
     is_black = models.BooleanField(default=False)
@@ -23,7 +30,7 @@ class TogetherPost(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     post_title = models.CharField(max_length=40)
     post_content = models.TextField()
-    post_image = models.ImageField(upload_to="", null=True)
+    post_image = models.ImageField(upload_to=upload_to, null=True)
     start_date = models.DateField()
     end_date = models.DateField()
     region = models.CharField(max_length=20)
@@ -45,7 +52,7 @@ class Schedule(models.Model):
     recuited_people =models.CharField(max_length=5)
     start_date = models.DateField()
     end_date = models.DateField()
-    image = models.ImageField(upload_to="", null=True)
+    image = models.ImageField(upload_to=upload_to, null=True)
     detail = models.TextField()
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
