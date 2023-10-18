@@ -7,6 +7,18 @@ class User(AbstractUser):
     review = models.IntegerField(default=0)
     number_of_written = models.IntegerField(default=0)
     is_black = models.BooleanField(default=False)
+    
+    # AbstractUser 기본 필드
+    # username_validator = UnicodeUsernameValidator()
+    # username = models.CharField(_('username'), max_length=150, unique=True,…)
+    # first_name = models.CharField(_('first name'), max_length=30, blank=True)
+    # last_name = models.CharField(_('last name'), max_length=150, blank=True)
+    # email = models.EmailField(_('email address'), blank=True)
+    # is_staff = models.BooleanField(_('staff status'), default=False,…)
+    # is_active = models.BooleanField(_('active'), default=True,…)
+    # date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
+    
+    
 class TogetherPost(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     post_title = models.CharField(max_length=40)
