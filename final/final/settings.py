@@ -80,8 +80,12 @@ WSGI_APPLICATION = "final.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "USER": "postgres",
+        "NAME": "trip_test",
+        "HOST": "localhost",
+        "PORT": "5432",
+        "PASSWORD": "1234"
     }
 }
 
@@ -126,3 +130,6 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# super user 사용
+AUTH_USER_MODEL = 'trip.User'

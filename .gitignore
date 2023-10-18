@@ -1,2 +1,9 @@
 django_env
 config.json
+__pycache__/
+models.py
+settings.py
+index.html
+forms.py
+register2.html
+static/
