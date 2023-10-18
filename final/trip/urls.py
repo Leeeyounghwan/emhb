@@ -12,4 +12,7 @@ urlpatterns = [
     path('main/',views.main, name='main'),
     path('packages/',views.packages, name='packages'),
     path('single_blog/',views.single_blog, name='single_blog'),
+    
+    #댓글
+    path('comment/', views.comment, name='comment'), 
 ]
