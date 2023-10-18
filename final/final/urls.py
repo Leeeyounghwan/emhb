@@ -22,5 +22,4 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("trip.urls")),
     path('favicon.ico', RedirectView.as_view(url='/static/trip_app/favicon.ico', permanent=True)),
-   
 ] 
