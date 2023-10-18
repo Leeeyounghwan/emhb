@@ -177,3 +177,4 @@ django_env
 config.json
 media
 static
+0001_initial.py
