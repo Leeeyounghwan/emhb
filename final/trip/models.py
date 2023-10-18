@@ -61,7 +61,7 @@ class ChoicePost(models.Model):
     is_deleted = models.BooleanField(default=False)
     
 class Voucher(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    buyer_id = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     dest_code = models.ForeignKey(TravelDestination, on_delete=models.CASCADE)
     accommodation = models.CharField(max_length=30)
     description = models.TextField(null=True)
