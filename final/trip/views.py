@@ -1,6 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Package, User, Report
 from django.contrib.auth.decorators import login_required
+import openai
+from django.http import JsonResponse
+import json
+
 
 # Create your views here.
 
@@ -156,3 +160,32 @@ def comment(request):
     return render(request, 'single-blog.html', {'form': form})
 
 #by 건영 종료
+
+
+# 챗봇 BY 영민
+def chatapi(request, question):
+    with open('../config.json', 'r') as f:
+        json_data = json.load(f)
+    api_key = json_data['OPENAI_KEY']
+                
+    response_generator = openai.ChatCompletion.create(
+        model='gpt-3.5-turbo',
+        messages=[
+            {
+            "role": "system",
+            "content": "너는 우리 트립웹에 Trip봇이야."},
+            {"role": "user", "content": f"'{question}'에 대해서 친절히 답변해줘"},
+        ],
+        temperature=0.5,
+        max_tokens=400,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0,
+        api_key=api_key,
+    )
+    content = response_generator['choices'][0]['message']['content']
+    answer = {'answer':content}
+    return JsonResponse(answer)
+
+def chatbot(request):
+    return render(request, 'test.html')
