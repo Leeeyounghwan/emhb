@@ -30,6 +30,7 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
+<<<<<<< HEAD
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -138,6 +139,9 @@
 
         </ul>
         <!-- End of Sidebar -->
+=======
+        {% include 'admin/admin_sidebar.html'%}
+>>>>>>> dev
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -290,6 +294,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
+<<<<<<< HEAD
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
@@ -534,6 +539,51 @@
 
                         </div>
                     </div>
+=======
+                        <h1 class="h3 mb-0 text-gray-800">상품 등록</h1>
+                        {% comment %} <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> {% endcomment %}
+                    </div>
+
+                    <!-- Content Row -->                    
+                    {% block content %}
+                    <div class="col-lg-13 mb-4">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">상품 등록</h6>
+                            </div>
+                            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" method="POST" action="" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="card-body-write">
+                                    
+                                    <div class="card-body">
+                                        <label class="border-bottom-primary write-img">
+                                            <img src="{% static 'img/icon_photo.png' %}" alt="이미지 설명" id="imagePreview">
+                                            <input type="file" name="product_image" accept="image/*" style="display: none;" onchange="previewImage(event);"  id="productImage">
+                                        </label>
+                                        <br>
+                                        <label for="title">상품명
+                                            <input type="text" name="title" placeholder="상품명" required="required" value="" class="form-control bg-light border-0 small" style="width: 80%; max-width:100%;">
+                                        </label>
+                                        <label for="sell_price">상품명
+                                            <input type="text" name="sell_price" placeholder="가격" required="required" value="" class="form-control bg-light border-0 small" style="width: 80%; max-width:100%;">
+                                        </label>
+                                    
+                                        <br>
+                                        <textarea name="description" required="required" class="form-control bg-light border-0 small" style="width: 100%; max-width:100%;"></textarea>
+                                        <div>
+                                            <button class="btn btn-primary" name="action" type="submit" value='edit'>수정하기</button>
+                                            <button class="btn btn-danger " name="action" type="submit" value='delete'>삭제하기</button>
+                                            <button class="btn btn-primary" type="submit">등록하기</button>
+                                        </div>
+                                    
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    {% endblock %}
+>>>>>>> dev
 
                 </div>
                 <!-- /.container-fluid -->
@@ -568,12 +618,20 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
+<<<<<<< HEAD
                     <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+=======
+                    <h5 class="modal-title" id="exampleModalLabel">로그아웃?</h5>
+>>>>>>> dev
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
+<<<<<<< HEAD
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+=======
+                <div class="modal-body">로그아웃 하시면 저장하지 않은 데이터는 삭제됩니다.<br>로그아웃 하시겠습니까?</div>
+>>>>>>> dev
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <a class="btn btn-primary" href="login.html">Logout</a>

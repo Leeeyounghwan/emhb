@@ -1,4 +1,8 @@
 {% load static%}
+<<<<<<< HEAD
+=======
+{% load humanize %}
+>>>>>>> dev
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,6 +34,7 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
+<<<<<<< HEAD
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -138,6 +143,9 @@
 
         </ul>
         <!-- End of Sidebar -->
+=======
+        {% include 'admin/admin_sidebar.html'%}
+>>>>>>> dev
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -355,6 +363,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
+<<<<<<< HEAD
                     <h1 class="h3 mb-2 text-gray-800">Tables</h1>
                     <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
                         For more information about DataTables, please visit the <a target="_blank"
@@ -365,21 +374,38 @@
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
                         </div>
+=======
+                    <h1 class="h3 mb-2 text-gray-800">상품 수정</h1>
+                    <p class="mb-4">수정하려는 상품의 제목을 클릭하세요.</p>
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+>>>>>>> dev
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
+<<<<<<< HEAD
                                             <th>Name</th>
                                             <th>Position</th>
                                             <th>Office</th>
                                             <th>Age</th>
                                             <th>Start date</th>
                                             <th>Salary</th>
+=======
+                                            <th>목차</th>
+                                            <th>시설명</th>
+                                            <th>가격</th>
+                                            <th>체크인날짜</th>
+                                            <th>체크아웃날짜</th>
+                                            <th>판매여부</th>
+>>>>>>> dev
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
+<<<<<<< HEAD
                                             <th>Name</th>
                                             <th>Position</th>
                                             <th>Office</th>
@@ -845,6 +871,26 @@
                                             <td>2011/01/25</td>
                                             <td>$112,000</td>
                                         </tr>
+=======
+                                            <th>목차</th>
+                                            <th>시설명</th>
+                                            <th>가격</th>
+                                            <th>체크인날짜</th>
+                                            <th>체크아웃날짜</th>
+                                            <th>판매여부</th>
+                                    </tfoot>
+                                    <tbody>
+                                        {% for package in packages %}
+                                            <tr>
+                                                <td>{{package.id}}</td>
+                                                <td>{{package.title}}</td>
+                                                <td>{{package.price |intcomma}}원</td>
+                                                <td>{{package.start_date|date:'Y-m-d'}}</td>
+                                                <td>{{package.end_date|date:'Y-m-d'}}</td>
+                                                <td></td>
+                                            </tr>
+                                        {% endfor %}
+>>>>>>> dev
                                     </tbody>
                                 </table>
                             </div>
@@ -884,12 +930,20 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
+<<<<<<< HEAD
                     <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+=======
+                    <h5 class="modal-title" id="exampleModalLabel">로그아웃?</h5>
+>>>>>>> dev
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
+<<<<<<< HEAD
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+=======
+                <div class="modal-body">로그아웃 하시면 저장하지 않은 데이터는 삭제됩니다.<br>로그아웃 하시겠습니까?</div>
+>>>>>>> dev
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <a class="btn btn-primary" href="login.html">Logout</a>

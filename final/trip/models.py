@@ -86,4 +86,27 @@ class Voucher(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
     
-    
+#추가 모델 2023-10-18 package.html에 사용(이수현)
+class Package(models.Model):
+    destination = models.CharField(max_length=40)
+    title = models.CharField(max_length=200)
+    price = models.IntegerField()
+    image = models.ImageField(upload_to='', null=True,blank=True)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    # 삭제관련 컬럼 추가 - 2023.10.19 by 영환
+    is_deleted = models.BooleanField(default=False)
+
+# 신고 관련 모델 추가 - 2023.10.19 by 영환
+class Report(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    reported_user = models.CharField(max_length=40)
+    report_reason = models.TextField(null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_completed = models.BooleanField(default=False)
+    completed_at = models.DateTimeField(auto_now=False)
+    is_deleted = models.BooleanField(default=False)
