@@ -22,4 +22,7 @@ urlpatterns = [
     path('single_blog/',views.single_blog, name='single_blog'),
     path('comment/', views.comment,  name='comment'),  #댓글
 
-]
+
+    #chatbot by 영민
+    path('chatbot/', views.chatbot, name='chatbot'),
+    path('chatapi/<str:question>', views.chatapi, name='chatapi'),
