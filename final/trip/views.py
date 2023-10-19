@@ -1,48 +1,61 @@
+from django.shortcuts import render
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
-from . import forms
-from .models import User
 
 # Create your views here.
 
+#마이페이지 by 준경
+def mypage(request):
+    return render(request, 'mypage.html')
+
+
+# 관리자페이지 시작 by 영환
 def main(request):
+    return render(request, "main.html")
+
+def admin_page(request):
+    return render(request, "admin/admin_page.html")
+
+def create_product(request):
+    return render(request, "admin/create_product.html")
+
+def product_management(request):
+    return render(request, "admin/product_management.html")
+
+def deleted_product(request):
+    return render(request, "admin/deleted_product.html")
+# 관리자페이지 종료
+
+
+#by 건영
+def index(request):
     return render(request, 'index.html')
+def about(request):
+    return render(request, 'about.html')
+def blog(request):
+    return render(request, 'blog.html')
+def contact(request):
+    return render(request, 'contact.html')
+def elements(request):
+    return render(request, 'elements.html')
+def main(request):
+    return render(request, 'main.html')
+def packages(request):
+    return render(request, 'packages.html')
+def single_blog(request):
+    return render(request, 'single-blog.html')
 
-def user_login(request):
-    return render(request, 'login.html')
+def comment(request):
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.save()
+            messages.success(request, '댓글이 성공적으로 작성되었습니다.')
+            return redirect('comment_list')
+    else:
+        form = CommentForm()
 
-def user_logout(request):
-    logout(request)
-    return redirect('trip:main')
+    return render(request, 'single-blog.html', {'form': form})
 
-def register(request):
-    # error_message = ''
-    # if request.method == 'POST':
-    #     form = forms.UserForm(request.POST)
-    #     username = request.POST.get('username')
-    #     nickname = request.POST.get('nickname')
-    #     if User.objects.filter(username=username).exists():
-    #         error_message = "이미 존재하는 아이디입니다."
-    #     elif form.is_valid():
-            
-    #         password1 = form.cleaned_data['password1']
-    #         password2 = form.cleaned_data['password2']
-            
-    #         # 비밀번호 일치 여부를 확인
-    #         if password1 == password2:
-    #             # 새로운 유저를 생성
-    #             user = User.objects.create_user(username=username, password=password1, nickname = nickname)
-                
-    #             # 유저를 로그인 상태로 만듦
-    #             # login(request, user)
-            
-            
-    #             return redirect('trip:login')
-    #         else:
-    #             form.add_error('password2', 'Passwords do not match')
-    # else:
-    #     form = forms.RegistrationForm()
-    # return render(request, 'register2.html' , {'error_message': error_message})
-    return render(request, 'register.html')
+#by 건영 종료
