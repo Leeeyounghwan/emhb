@@ -1,81 +1,94 @@
-// Override Bootstrap default variables here
-// Do not edit any of the files in /vendor/bootstrap/scss/!
+@import 'color';
 
-// Color Variables
-// Bootstrap Color Overrides
+// Font Family
+$font_1 :'Barlow Condensed', ;
+$font_2 :'Roboto', ;
+$font_3 :'Satisfy', ;
 
-$white: #fff !default;
-$gray-100: #f8f9fc !default;
-$gray-200: #eaecf4 !default;
-$gray-300: #dddfeb !default;
-$gray-400: #d1d3e2 !default;
-$gray-500: #b7b9cc !default;
-$gray-600: #858796 !default;
-$gray-700: #6e707e !default;
-$gray-800: #5a5c69 !default;
-$gray-900: #3a3b45 !default;
-$black: #000 !default;
+$heading_color2: #28395a;
+$white_color:#fff;
 
-$blue: #4e73df !default;
-$indigo: #6610f2 !default;
-$purple: #6f42c1 !default;
-$pink: #e83e8c !default;
-$red: #e74a3b !default;
-$orange: #fd7e14 !default;
-$yellow: #f6c23e !default;
-$green: #1cc88a !default;
-$teal: #20c9a6 !default;
-$cyan: #36b9cc !default;
 
-// Custom Colors
-$brand-google: #ea4335 !default;
-$brand-facebook: #3b5998 !default;
 
-// Set Contrast Threshold
-$yiq-contrasted-threshold: 195 !default;
+// @media #{$xs}{}
 
-// Typography
-$body-color: $gray-600 !default;
 
-$font-family-sans-serif: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", 'Noto Color Emoji' !default;
+// Responsive Variables
 
-$font-weight-light: 300 !default;
-// $font-weight-base: 400;
-$headings-font-weight: 400 !default;
 
-// Shadows
-$box-shadow-sm: 0 0.125rem 0.25rem 0 rgba($gray-900, .2) !default;
-$box-shadow: 0 0.15rem 1.75rem 0 rgba($gray-900, .15) !default;
-// $box-shadow-lg: 0 1rem 3rem rgba($black, .175) !default;
 
-// Borders Radius
-$border-radius: 0.35rem !default;
-$border-color: darken($gray-200, 2%) !default;
+/*------------------- Responsive --------------------------*/
 
-// Spacing Variables
-// Change below variable if the height of the navbar changes
-$topbar-base-height: 4.375rem !default;
-// Change below variable to change the width of the sidenav
-$sidebar-base-width: 14rem !default;
-// Change below variable to change the width of the sidenav when collapsed
-$sidebar-collapsed-width: 6.5rem !default;
+$laptop: 'only screen and (min-width: 1200px) and (max-width: 1600px)';
+$lg :'only screen and (min-width: 992px) and (max-width: 1199px)';
+$md:'only screen and (min-width: 768px) and (max-width: 991px)';
+$xs:'(max-width: 767px)';
+$sm: 'only screen and (min-width: 576px) and (max-width: 767px)';
 
-// Card
-$card-cap-bg: $gray-100 !default;
-$card-border-color: $border-color !default;
+// Extra Responsive
 
-// Adjust column spacing for symmetry
-$spacer: 1rem !default;
-$grid-gutter-width: $spacer * 1.5 !default;
+$medium_device : 'only screen and (min-width: 992px) and (max-width: 1200px)';
+$tab_device:'only screen and (min-width: 768px) and (max-width: 991px)';
+$large_mobile: 'only screen and (min-width: 576px) and (max-width: 767px)';
+$tab: '(max-width: 991px)';
+$small_mobile:'(max-width: 576px)';
+$xs_mobile:'(max-width: 420px)';
+$sm_mobile:'only screen and (min-width: 421px) and (max-width: 575px)';
+$big_screen:'only screen and (min-width: 1200px) and (max-width: 1440px)';
+$extra_big_screen: 'only screen and (min-width: 1200px) and (max-width: 3640px)';
 
-// Transitions
-$transition-collapse: height .15s ease !default;
 
-// Dropdowns
-$dropdown-font-size: 0.85rem !default;
-$dropdown-border-color: $border-color !default;
+// More Extra Responsive
+$large_device_2:'(min-width: 1501px) and (max-width: 1700px)';
+$large_device:'(min-width: 1200px) and (max-width: 1500px)';
+$mid_device:'(min-width: 992px) and (max-width: 1200px)';
+$tablet_device:'(min-width: 768px) and (max-width: 991px)';
+$mobile_device:'(max-width: 767px)';
+$large_mobile:'only screen and (min-width: 480px) and (max-width: 767px)';
 
-// Images
-$login-image: 'https://source.unsplash.com/K4mSJ7kc0As/600x800' !default;
-$register-image: 'https://source.unsplash.com/Mv9hjnEUHR4/600x800' !default;
-$password-image: 'https://source.unsplash.com/oWTW-jNGl9I/600x800' !default;
+// Cusotm
+$boder-custom:'only screen and (min-width: 1200px) and (max-width: 1250px)';
+
+
+
+
+/*
+	@include transition(.4s);
+	color:$theme-color;
+*/
+
+
+// Elemet Page btn
+
+.boxed-btn {
+	background: #fff;
+    color: $theme-color !important;
+    
+	display: inline-block;
+	padding: 18px 44px;
+	font-family: $font_1;
+	font-size: 14px;
+    font-weight: 400;
+    border: 0;
+    border: 1px solid $theme-color;
+    letter-spacing: 3px;
+
+    text-align: center;
+    color: $theme-color;
+    text-transform: uppercase;
+    cursor: pointer;
+    &:hover{
+        background: $theme-color;
+        color: #fff !important;
+        border: 1px solid $theme-color;
+    }
+    &:focus{
+        outline: none;
+    }
+    &.large-width{
+        width: 220px;
+    }
+}
+
+
+
