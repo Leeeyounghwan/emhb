@@ -59,3 +59,13 @@ def comment(request):
     return render(request, 'single-blog.html', {'form': form})
 
 #by 건영 종료
+
+# 로그인, 회원가입 페이지 by 문정
+def user_login(request):
+    return render(request, 'login.html')
+
+def user_logout(request):
+    redirect('trip:main')
+
+def register(request):
+    return render(request, 'register.html')
