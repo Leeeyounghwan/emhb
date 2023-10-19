@@ -1,0 +1,108 @@
+<!-- Sidebar -->
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{%url 'trip:main'%}">
+        <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa fa-suitcase"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">사이트 바로가기</div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item active">
+        <a class="nav-link" href="{%url 'trip:admin_page'%}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>요약 보기</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Management
+    </div>
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#prod_management"
+            aria-expanded="true" aria-controls="prod_management">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>상품관리</span>
+        </a>
+        <div id="prod_management" class="collapse" aria-labelledby="heading_prod" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">상품 등록 및 수정:</h6>
+                <a class="collapse-item" href="{%url 'trip:create_product'%}">상품 등록</a>
+                <a class="collapse-item" href="{%url 'trip:product_management'%}">상품 수정</a>
+                <a class="collapse-item" href="{%url 'trip:deleted_product'%}">삭제된 상품 관리</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#sales_management"
+            aria-expanded="true" aria-controls="sales_management">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>판매관리</span>
+        </a>
+        <div id="sales_management" class="collapse" aria-labelledby="heading_sales" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">판매 내역 관리:</h6>
+                <a class="collapse-item" href="{%url 'trip:order_inquiry'%}">주문 조회</a>
+                <a class="collapse-item" href="{%url 'trip:delivery_tracking'%}">배송 조회</a>
+                <a class="collapse-item" href="{%url 'trip:return_management'%}">반품/교환 관리</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Utilities Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#accuse_management"
+            aria-expanded="true" aria-controls="accuse_management">
+            <i class="fas fa fa-bullhorn"></i>
+            <span>신고관리</span>
+        </a>
+        <div id="accuse_management" class="collapse" aria-labelledby="headingUtilities"
+            data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">신고 관련:</h6>
+                <a class="collapse-item" href="{%url 'trip:report_detail'%}">신고 내역</a>
+                <a class="collapse-item" href="{%url 'trip:user_management'%}">사용자 관리</a>
+                <a class="collapse-item" href="{%url 'trip:blacklist_management'%}">블랙리스트 관리</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        
+    </div>
+
+    
+
+    <!-- Nav Item - Tables -->
+    <li class="nav-item">
+        <a class="nav-link" href="tables.html">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Tables</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+</ul>
+<!-- End of Sidebar -->
