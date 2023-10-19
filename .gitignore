@@ -175,7 +175,6 @@ cython_debug/
 
 django_env
 config.json
-
 *.log
 *.pot
 *.pyc
@@ -187,4 +186,3 @@ media
 django_env
 .secrets
 .cph/
-static
