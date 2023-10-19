@@ -4,6 +4,9 @@ from . import views
 app_name = 'trip'
 urlpatterns = [
     path('mypage', views.mypage, name='mypage'),#마이페이지 url by 준경
+    path('charts/', views.charts, name='charts'),
+    
+    
     # 관리자 페이지 관련 urlpatterns by 영환
     path("admin_page/", views.admin_page, name="admin_page"),
     path("admin_page/create_product", views.create_product, name="create_product"),

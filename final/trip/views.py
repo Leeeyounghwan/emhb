@@ -7,7 +7,8 @@ from django.contrib.auth.decorators import login_required
 #마이페이지 by 준경
 def mypage(request):
     return render(request, 'mypage.html')
-
+def charts(request):
+    return render(request,'charts.html')
 
 # 관리자페이지 시작 by 영환
 def main(request):
