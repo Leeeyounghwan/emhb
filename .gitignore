@@ -186,4 +186,3 @@ media
 django_env
 .secrets
 .cph/
-static
