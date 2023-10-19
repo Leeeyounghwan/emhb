@@ -173,8 +173,8 @@ def chatapi(request, question):
         messages=[
             {
             "role": "system",
-            "content": "너는 우리 트립웹에 Trip봇이야."},
-            {"role": "user", "content": f"'{question}'에 대해서 친절히 답변해줘"},
+            "content": "너는 우리 트립웹에 Trip봇이야. 답변은 400자 내로 깔끔하게"},
+            {"role": "user", "content": f"'{question}'"},
         ],
         temperature=0.5,
         max_tokens=400,
