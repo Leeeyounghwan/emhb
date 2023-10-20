@@ -10,6 +10,11 @@ import openai
 from django.http import JsonResponse
 import json
 
+from django.contrib.auth.models import User
+from .forms import UserForm
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import AuthenticationForm
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -167,6 +172,48 @@ def together_comment(request, post_id):
     return render(request, 'single-blog.html', {'form': form})
 
 #by 건영 종료
+
+# 로그인, 회원가입 페이지 by 문정
+def user_login(request):
+    # if request.method == 'POST':
+    #     form = AuthenticationForm(request=request, data=request.POST)
+    #     if form.is_valid():
+    #         login(request, form.get_user())
+    #         return redirect('trip:main')  # 로그인 성공 시 리디렉션할 페이지
+    # else:
+    #     form = AuthenticationForm()
+    # return render(request, 'login.html', {'form': form})
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return render(request,'main.html')
+    #     else:
+    #         return render(request,'login.html', {'error':'username or password is incorrect'})
+    # else:
+    return render(request,'login.html')
+
+
+
+def user_logout(request):
+    redirect('trip:main')
+
+def register(request):
+    # return render(request, 'register.html')
+    if request.method == "POST":
+        form = UserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)  # 사용자 인증
+            login(request, user)  # 로그인
+            return redirect('trip:main')
+    else:
+        form = UserForm()
+    return render(request, 'register.html', {'form': form})
 
 
 # 챗봇 BY 영민

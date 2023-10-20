@@ -38,6 +38,11 @@ urlpatterns = [
     
     path('single_blog/',views.single_blog, name='single_blog'),
     path('comment/', views.comment,  name='comment'),  #댓글
+
+    # 로그인, 회원가입 페이지 by 문정
+    path('login/', views.user_login, name = 'login'),
+    path('logout/', views.user_logout, name= 'logout'),
+    path('register/', views.register, name='register'),
     
     #CHATBOT BY 영민
     path('chatbot/', views.chatbot, name='chatbot'),
