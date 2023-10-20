@@ -1,3 +1,8 @@
+from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404
+from .models import TogetherPost,TogetherComment
+from .forms import CommentForm
+from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Package, User, Report
 from django.contrib.auth.decorators import login_required
@@ -143,17 +148,19 @@ def main(request):
 def packages(request):
     return render(request, 'packages.html')
 def single_blog(request):
-    return render(request, 'single-blog.html')
+    post = get_object_or_404(TogetherPost)
+    return render(request, 'single-blog.html',{'post':post})
 
-def comment(request):
+def together_comment(request, post_id):
+    post = TogetherPost.objects.get(pk=post_id)
+
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
             comment.user = request.user
             comment.save()
-            messages.success(request, '댓글이 성공적으로 작성되었습니다.')
-            return redirect('comment_list')
+            return redirect('view_post', post_id=post_id)
     else:
         form = CommentForm()
 

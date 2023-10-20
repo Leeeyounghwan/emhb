@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views 
+from django.conf import settings
+from django.conf.urls.static import static
 
 app_name = 'trip'
 urlpatterns = [
@@ -28,6 +30,13 @@ urlpatterns = [
     path('elements/',views.elements, name='elements'),
     path('main/',views.main, name='main'),
     path('packages/',views.packages, name='packages'),
+    path('single_blog/1/',views.single_blog, name='single_blog'), 
+    # path('single_blog/<int:post_id>/',views.single_blog, name='single_blog'), 
+    path('post/<int:post_id>/together_comment/', views.together_comment,  name='together_comment'),  #댓글
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     path('single_blog/',views.single_blog, name='single_blog'),
     path('comment/', views.comment,  name='comment'),  #댓글
     

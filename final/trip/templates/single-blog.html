@@ -67,16 +67,16 @@
             <div class="col-lg-8 posts-list">
                <div class="single-post">
                   <div class="feature-img">
-                     <img class="img-fluid" src="{{ TogetherPost.image.url }}" alt="TogetherPost.title">
+                     <img class="img-fluid" src="{{ post.post_image.url }}" alt="post.post_title">
                   </div>
                   <div class="blog_details">
-                     <h2>{{ TogetherPost.title }}</h2>
+                     <h2>{{ post.post_title }}</h2>
                      <ul class="blog-info-link mt-3 mb-4">
                         <li><a href="#"><i class="fa fa-user"></i> Travel, Lifestyle</a></li>
                         <li><a href="#"><i class="fa fa-comments"></i> 03 Comments</a></li>
                      </ul>
                      <p class="excert">
-                        {{ TogetherPost.content }}
+                        {{ post.post_content }}
                      </p>
                   </div>
                </div>
@@ -100,7 +100,7 @@
                            class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
                            <div class="thumb">
                               <a href="#">
-                                 <img class="img-fluid" src="assets/img/post/preview.png" alt="">
+                                 <img class="img-fluid" src="{% static 'img/post/preview.png' %}" alt="">
                               </a>
                            </div>
                            <div class="arrow">
