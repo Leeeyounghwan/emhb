@@ -49,6 +49,10 @@ urlpatterns = [
     #CHATBOT BY 영민
     path('chatbot/', views.chatbot, name='chatbot'),
     path('chatapi/<str:question>', views.chatapi, name='chatapi'),
+    
+    #실시간 채팅 BY 영민
+    path('chat/', views.chatting, name='chatting'),
+    path('chat/<str:room_name>/', views.room, name='room'),
 ]
 
 if settings.DEBUG:
