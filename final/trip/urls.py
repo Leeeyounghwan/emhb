@@ -5,8 +5,12 @@ from django.conf.urls.static import static
 
 app_name = 'trip'
 urlpatterns = [
-    path('mypage', views.mypage, name='mypage'),#마이페이지 url by 준경
-    path('charts/', views.charts, name='charts'),
+    path('mypage/profile/', views.profile, name='profile'),
+    path('mypage/mytopics/', views.mytopics, name='mytopics'),
+    path('mypage/myreviews/', views.myreviews, name='myreviews'),
+    path('mypage/like_schedule/', views.like_schedule, name='like_schedule'),
+    path('mypage/chatting_room/', views.chatting_room, name='chatting_room'),
+
     
     
     # 관리자 페이지 관련 urlpatterns by 영환

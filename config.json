@@ -1,1 +1,5 @@
-{"SECRET_KEY":"1234"}
+{
+    "SECRET_KEY":"django-insecure-*6fb639i&s$db*$5e=b(tf-ek5%$%gwbdv5y9xud83q))5+r+u",
+    "OPENAI_KEY":"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"
+
+}
