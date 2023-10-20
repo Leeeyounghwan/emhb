@@ -201,23 +201,31 @@
                                     
                                     <div class="card-body">
                                         <label class="border-bottom-primary write-img">
-                                            <img src="{% static 'img/icon_photo.png' %}" alt="이미지 설명" id="imagePreview">
-                                            <input type="file" name="product_image" accept="image/*" style="display: none;" onchange="previewImage(event);"  id="productImage">
+                                            <img src="{% static 'img/icon_photo.png' %}" alt="이미지 설명" id="imagePreview" style="width:13rem;">
+                                            <input type="file" name="package_image" accept="image/*" style="display: none;" onchange="previewImage(event);"  id="productImage">
                                         </label>
                                         <br>
                                         <label for="title">상품명
                                             <input type="text" name="title" placeholder="상품명" required="required" value="" class="form-control bg-light border-0 small" style="width: 80%; max-width:100%;">
                                         </label>
-                                        <label for="sell_price">상품명
-                                            <input type="text" name="sell_price" placeholder="가격" required="required" value="" class="form-control bg-light border-0 small" style="width: 80%; max-width:100%;">
+                                        <label for="price">상품가격
+                                            <input type="text" name="price" placeholder="가격" required="required" value="" class="form-control bg-light border-0 small" style="width: 80%; max-width:100%;">
                                         </label>
+                                        <label for="destination">여행지
+                                            <input type="text" name="destination" placeholder="여행지" required="required" value="" class="form-control bg-light border-0 small" style="width: 80%; max-width:100%;">
+                                        </label>
+                                        <label for="start_date">체크인날짜
+                                            <input type="date" name="start_date" required="required" value="" class="form-control bg-light border-0 small" style="width: 80%; max-width:100%;">
+                                        </label>
+                                        <label for="end_date">체크아웃날짜
+                                            <input type="date" name="end_date" required="required" value="" class="form-control bg-light border-0 small" style="width: 80%; max-width:100%;">
+                                        </label>
+
                                     
                                         <br>
-                                        <textarea name="description" required="required" class="form-control bg-light border-0 small" style="width: 100%; max-width:100%;"></textarea>
-                                        <div>
-                                            <button class="btn btn-primary" name="action" type="submit" value='edit'>수정하기</button>
-                                            <button class="btn btn-danger " name="action" type="submit" value='delete'>삭제하기</button>
-                                            <button class="btn btn-primary" type="submit">등록하기</button>
+                                        <textarea name="content" required="required" class="form-control bg-light border-0 small" style="width: 100%; max-width:100%;"></textarea>
+                                        <div style="margin-top: 1.5rem;">
+                                            <button class="btn btn-primary" type="submit" style="float:right">등록하기</button>
                                         </div>
                                     
                                     </div>
@@ -233,15 +241,7 @@
             </div>
             <!-- End of Main Content -->
 
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
+            {% include 'admin/admin_footer.html'%}
 
         </div>
         <!-- End of Content Wrapper -->
@@ -293,6 +293,7 @@
     <!-- Jquery Mobile Menu -->
     <script src="{% static 'js/jquery.slicknav.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/write.js' %}"></script>
 
 </body>
 
