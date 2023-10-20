@@ -49,14 +49,62 @@ def admin_page(request):
 
 def create_product(request):
 
+    package = Package()
+    if request.method == "POST":
+        package.title = request.POST['title']
+        package.price = request.POST['price']
+        package.destination = request.POST['destination']
+        package.start_date = request.POST['start_date']
+        package.end_date = request.POST['end_date']
+        package.content = request.POST['content']
+        if 'package_image' in request.FILES:
+            package.image = request.FILES['package_image']
+        package.save()
+        return redirect('trip:product_management')
+    
     # if admin_check(request) == True :
     return render(request, "admin/create_product.html")
     # else:
     #     return redirect("trip:main")
 
+def update_product(request, package_id):
+
+    package = get_object_or_404(Package, id=package_id)
+    if package:
+        package.content = package.content.strip()
+    
+    if request.method == "POST":
+        action = request.POST.get('action')
+        if action == 'update':
+            package.title = request.POST['title']
+            package.price = request.POST['price']
+            package.destination = request.POST['destination']
+            package.start_date = request.POST['start_date']
+            package.end_date = request.POST['end_date']
+            package.content = request.POST['content']
+            if 'package_image' in request.FILES:
+                package.image = request.FILES['package_image']
+            package.save()
+            return redirect('trip:product_management')
+        
+        elif action == 'delete':
+            package.is_deleted = True
+            package.save()
+            return redirect('trip:product_management')
+
+    context = {
+        'package' : package
+    }
+
+    # if admin_check(request) == True :
+    return render(request, "admin/update_product.html", context)
+    # else:
+    #     return redirect("trip:main")
+
+
 def product_management(request):
 
-    packages = Package.objects.all()
+    packages = Package.objects.filter(is_deleted=False).order_by('id')
     context = {
         "packages" : packages
     }
@@ -89,6 +137,17 @@ def deleted_product(request):
     #     return render(request, "admin/deleted_product.html", context)
     # else:
     #     return redirect("trip:main")
+
+def delete_cancel(request, package_id):
+
+    package = get_object_or_404(Package, id=package_id)
+    print(package.is_deleted)
+
+    package.is_deleted = False
+    package.save()
+    print(package.is_deleted)
+
+    return redirect("trip:product_management")
 
 def order_inquiry(request):
     return render(request, "admin/order_inquiry.html")
