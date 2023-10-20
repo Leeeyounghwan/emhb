@@ -189,3 +189,5 @@ def chatapi(request, question):
 
 def chatbot(request):
     return render(request, 'test.html')
+def packages(request):
+  return render(request, 'packages.html', {'items' : Package.objects.all()})
