@@ -10,20 +10,20 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="manifest" href="site.webmanifest">
-		<link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}">
+		<link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
 
 		<!-- CSS here -->
-            <link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap.min.css' %}"/>
-            <link rel="stylesheet" type="text/css" href="{% static 'assets/css/owl.carousel.min.css' %}"/>
-            <link rel="stylesheet" type="text/css" href="{% static 'assets/css/flaticon.css' %}"/>
-            <link rel="stylesheet" type="text/css" href="{% static 'assets/css/slicknav.css' %}"/>
-            <link rel="stylesheet" type="text/css" href="{% static 'assets/css/animate.min.css' %}"/>
-            <link rel="stylesheet" type="text/css" href="{% static 'assets/css/magnific-popup.css' %}"/>
-            <link rel="stylesheet" type="text/css" href="{% static 'assets/css/fontawesome-all.min.css' %}"/>
-            <link rel="stylesheet" type="text/css" href="{% static 'assets/css/themify-icons.css' %}"/>
-            <link rel="stylesheet" type="text/css" href="{% static 'assets/css/slick.css' %}"/>
-            <link rel="stylesheet" type="text/css" href="{% static 'assets/css/nice-select.css' %}"/>
-            <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}"/>
+            <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}"/>
+            <link rel="stylesheet" type="text/css" href="{% static 'css/owl.carousel.min.css' %}"/>
+            <link rel="stylesheet" type="text/css" href="{% static 'css/flaticon.css' %}"/>
+            <link rel="stylesheet" type="text/css" href="{% static 'css/slicknav.css' %}"/>
+            <link rel="stylesheet" type="text/css" href="{% static 'css/animate.min.css' %}"/>
+            <link rel="stylesheet" type="text/css" href="{% static 'css/magnific-popup.css' %}"/>
+            <link rel="stylesheet" type="text/css" href="{% static 'css/fontawesome-all.min.css' %}"/>
+            <link rel="stylesheet" type="text/css" href="{% static 'css/themify-icons.css' %}"/>
+            <link rel="stylesheet" type="text/css" href="{% static 'css/slick.css' %}"/>
+            <link rel="stylesheet" type="text/css" href="{% static 'css/nice-select.css' %}"/>
+            <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
             
             <style type="text/css">
                 .single-slider slider-height2 d-flex align-items-center {
@@ -39,7 +39,7 @@
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    <img src="{% static 'assets/img/logo/logo.png' %}" alt="">
+                    <img src="{% static 'img/logo/logo.png' %}" alt="">
                 </div>
             </div>
         </div>
@@ -64,10 +64,10 @@
                         <div class="col-lg-4">
                             <div class="header-info-right f-right">
                                 <ul class="header-social">    
-                                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
-                                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                   <li> <a href="#"><i class="fab fa-pinterest-p"></i></a></li>
+                                    <li><a href="https://www.twitter.com/"><i class="fab fa-twitter"></i></a></li>
+                                    <li><a href="https://kr.linkedin.com/"><i class="fab fa-linkedin-in"></i></a></li>
+                                    <li><a href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a></li>
+                                   <li> <a href="https://www.pinterest.co.kr/"><i class="fab fa-pinterest-p"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -80,7 +80,7 @@
                             <!-- Logo -->
                             <div class="col-xl-2 col-lg-2 col-md-1">
                                 <div class="logo">
-                                  <a href="index.html"><img src="{% static 'assets/img/logo/logo.png' %}" alt=""></a>
+                                  <a href="{% url 'trip:index' %}"><img src="{% static 'img/logo/logo.png' %}" alt=""></a>
                                 </div>
                             </div>
                             <div class="col-xl-10 col-lg-10 col-md-10">
@@ -88,21 +88,21 @@
                                 <div class="main-menu f-right d-none d-lg-block">
                                     <nav>               
                                         <ul id="navigation">                                                                                                                                     
-                                            <li><a href="index.html">Home</a></li>
-                                            <li><a href="about.html">About US</a></li>
+                                            <li><a href="{% url 'trip:index' %}">Home</a></li>
+                                            <li><a href="{% url 'trip:about' %}">About US</a></li>
                                             <li><a href="{% url 'trip:packages'%}">Package</a></li>
-                                            <li><a href="blog.html">Blog</a>
+                                            <li><a href="{% url 'trip:blog'%}">Blog</a>
                                                 <ul class="submenu">
-                                                    <li><a href="blog.html">Blog</a></li>
-                                                    <li><a href="single-blog.html">Blog Details</a></li>
+                                                    <li><a href="{% url 'trip:blog' %}">Blog</a></li>
+                                                    <li><a href="{% url 'trip:single_blog' %}">Blog Details</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="#">Pages</a>
                                                 <ul class="submenu">
-                                                    <li><a href="elements.html">Element</a></li>
+                                                    <li><a href="{% url 'trip:elements' %}">Element</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="contact.html">Contact Us</a></li>
+                                            <li><a href="{% url 'trip:contact' %}">Contact Us</a></li>
                                         </ul>
                                     </nav>
                                 </div>
@@ -212,7 +212,7 @@
     <footer>
         
         <!-- Footer Start-->
-        <div class="footer-area footer-padding footer-bg" data-background="{% static 'assets/img/service/footer_bg.jpg' %}">
+        <div class="footer-area footer-padding footer-bg" data-background="{% static 'img/service/footer_bg.jpg' %}">
             <div class="container">
                 <div class="row d-flex justify-content-between">
                     <div class="col-xl-3 col-lg-3 col-md-5 col-sm-6">
@@ -220,7 +220,7 @@
                          <div class="single-footer-caption mb-30">
                               <!-- logo -->
                              <div class="footer-logo">
-                                 <a href="index.html"><img src="{% static 'assets/img/logo/logo2_footer.png' %}" alt=""></a>
+                                 <a href="index.html"><img src="{% static 'img/logo/logo2_footer.png' %}" alt=""></a>
                              </div>
                              <div class="footer-tittle">
                                  <div class="footer-pera">
@@ -235,10 +235,10 @@
                             <div class="footer-tittle">
                                 <h4>Quick Links</h4>
                                 <ul>
-                                    <li><a href="#">About</a></li>
+                                    <li><a href="{% url 'trip:about' %}">About</a></li>
                                     <li><a href="#"> Offers & Discounts</a></li>
                                     <li><a href="#"> Get Coupon</a></li>
-                                    <li><a href="#">  Contact Us</a></li>
+                                    <li><a href="{% url 'trip:contact' %}">  Contact Us</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -299,38 +299,38 @@
 	<!-- JS here -->
 	
 		<!-- All JS Custom Plugins Link Here here -->
-        <script src="{% static 'assets/js/vendor/modernizr-3.5.0.min.js' %}"></script>
+        <script src="{% static 'js/vendor/modernizr-3.5.0.min.js' %}"></script>
 		
 		<!-- Jquery, Popper, Bootstrap -->
-		<script src="{% static 'assets/js/vendor/jquery-1.12.4.min.js' %}"></script>
-        <script src="{% static 'assets/js/popper.min.js' %}"></script>
-        <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+		<script src="{% static 'js/vendor/jquery-1.12.4.min.js' %}"></script>
+        <script src="{% static 'js/popper.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
 	    <!-- Jquery Mobile Menu -->
-        <script src="{% static 'assets/js/jquery.slicknav.min.js' %}"></script>
+        <script src="{% static 'js/jquery.slicknav.min.js' %}"></script>
 
 		<!-- Jquery Slick , Owl-Carousel Plugins -->
-        <script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
-        <script src="{% static 'assets/js/slick.min.js' %}"></script>
+        <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'js/slick.min.js' %}"></script>
 		<!-- One Page, Animated-HeadLin -->
-        <script src="{% static 'assets/js/wow.min.js' %}"></script>
-		<script src="{% static 'assets/js/animated.headline.js' %}"></script>
-        <script src="{% static 'assets/js/jquery.magnific-popup.js' %}"></script>
+        <script src="{% static 'js/wow.min.js' %}"></script>
+		<script src="{% static 'js/animated.headline.js' %}"></script>
+        <script src="{% static 'js/jquery.magnific-popup.js' %}"></script>
 
 		<!-- Scrollup, nice-select, sticky -->
-        <script src="{% static 'assets/js/jquery.scrollUp.min.js' %}"></script>
-        <script src="{% static 'assets/js/jquery.nice-select.min.js' %}"></script>
-		<script src="{% static 'assets/js/jquery.sticky.js' %}"></script>
+        <script src="{% static 'js/jquery.scrollUp.min.js' %}"></script>
+        <script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+		<script src="{% static 'js/jquery.sticky.js' %}"></script>
         
         <!-- contact js -->
-        <script src="{% static 'assets/js/contact.js' %}"></script>
-        <script src="{% static 'assets/js/jquery.form.js' %}"></script>
-        <script src="{% static 'assets/js/jquery.validate.min.js' %}"></script>
-        <script src="{% static 'assets/js/mail-script.js' %}"></script>
-        <script src="{% static 'assets/js/jquery.ajaxchimp.min.js' %}"></script>
+        <script src="{% static 'js/contact.js' %}"></script>
+        <script src="{% static 'js/jquery.form.js' %}"></script>
+        <script src="{% static 'js/jquery.validate.min.js' %}"></script>
+        <script src="{% static 'js/mail-script.js' %}"></script>
+        <script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
         
 		<!-- Jquery Plugins, main Jquery -->	
-        <script src="{% static 'assets/js/plugins.js' %}"></script>
-        <script src="{% static 'assets/js/main.js' %}"></script>
+        <script src="{% static 'js/plugins.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
 
         <!-- 날짜계산기 -->
         <!-- 맞는지 확인해봐야함 -->
