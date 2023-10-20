@@ -11,20 +11,63 @@ from django.contrib.auth.decorators import login_required
 import openai
 from django.http import JsonResponse
 import json
-
+from django.contrib import messages
 from django.contrib.auth.models import User
 from .forms import UserForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import JsonResponse
+from .forms import UserProfileForm
+from django.contrib.auth import update_session_auth_hash
 
 # Create your views here.
 
 #마이페이지 by 준경
-def mypage(request):
-    return render(request, 'mypage.html')
-def charts(request):
-    return render(request,'charts.html')
+
+#@login_required
+def profile(request): #내 정보 수정
+    user = request.user
+    form = UserProfileForm(initial={'username': user.username})
+
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST)
+
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            password_confirm = form.cleaned_data['password_confirm']
+
+            if username != user.username:
+                user.username = username
+                user.save()
+                messages.success(request, '아이디가 업데이트되었습니다.')
+
+            if password:
+                if password == password_confirm:
+                    user.set_password(password)
+                    user.save()
+                    update_session_auth_hash(request, user)
+                    messages.success(request, '비밀번호가 업데이트되었습니다.')
+                else:
+                    messages.error(request, '비밀번호와 비밀번호 확인이 일치하지 않습니다.')
+
+            return redirect('profile')
+
+    return render(request, 'mypage/profile.html', {'form': form})
+
+def mytopics(request): #내가 쓴 글 보기
+    return render(request,'mypage/mytopics.html')
+
+def myreviews(request): #내가 쓴 글 보기
+    return render(request,'mypage/myreviews.html')
+
+def like_schedule(request): #찜한 일정 리스트
+    return render(request,'mypage/like_schedule.html')
+
+def chatting_room(request): #채팅방리스트
+    return render(request,'mypage/chatting_room.html')
+
+
 
 # 관리자페이지 시작 by 영환
 def main(request):
