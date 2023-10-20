@@ -16,7 +16,7 @@ import json, os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-with open('../config.json', 'r') as f:
+with open('trip/config.json', 'r') as f:
     json_data = json.load(f)
     secret_key = json_data['SECRET_KEY']
 
@@ -76,7 +76,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "final.wsgi.application"
-
+ASGI_APPLICATION = "final.asgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases

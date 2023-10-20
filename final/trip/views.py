@@ -327,7 +327,7 @@ def register(request):
 
 # 챗봇 BY 영민
 def chatapi(request, question):
-    with open('../config.json', 'r') as f:
+    with open('trip/config.json', 'r') as f:
         json_data = json.load(f)
     api_key = json_data['OPENAI_KEY']
                 
@@ -354,3 +354,9 @@ def chatbot(request):
     return render(request, 'test.html')
 def packages(request):
   return render(request, 'packages.html', {'items' : Package.objects.all()})
+
+def chatting(request):
+    return render(request, 'chat/index.html')
+
+def room(request, room_name):
+    return render(request, 'chat/room.html', {"room_name": room_name})
