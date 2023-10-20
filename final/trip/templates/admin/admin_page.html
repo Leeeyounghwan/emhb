@@ -1,5 +1,5 @@
+{% load static%}
 <!DOCTYPE html>
-{% load static %}
 <html lang="en">
 
 <head>
@@ -10,129 +10,45 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>EMHB 관리페이지</title>
 
     <!-- Custom fonts for this template-->
-    <link href="css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="{% static 'admin_vendor/fontawesome-free/css/all.min.css'%}" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="{% static 'css/sb-admin-2.css' %}" type="text/css" rel="stylesheet">
-    <link href="{% static 'css/bootstrap.min.css' %}" type="text/css" rel="stylesheet">
-    <link href="{% static 'css/owl.carousel.min.css' %}" type="text/css" rel="stylesheet">
-    <link href="{% static 'css/flaticon.css' %}" type="text/css" rel="stylesheet">
-    <link href="{% static 'css/slicknav.css' %}" type="text/css" rel="stylesheet">
-    <link href="{% static 'css/animate.min.css' %}" type="text/css" rel="stylesheet">
-    <link href="{% static 'css/magnific-popup.css' %}" type="text/css" rel="stylesheet">
-    <link href="{% static 'css/fontawesome-all.min.css' %}" type="text/css" rel="stylesheet">
-    <link href="{% static 'css/themify-icons.css' %}" type="text/css" rel="stylesheet">
-    <link href="{% static 'css/slick.css' %}" type="text/css" rel="stylesheet">
-    <link href="{% static 'css/nice-select.css' %}" type="text/css" rel="stylesheet">
-    <link href="{% static 'css/styles.css' %}" type="text/css" rel="stylesheet">
-    
-    <style>
-        .nav-item.active a.nav-link:hover span {
-            color: #fff; 
-            background-color: #007bff; 
-            transition: color 0.3s, background-color 0.3s; 
-        }
-     
-        #accordionSidebar {
-            background-color: #0E1C35;
-            
-        }
-        
-    </style>
+    <link href="{% static 'css/reset.css' %}" rel="stylesheet">
+    <link href="{% static 'css/sb-admin-2.css' %}" rel="stylesheet">
+    <link href="{% static 'css/fontawesome-all.min.css'%}" rel="stylesheet">
+
 </head>
 
 <body id="page-top">
-    <header>
-        <!-- Header Start -->
-       <div class="header-area">
-            <div class="main-header ">
-               <div class="header-bottom  header-sticky">
-                    <div class="container">
-                        <div class="row align-items-center">
-                            <!-- Logo -->
-                            <div class="col-xl-2 col-lg-2 col-md-1">
-                                <div class="logo"  >
-                                  <a href="index.html"><img src="{% static 'img/logo/logo.png' %}" alt=""/></a>
-                                </div>
-                            </div>
-                            <div class="col-xl-10 col-lg-10 col-md-10">
-                                <!-- Main-menu -->
-                                <div class="main-menu f-right d-none d-lg-block">
-                                    <nav>               
-                                        <ul id="navigation">                                                                                                                                     
-                                            <li><a href="index.html">Home</a></li>
-                                            <li><a href="about.html">About US</a></li>
-                                            <li><a href="packages.html">Package</a></li>
-                                            <li><a href="blog.html">Blog</a>
-                                                <ul class="submenu">
-                                                    <li><a href="blog.html">Blog</a></li>
-                                                    <li><a href="single-blog.html">Blog Details</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="#">Pages</a>
-                                                <ul class="submenu">
-                                                    <li><a href="elements.html">Element</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="contact.html">Contact Us</a></li>
-                                            <li><a href>LOGOUT</a></li>
-                                        </ul>
-                                    </nav>
-                                </div>
-                            </div>
-                            <!-- Mobile Menu -->
-                            <div class="col-12">
-                                <div class="mobile_menu d-block d-lg-none"></div>
-                            </div>
-                        </div>
-                    </div>
-               </div>
-            </div>
-       </div>
-        <!-- Header End -->
-    </header>
+
     <!-- Page Wrapper -->
-    <div id="wrapper" >
-        
+    <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color:#ffc107;">
-            
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html" style="background-color:#ffc107;">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{%url 'trip:main'%}">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+                    <i class="fas fa fa-suitcase"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Go trip <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">사이트 바로가기</div>
             </a>
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-          <li class="nav-item active" >
-                <a class="nav-link" href="index.html">
+            <li class="nav-item active">
+                <a class="nav-link" href="{%url 'trip:admin_page'%}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>내 정보 수정</span></a>
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>내가 쓴 글 보기</span></a>
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>내가 받은 후기</span></a>
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>찜한 일정 리스트</span></a>
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>채팅방</span></a>
+                    <span>요약 보기</span></a>
             </li>
 
             <!-- Divider -->
@@ -140,80 +56,70 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Interface
-            </div> 
+                Management
+            </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#prod_management"
+                    aria-expanded="true" aria-controls="prod_management">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
+                    <span>상품관리</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="prod_management" class="collapse" aria-labelledby="heading_prod" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
+                        <h6 class="collapse-header">상품 등록 및 수정:</h6>
+                        <a class="collapse-item" href="{%url 'trip:create_product'%}">상품 등록</a>
+                        <a class="collapse-item" href="{%url 'trip:product_management'%}">상품 수정</a>
+                        <a class="collapse-item" href="{%url 'trip:deleted_product'%}">삭제된 상품 관리</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#sales_management"
+                    aria-expanded="true" aria-controls="sales_management">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>판매관리</span>
+                </a>
+                <div id="sales_management" class="collapse" aria-labelledby="heading_sales" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">판매 내역 관리:</h6>
+                        <a class="collapse-item" href="login.html">주문 조회</a>
+                        <a class="collapse-item" href="register.html">배송 조회</a>
+                        <a class="collapse-item" href="forgot-password.html">반품/환불 관리</a>
                     </div>
                 </div>
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Utilities</span>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#accuse_management"
+                    aria-expanded="true" aria-controls="accuse_management">
+                    <i class="fas fa fa-bullhorn"></i>
+                    <span>신고관리</span>
                 </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                <div id="accuse_management" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Colors</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
+                        <h6 class="collapse-header">신고 관련:</h6>
+                        <a class="collapse-item" href="utilities-color.html">신고 내역</a>
+                        <a class="collapse-item" href="utilities-border.html">사용자 관리</a>
+                        <a class="collapse-item" href="utilities-animation.html">블랙리스트 관리</a>
                     </div>
                 </div>
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
-        
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Addons
+                
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
-            </li>
+            
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
@@ -230,13 +136,6 @@
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
 
-            <!-- Sidebar Message -->
-            <div class="sidebar-card d-none d-lg-flex">
-                <img class = "sidebar-card-illustration mb-2" src="{% static 'img/undraw_rocket.svg' %}" alt="..." />
-                
-                <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
-                <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
-            </div>
         </ul>
         <!-- End of Sidebar -->
 
@@ -267,7 +166,6 @@
                             </div>
                         </div>
                     </form>
-                    
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -347,68 +245,7 @@
                             </div>
                         </li>
 
-                        <!-- Nav Item - Messages -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-envelope fa-fw"></i>
-                                <!-- Counter - Messages -->
-                                <span class="badge badge-danger badge-counter">7</span>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="messagesDropdown">
-                                <h6 class="dropdown-header">
-                                    Message Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class = "rounded-circle" src="{% static 'img/undraw_profile_1.svg' %}" alt="..." />
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div class="font-weight-bold">
-                                        <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                            problem I've been having.</div>
-                                        <div class="small text-gray-500">Emily Fowler · 58m</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class = "rounded-circle" src="{% static 'img/undraw_profile_2.svg' %}" alt="..." />
-                                        <div class="status-indicator"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">I have the photos that you ordered last month, how
-                                            would you like them sent to you?</div>
-                                        <div class="small text-gray-500">Jae Chun · 1d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class = "rounded-circle" src="{% static 'img/undraw_profile_3.svg' %}" alt="..." />
-                                        
-                                        <div class="status-indicator bg-warning"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Last month's report looks great, I am very happy with
-                                            the progress so far, keep up the good work!</div>
-                                        <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class = "rounded-circle" src="{% static 'https://source.unsplash.com/Mv9hjnEUHR4/60x60' %}" alt="..." />
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                            told me that people say this to all dogs, even if they aren't good...</div>
-                                        <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-                            </div>
-                        </li>
+                        
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -416,8 +253,9 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">User Name</span>
-                                <img class = "img-profile rounded-circle" src="{% static 'img/undraw_profile.svg' %}" alt="..." />
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <img class="img-profile rounded-circle"
+                                    src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -452,13 +290,13 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                        <h1 class="h3 mb-0 text-gray-800">요약보기</h1>
+                        {% comment %} <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> {% endcomment %}
                     </div>
 
                     <!-- Content Row -->
-                    <div class="row">
+                    <div class="row" style="justify-content: center;">
 
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
@@ -467,11 +305,11 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Earnings (Monthly)</div>
+                                                신규 주문</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                            <i class="fas fa fa-bell fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -485,7 +323,7 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Earnings (Annual)</div>
+                                                반품/환불 내역</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
                                         </div>
                                         <div class="col-auto">
@@ -502,7 +340,7 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">신규 신고내역
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
@@ -518,104 +356,8 @@
                                             </div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                            <i class="fas fa fa-bullhorn fa-2x text-gray-300"></i>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Pending Requests Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Pending Requests</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Content Row -->
-
-                    <div class="row">
-
-                        <!-- Area Chart -->
-                        <div class="col-xl-8 col-lg-7">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-area">
-                                        <canvas id="myAreaChart"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Pie Chart -->
-                        <div class="col-xl-4 col-lg-5">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-pie pt-4 pb-2">
-                                        <canvas id="myPieChart"></canvas>
-                                    </div>
-                                    <div class="mt-4 text-center small">
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i> Direct
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> Social
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-info"></i> Referral
-                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -746,7 +488,8 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="text-center">
-                                        <img class = "img-fluid px-3 px-sm-4 mt-3 mb-4" src="{% static 'img/undraw_posting_photo.svg' %}" alt="..." />
+                                        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                                            src="img/undraw_posting_photo.svg" alt="...">
                                     </div>
                                     <p>Add some quality, svg illustrations to your project courtesy of <a
                                             target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a
@@ -822,52 +565,20 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'admin_vendor/jquery/jquery.min.js'%} "></script>
+    <script src="{% static 'admin_vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="{% static 'admin_vendor/jquery-easing/jquery.easing.min.js' %}"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
 
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
-
-
-    <script src="{% static 'js/js_m/vendor/modernizr-3.5.0.min.js' %}"></script>
+    <script src="{% static 'admin_vendor/modernizr-3.5.0.min.js' %}' $"></script>
+	
 	<!-- Jquery, Popper, Bootstrap -->
-    <script src="{% static 'js/js_m//vendor/jquery-1.12.4.min.js' %}"></script>
-    <script src="{% static 'js/js_m/popper.min.js' %}"></script>
-    <script src="{% static 'js/js_m/bootstrap.min.js' %}"></script>
-	<!-- Jquery Mobile Menu -->
-    <script src="{% static 'js/js_m/jquery.slicknav.min.js' %}"></script>
-	<!-- Jquery Slick , Owl-Carousel Plugins -->   
-    <script src="{% static 'js/js_m/owl.carousel.min.js' %}"></script>
-    <script src="{% static 'js/js_m/slick.min.js' %}"></script>
-	<!-- One Page, Animated-js/HeadLin -->
-    <script src="{% static 'js/js_m/wow.min.js' %}"></script>
-    <script src="{% static 'js/js_m/animated.headline.js' %}"></script>
-    <script src="{% static 'js/js_m/jquery.magnific-popup.js' %}"></script>
-	<!-- Scrollup, nice-select, sticky -->
-    <script src="{% static 'js/js_m/jquery.scrollUp.min.js' %}"></script>
-    <script src="{% static 'js/js_m/jquery.nice-select.min.js' %}"></script>
-    <script src="{% static 'js/js_m/jquery.sticky.js' %}"></script>
-    
-    <!-- contact js -->
-    <script src="{% static 'js/js_m/contact.js' %}"></script>
-    <script src="{% static 'js/js_m/jquery.form.js' %}"></script>
-    <script src="{% static 'js/js_m/jquery.validate.min.js' %}"></script>
-    <script src="{% static 'js/js_m/mail-script.js' %}"></script>
-    <script src="{% static 'js/js_m/jquery.ajaxchimp.min.js' %}"></script>
-    
-	<!-- Jquery Plugins, main Jquery -->
-    <script src="{% static 'js/js_m/plugins.js' %}"></script>
-    <script src="{% static 'js/js_m/main.js' %}"></script>
+	<script src="{% static 'admin_vendor/jquery-1.12.4.min.js' %}"></script>
+
 </body>
 
 </html>
