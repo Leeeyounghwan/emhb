@@ -158,20 +158,20 @@ def single_blog(request):
     post = get_object_or_404(TogetherPost)
     return render(request, 'single-blog.html',{'post':post})
 
-def together_comment(request, post_id):
-    post = TogetherPost.objects.get(pk=post_id)
+# def together_comment(request, post_id):
+#     post = TogetherPost.objects.get(pk=post_id)
 
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.user = request.user
-            comment.save()
-            return redirect('view_post', post_id=post_id)
-    else:
-        form = CommentForm()
+#     if request.method == 'POST':
+#         form = CommentForm(request.POST)
+#         if form.is_valid():
+#             comment = form.save(commit=False)
+#             comment.user = request.user
+#             comment.save()
+#             return redirect('view_post', post_id=post_id)
+#     else:
+#         form = CommentForm()
 
-    return render(request, 'single-blog.html', {'form': form})
+#     return render(request, 'single-blog.html', {'form': form})
 
 #by 건영 종료
 
