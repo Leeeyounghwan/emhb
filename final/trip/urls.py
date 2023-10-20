@@ -34,7 +34,7 @@ urlpatterns = [
     # path('single_blog/1/',views.single_blog, name='single_blog'), 
     # path('single_blog/<int:post_id>/',views.single_blog, name='single_blog'), 
     
-    path('post/<int:post_id>/together_comment/', views.together_comment,  name='together_comment'),  #댓글
+    # path('post/<int:post_id>/together_comment/', views.together_comment,  name='together_comment'),  #댓글
     
     path('single_blog/',views.single_blog, name='single_blog'),
     # path('comment/', views.comment,  name='comment'),  #댓글
