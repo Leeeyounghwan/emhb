@@ -235,30 +235,35 @@ def single_blog(request):
 #by 건영 종료
 
 # 로그인, 회원가입 페이지 by 문정
+
+from django.contrib.auth.forms import UserCreationForm
 def user_login(request):
-    # if request.method == 'POST':
-    #     form = AuthenticationForm(request=request, data=request.POST)
-    #     if form.is_valid():
-    #         login(request, form.get_user())
-    #         return redirect('trip:main')  # 로그인 성공 시 리디렉션할 페이지
-    # else:
-    #     form = AuthenticationForm()
-    # return render(request, 'login.html', {'form': form})
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return render(request,'main.html')
+            # return redirect('trip:main')
+            return render(request,'register.html')
     #     else:
     #         return render(request,'login.html', {'error':'username or password is incorrect'})
     # else:
     return render(request,'login.html')
+    # if request.method == 'POST':
+    #     form = UserCreationForm(request.form)
+    #     if form.is_valid():
+    #         user = form.save()
+    #         login(request, user)
+    #         return redirect('trip:main')
+    # else:
+    #     form = UserCreationForm()
+    # return render(request,'login.html') 
 
 
 
 def user_logout(request):
+    logout(request)
     redirect('trip:main')
 
 def register(request):
