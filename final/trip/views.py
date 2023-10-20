@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.shortcuts import render, get_object_or_404
 from .models import TogetherPost,TogetherComment
-from .forms import CommentForm
+
+# from .forms import CommentForm
+
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Package, User, Report
