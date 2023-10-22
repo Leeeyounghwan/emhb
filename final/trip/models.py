@@ -112,8 +112,22 @@ class Report(models.Model):
     is_deleted = models.BooleanField(default=False)
 
 
-
 #받은후기 관련 모델 추가 - 2023.10.22 by 준경
 # class Feedback(models.Model):
 #     receiver_id = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 #     sender_id = 
+
+    
+class GroupChat(models.Model):
+    name = models.CharField(max_length=255)
+    members = models.ManyToManyField(User, related_name='group_chat_rooms')
+    created_at = models.DateTimeField(auto_now_add=True)
+    last_message = models.TextField(null=True, blank=True)
+    last_message_sender = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='last_message_sender')
+
+class Message(models.Model):
+    group_chat = models.ForeignKey(GroupChat, on_delete=models.CASCADE)
+    sender = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+

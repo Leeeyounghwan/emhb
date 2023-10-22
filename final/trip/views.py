@@ -92,14 +92,62 @@ def admin_page(request):
 
 def create_product(request):
 
+    package = Package()
+    if request.method == "POST":
+        package.title = request.POST['title']
+        package.price = request.POST['price']
+        package.destination = request.POST['destination']
+        package.start_date = request.POST['start_date']
+        package.end_date = request.POST['end_date']
+        package.content = request.POST['content']
+        if 'package_image' in request.FILES:
+            package.image = request.FILES['package_image']
+        package.save()
+        return redirect('trip:product_management')
+    
     # if admin_check(request) == True :
     return render(request, "admin/create_product.html")
     # else:
     #     return redirect("trip:main")
 
+def update_product(request, package_id):
+
+    package = get_object_or_404(Package, id=package_id)
+    if package:
+        package.content = package.content.strip()
+    
+    if request.method == "POST":
+        action = request.POST.get('action')
+        if action == 'update':
+            package.title = request.POST['title']
+            package.price = request.POST['price']
+            package.destination = request.POST['destination']
+            package.start_date = request.POST['start_date']
+            package.end_date = request.POST['end_date']
+            package.content = request.POST['content']
+            if 'package_image' in request.FILES:
+                package.image = request.FILES['package_image']
+            package.save()
+            return redirect('trip:product_management')
+        
+        elif action == 'delete':
+            package.is_deleted = True
+            package.save()
+            return redirect('trip:product_management')
+
+    context = {
+        'package' : package
+    }
+
+    # if admin_check(request) == True :
+    return render(request, "admin/update_product.html", context)
+    # else:
+    #     return redirect("trip:main")
+
+
 def product_management(request):
 
-    packages = Package.objects.all()
+    packages = Package.objects.filter(is_deleted=False).order_by('id')
     context = {
         "packages" : packages
     }
@@ -132,6 +180,17 @@ def deleted_product(request):
     #     return render(request, "admin/deleted_product.html", context)
     # else:
     #     return redirect("trip:main")
+
+def delete_cancel(request, package_id):
+
+    package = get_object_or_404(Package, id=package_id)
+    print(package.is_deleted)
+
+    package.is_deleted = False
+    package.save()
+    print(package.is_deleted)
+
+    return redirect("trip:product_management")
 
 def order_inquiry(request):
     return render(request, "admin/order_inquiry.html")
@@ -219,30 +278,35 @@ def single_blog(request):
 #by 건영 종료
 
 # 로그인, 회원가입 페이지 by 문정
+
+from django.contrib.auth.forms import UserCreationForm
 def user_login(request):
-    # if request.method == 'POST':
-    #     form = AuthenticationForm(request=request, data=request.POST)
-    #     if form.is_valid():
-    #         login(request, form.get_user())
-    #         return redirect('trip:main')  # 로그인 성공 시 리디렉션할 페이지
-    # else:
-    #     form = AuthenticationForm()
-    # return render(request, 'login.html', {'form': form})
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return render(request,'main.html')
+            # return redirect('trip:main')
+            return render(request,'register.html')
     #     else:
     #         return render(request,'login.html', {'error':'username or password is incorrect'})
     # else:
     return render(request,'login.html')
+    # if request.method == 'POST':
+    #     form = UserCreationForm(request.form)
+    #     if form.is_valid():
+    #         user = form.save()
+    #         login(request, user)
+    #         return redirect('trip:main')
+    # else:
+    #     form = UserCreationForm()
+    # return render(request,'login.html') 
 
 
 
 def user_logout(request):
+    logout(request)
     redirect('trip:main')
 
 def register(request):
@@ -263,7 +327,7 @@ def register(request):
 
 # 챗봇 BY 영민
 def chatapi(request, question):
-    with open('../config.json', 'r') as f:
+    with open('trip/config.json', 'r') as f:
         json_data = json.load(f)
     api_key = json_data['OPENAI_KEY']
                 
@@ -290,3 +354,9 @@ def chatbot(request):
     return render(request, 'test.html')
 def packages(request):
   return render(request, 'packages.html', {'items' : Package.objects.all()})
+
+def chatting(request):
+    return render(request, 'chat/index.html')
+
+def room(request, room_name):
+    return render(request, 'chat/room.html', {"room_name": room_name})

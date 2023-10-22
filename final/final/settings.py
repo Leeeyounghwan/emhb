@@ -16,7 +16,7 @@ import json, os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-with open('../config.json', 'r') as f:
+with open('trip/config.json', 'r') as f:
     json_data = json.load(f)
     secret_key = json_data['SECRET_KEY']
 
@@ -35,6 +35,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
+    "trip",
+    'channels',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -42,7 +45,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
-    "trip",
 ]
 
 MIDDLEWARE = [
@@ -74,7 +76,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "final.wsgi.application"
-
+ASGI_APPLICATION = "final.asgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -135,3 +137,16 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 AUTH_USER_MODEL = 'trip.User'
+
+# 실시간 채팅 설정
+
+ASGI_APPLICATION = "final.asgi.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
