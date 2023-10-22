@@ -6,7 +6,7 @@ from .models import TogetherPost,TogetherComment
 
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Package, User, Report
+from .models import Package, User, Report,Schedule,ScheduleComment
 from django.contrib.auth.decorators import login_required
 import openai
 from django.http import JsonResponse
@@ -55,14 +55,14 @@ def profile(request): #내 정보 수정
 
     return render(request, 'mypage/profile.html', {'form': form})
 
-def mytopics(request): #내가 쓴 글 보기
-    return render(request,'mypage/mytopics.html')
+def mytopics(request):#내가 쓴 글 보기
+  return render(request, 'mypage/mytopics.html', {'posts' : TogetherPost.objects.all()})
 
-def myreviews(request): #내가 쓴 글 보기
+def myreviews(request): #내가받은 후기 보기
     return render(request,'mypage/myreviews.html')
 
 def like_schedule(request): #찜한 일정 리스트
-    return render(request,'mypage/like_schedule.html')
+    return render(request,'mypage/like_schedule.html',{'schedules' : Schedule.objects.all()})
 
 def chatting_room(request): #채팅방리스트
     return render(request,'mypage/chatting_room.html')
