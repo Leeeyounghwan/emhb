@@ -12,7 +12,6 @@ import openai
 from django.http import JsonResponse
 import json
 from django.contrib import messages
-from django.contrib.auth.models import User
 from .forms import UserForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -181,7 +180,7 @@ def deleted_product(request):
     # else:
     #     return redirect("trip:main")
 
-def delete_cancel(request, package_id):
+def delete_cancel(package_id):
 
     package = get_object_or_404(Package, id=package_id)
     print(package.is_deleted)
@@ -203,40 +202,105 @@ def return_management(request):
 
 def report_detail(request):
 
-    if admin_check(request) == True :
-        reports = Report.objects.all()
-        context = {
-            "reports" : reports
-        }
+    reports = Report.objects.all().order_by('is_completed', 'created_at', 'updated_at')
+    
+    context = {
+        "reports" : reports
+    }
 
-        return render(request, "admin/report_detail.html", context)
-    else:
-        return redirect("trip:main")
+    return render(request, "admin/report_detail.html", context)
 
-def user_management(request):
+    # if admin_check(request) == True :
+    #     reports = Report.objects.all()
+    #     context = {
+    #         "reports" : reports
+    #     }
 
-    if admin_check(request) == True :
-        users = User.objects.all()
-        context = {
-            "users" : users
-        }
+    #     return render(request, "admin/report_detail.html", context)
+    # else:
+    #     return redirect("trip:main")
 
-        return render(request, "admin/user_management.html", context)
-    else:
-        return redirect("trip:main")
+def view_report_detail(request, id):
+    report_detail = Report.objects.filter(id=id)
+    # 신고한 유저 정보
+    user_info = get_object_or_404(User, id=report_detail[0].user_id_id)
+    # 신고당한 유저 정보
+    reported_user_info = get_object_or_404(User, username=report_detail[0].reported_user)
+    context = {
+        "report_detail" : report_detail[0],
+        "user_info" : user_info,
+        "reported_user_info" : reported_user_info
+    }
+    return render(request, "admin/view_report_detail.html", context)
+
+def report_complete(request, id):
+    report = get_object_or_404(Report, id=id)
+    reported_user_info = get_object_or_404(User, username=report.reported_user)
+
+    if request.method == "POST":
+        action = request.POST.get('action')
+        if action == 'commit':
+            report.report_reply = request.POST['reply']
+            report.is_completed = True
+            report.completed_at = timezone.now()
+            report.save()
+        
+        elif action == 'count_up':
+            report.report_reply = request.POST['reply']
+            report.is_completed = True
+            report.completed_at = timezone.now()
+            report.save()
+            if reported_user_info.caution_cnt >= 9 :
+                reported_user_info.is_black = True
+            else:
+                reported_user_info.caution_cnt += 1
+            reported_user_info.save()
+        
+        elif action == 'update':
+            report.report_reply = request.POST['reply']
+            report.updated_at = timezone.now()
+            report.save()
+
+        elif action == 'delete':
+            report.report_reply = ""
+            report.is_completed = False
+            report.updated_at = timezone.now()
+            report.save()
+
+    reports = Report.objects.all().order_by('is_completed', 'created_at', 'updated_at')
+    
+    context = {
+        "reports" : reports
+    }
+    return render(request, "admin/report_detail.html", context)
+
 
 def blacklist_management(request):
 
-    if admin_check(request) == True :
-        blacklist = User.objects.filter(is_black=True)
-        context = {
-            "blacklist" : blacklist
-        }
+    blacklists = User.objects.filter(is_black=True)
+    context = {
+        "blacklists" : blacklists
+    }
+    return render(request, "admin/blacklist_management.html", context)
+    # if admin_check(request) == True :
+    #     blacklist = User.objects.filter(is_black=True)
+    #     context = {
+    #         "blacklist" : blacklist
+    #     }
 
-        return render(request, "admin/blacklist_management.html", context)
-    else:
-        return redirect("trip:main")
+    #     return render(request, "admin/blacklist_management.html", context)
+    # else:
+    #     return redirect("trip:main")
 
+def black_cancel(request, blacklist_id):
+    # print(blacklist_id)
+    blacklist = get_object_or_404(User, id=blacklist_id)
+    print(blacklist.is_black)
+
+    blacklist.is_black = False
+    blacklist.save()
+
+    return redirect("trip:blacklist_management")
 
 # 관리자페이지 종료
 
@@ -279,15 +343,15 @@ def single_blog(request):
 
 # 로그인, 회원가입 페이지 by 문정
 
-from django.contrib.auth.forms import UserCreationForm
 def user_login(request):
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
+        print(user)
         if user is not None:
             login(request, user)
-            # return redirect('trip:main')
+            return redirect('trip:main')
             return render(request,'register.html')
     #     else:
     #         return render(request,'login.html', {'error':'username or password is incorrect'})
