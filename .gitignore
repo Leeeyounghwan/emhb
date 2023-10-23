@@ -186,7 +186,4 @@ media
 django_env
 .secrets
 .cph/
-static
-media
-static
 0001_initial.py
