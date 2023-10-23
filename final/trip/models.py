@@ -110,6 +110,13 @@ class Report(models.Model):
     is_completed = models.BooleanField(default=False)
     completed_at = models.DateTimeField(auto_now=False)
     is_deleted = models.BooleanField(default=False)
+
+
+#받은후기 관련 모델 추가 - 2023.10.22 by 준경
+# class Feedback(models.Model):
+#     receiver_id = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+#     sender_id = 
+
     
 class GroupChat(models.Model):
     name = models.CharField(max_length=255)
@@ -123,3 +130,4 @@ class Message(models.Model):
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+
