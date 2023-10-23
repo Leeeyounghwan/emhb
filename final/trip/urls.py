@@ -35,16 +35,10 @@ urlpatterns = [
     path('contact/',views.contact, name='contact'),
     path('elements/',views.elements, name='elements'),
     path('main/',views.main, name='main'),
-    
     path('packages/',views.packages, name='packages'),
-    
-    # path('single_blog/1/',views.single_blog, name='single_blog'), 
-    # path('single_blog/<int:post_id>/',views.single_blog, name='single_blog'), 
-    
-    # path('post/<int:post_id>/together_comment/', views.together_comment,  name='together_comment'),  #댓글
-    
+    path('single_blog/<int:post_id>/',views.single_blog, name='single_blog'), 
+    path('add_comment/<int:post_id>/', views.add_comment, name='add_comment'),
     path('single_blog/',views.single_blog, name='single_blog'),
-    # path('comment/', views.comment,  name='comment'),  #댓글
 
     # 로그인, 회원가입 페이지 by 문정
     path('login/', views.user_login, name = 'login'),
