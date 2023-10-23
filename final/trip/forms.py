@@ -28,7 +28,19 @@ class UserForm(UserCreationForm):
         self.fields['nickname'].widget.attrs['class'] = 'form-control form-control-user'
         self.fields['nickname'].widget.attrs['id'] = 'nickname'
 
-        
+
+class UserLoginForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields= ['username', 'password']
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs['class'] = 'form-control form-control-user'
+        self.fields['username'].widget.attrs['id'] = 'username'
+        self.fields['password'].widget.attrs['class'] = 'form-control form-control-user'
+        self.fields['password'].widget.attrs['id'] = 'password'
 # class UserModelForm(forms.ModelForm):
     
 #     class Meta:

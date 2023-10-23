@@ -13,7 +13,7 @@ from django.http import JsonResponse
 import json
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .forms import UserForm
+from .forms import UserForm, UserLoginForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import JsonResponse
@@ -282,17 +282,19 @@ def single_blog(request):
 # from django.contrib.auth.forms import UserCreationForm
 def user_login(request):
     if request.method == "POST":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            # return redirect('trip:main')
-            return render(request,'register.html')
+        form = UserLoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, username=username, password=password) # 사용자 인증
+            login(request, user)  # 로그인
+            return redirect('trip:main')
+    else:
+        form = UserLoginForm()
     #     else:
     #         return render(request,'login.html', {'error':'username or password is incorrect'})
     # else:
-    return render(request,'login.html')
+    return render(request,'login.html', {"form":form})
     # if request.method == 'POST':
     #     form = UserCreationForm(request.form)
     #     if form.is_valid():
@@ -313,7 +315,6 @@ def register(request):
     # return render(request, 'register.html')
     if request.method == "POST":
         form = UserForm(request.POST)
-        print(form)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
