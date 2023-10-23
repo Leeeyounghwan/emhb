@@ -323,21 +323,13 @@ def packages(request):
 def single_blog(request):
     post = get_object_or_404(TogetherPost)
     return render(request, 'single-blog.html',{'post':post})
-
-# def together_comment(request, post_id):
-#     post = TogetherPost.objects.get(pk=post_id)
-
-#     if request.method == 'POST':
-#         form = CommentForm(request.POST)
-#         if form.is_valid():
-#             comment = form.save(commit=False)
-#             comment.user = request.user
-#             comment.save()
-#             return redirect('view_post', post_id=post_id)
-#     else:
-#         form = CommentForm()
-
-#     return render(request, 'single-blog.html', {'form': form})
+def add_comment(request, post_id):
+    if request.method == 'POST':
+        content = request.POST['content']
+        comment = TogetherComment(post_id_id=post_id, content=content)
+        comment.save()
+        return redirect('single-blog.html', post_id=post_id)
+    return redirect('single-blog.html')
 
 #by 건영 종료
 
