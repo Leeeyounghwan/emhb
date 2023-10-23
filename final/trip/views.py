@@ -279,7 +279,7 @@ def single_blog(request):
 
 # 로그인, 회원가입 페이지 by 문정
 
-from django.contrib.auth.forms import UserCreationForm
+# from django.contrib.auth.forms import UserCreationForm
 def user_login(request):
     if request.method == "POST":
         username = request.POST.get('username')
@@ -313,6 +313,7 @@ def register(request):
     # return render(request, 'register.html')
     if request.method == "POST":
         form = UserForm(request.POST)
+        print(form)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')

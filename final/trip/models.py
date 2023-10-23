@@ -7,6 +7,7 @@ class User(AbstractUser):
     review = models.IntegerField(default=0)
     number_of_written = models.IntegerField(default=0)
     is_black = models.BooleanField(default=False)
+    caution_cnt = models.IntegerField(default=0)
     
     # AbstractUser 기본 필드
     # username_validator = UnicodeUsernameValidator()
@@ -31,6 +32,7 @@ class TogetherPost(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
+    
 
 class TogetherComment(models.Model):
     post_id = models.ForeignKey(TogetherPost, on_delete=models.CASCADE)
