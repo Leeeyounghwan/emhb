@@ -6,7 +6,7 @@ from .models import TogetherPost,TogetherComment
 
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Package, User, Report,Schedule,ScheduleComment
+# from .models import Package, User, Report,Schedule,ScheduleComment, GroupChat
 from django.contrib.auth.decorators import login_required
 import openai
 from django.http import JsonResponse
@@ -357,8 +357,26 @@ def chatbot(request):
 def packages(request):
   return render(request, 'packages.html', {'items' : Package.objects.all()})
 
+
+
+# 실시간 채팅 뷰
 def chatting(request):
     return render(request, 'chat/index.html')
 
+@login_required
 def room(request, room_name):
-    return render(request, 'chat/room.html', {"room_name": room_name})
+    if request.method == "GET":
+        print("시작")
+        chat_room = GroupChat.objects.filter(name=room_name)
+        print(chat_room)
+        if chat_room.exists():
+            print(chat_room)
+            return render(request, 'chat/room.html', {"room_name": room_name})
+        else:
+            print("create")
+            chat_room = GroupChat.objects.create(
+                member = request.user,
+            )
+            return render(request, 'chat/room.html', {"room_name": chat_room.room_name})
+        
+    return redirect("trip:main")
