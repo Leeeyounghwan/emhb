@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 # Create your models here.
 class User(AbstractUser):
-    nickname = models.CharField(max_length=40)
+    nickname = models.CharField(max_length=40, blank=True)
     profile_image = models.ImageField(upload_to="", null=True)
     review = models.IntegerField(default=0)
     number_of_written = models.IntegerField(default=0)
@@ -119,7 +119,7 @@ class Report(models.Model):
 
     
 class GroupChat(models.Model):
-    name = models.CharField(max_length=255)
+    room_name = models.AutoField(primary_key=True)
     members = models.ManyToManyField(User, related_name='group_chat_rooms')
     created_at = models.DateTimeField(auto_now_add=True)
     last_message = models.TextField(null=True, blank=True)
