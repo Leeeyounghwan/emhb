@@ -35,6 +35,7 @@ urlpatterns = [
     path('contact/',views.contact, name='contact'),
     path('elements/',views.elements, name='elements'),
     path('main/',views.main, name='main'),
+    
     path('packages/',views.packages, name='packages'),
     
     # path('single_blog/1/',views.single_blog, name='single_blog'), 
