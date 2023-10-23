@@ -120,16 +120,16 @@ class Report(models.Model):
 #     sender_id = 
 
     
-# class GroupChat(models.Model):
-#     room_name = models.AutoField(primary_key=True)
-#     members = models.ManyToManyField(User, related_name='group_chat_rooms')
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     last_message = models.TextField(null=True, blank=True)
-#     last_message_sender = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='last_message_sender')
+class GroupChat(models.Model):
+    room_name = models.AutoField(primary_key=True)
+    members = models.ManyToManyField(User, related_name='group_chat_rooms')
+    created_at = models.DateTimeField(auto_now_add=True)
+    last_message = models.TextField(null=True, blank=True)
+    last_message_sender = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='last_message_sender')
 
-# class Message(models.Model):
-#     group_chat = models.ForeignKey(GroupChat, on_delete=models.CASCADE)
-#     sender = models.ForeignKey(User, on_delete=models.CASCADE)
-#     content = models.TextField()
-#     created_at = models.DateTimeField(auto_now_add=True)
+class Message(models.Model):
+    group_chat = models.ForeignKey(GroupChat, on_delete=models.CASCADE, related_name="chat_messages")
+    sender = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
 

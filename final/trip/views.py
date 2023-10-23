@@ -6,7 +6,7 @@ from .models import TogetherPost,TogetherComment
 
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
-# from .models import Package, User, Report,Schedule,ScheduleComment, GroupChat
+from .models import Package, User, Report,Schedule,ScheduleComment, GroupChat
 from django.contrib.auth.decorators import login_required
 import openai
 from django.http import JsonResponse
@@ -282,6 +282,8 @@ def single_blog(request):
 # from django.contrib.auth.forms import UserCreationForm
 def user_login(request):
     if request.method == "POST":
+        if request.user.is_authenticated:
+            return redirect('trip:main')
         form = UserLoginForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
@@ -365,18 +367,16 @@ def chatting(request):
 
 @login_required
 def room(request, room_name):
+    chat_rooms = GroupChat.objects.filter(room_name=room_name)
     if request.method == "GET":
-        print("시작")
-        chat_room = GroupChat.objects.filter(name=room_name)
-        print(chat_room)
-        if chat_room.exists():
-            print(chat_room)
+        if chat_rooms.exists():
+            chat_room = chat_rooms.first()
+            chat_room.members.set([request.user])
             return render(request, 'chat/room.html', {"room_name": room_name})
         else:
-            print("create")
-            chat_room = GroupChat.objects.create(
-                member = request.user,
-            )
-            return render(request, 'chat/room.html', {"room_name": chat_room.room_name})
+            chat_room = GroupChat.objects.create()
+            chat_room.members.set([request.user])
+            return render(request, 'chat/room.html', {"room_name": chat_room.room_name,
+                                                      "username": request.user.username})
         
     return redirect("trip:main")

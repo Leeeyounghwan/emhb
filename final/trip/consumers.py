@@ -31,6 +31,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         text_data_json = json.loads(text_data)
         message = text_data_json["message"]
         username = text_data_json['username']
+        print(username)
         # DB에 메시지 저장
         await self.save_message(username, message)
         # Send message to room group
@@ -40,7 +41,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def save_message(self, username, message):
+        print(username)
         user = User.objects.get(username=username)
+        print(user)
         chat_room = GroupChat.objects.get(room_name=self.room_name)
         chat_room.last_message = message
         chat_room.last_message_sender = user
@@ -53,7 +56,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def load_previous_messages(self):
         chat_room = GroupChat.objects.get(room_name=self.room_name)
-        messages = chat_room.message.all()
+        messages = chat_room.chat_messages.all()
         return [(message.content, message.sender.username) for message in messages]   
         
         
@@ -61,6 +64,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
     # Receive message from room group
     async def chat_message(self, event):
         message = event["message"]
+        username = event['username']
 
         # Send message to WebSocket
-        await self.send(text_data=json.dumps({"message": message}))
+        await self.send(text_data=json.dumps({"message": message,
+                                              "username":username
+                                              }))
