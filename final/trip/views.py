@@ -360,3 +360,6 @@ def chatting(request):
 
 def room(request, room_name):
     return render(request, 'chat/room.html', {"room_name": room_name})
+
+def community(request):
+    render(request, 'community.html')
