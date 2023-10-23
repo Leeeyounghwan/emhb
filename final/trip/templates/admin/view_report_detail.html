@@ -45,58 +45,88 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">상품 등록</h1>
+                        <h1 class="h3 mb-0 text-gray-800">신고 상세</h1>
                         {% comment %} <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> {% endcomment %}
                     </div>
 
-                    <!-- Content Row -->                    
+                    <!-- Content Row -->
+                    <div style ="display:flex; flex-directions: row; justify-content: space-around;">
                     {% block content %}
                     <div class="col-lg-13 mb-4">
-                        <div class="card shadow mb-4">
+                        <div class="card shadow mb-4 size50">
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">상품 등록</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">신고 상세내역</h6>
                             </div>
                             <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" method="POST" action="" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <div class="card-body-write">
                                     
-                                    <div class="card-body">
-                                        <label class="border-bottom-primary write-img">
-                                            <img src="{% static 'img/icon_photo.png' %}" alt="이미지 설명" id="imagePreview" style="width:13rem;">
-                                            <input type="file" name="package_image" accept="image/*" style="display: none;" onchange="previewImage(event);"  id="productImage">
+                                    <div class="card-body-report">
+                                        <br>
+                                        <label for="title">신고자 ID
+                                            <input type="text" name="title" value="{{user_info.username}}" class="form-control bg-light border-0 small" style="width: 85%; max-width:100%;">
+                                        </label>
+                                        <label for="price">가해자 ID
+                                            <input type="text" name="price" value="{{reported_user_info.username}}" class="form-control bg-light border-0 small" style="width: 85%; max-width:100%;">
                                         </label>
                                         <br>
-                                        <label for="title">상품명
-                                            <input type="text" name="title" placeholder="상품명" required="required" value="" class="form-control bg-light border-0 small" style="width: 80%; max-width:100%;">
+                                        <label for="content">신고 내용
+                                        <textarea name="content" class="form-control bg-light border-0 small" style="width: 85%; max-width:100%; margin-left : 0.2rem;">{{report_detail.report_reason}}</textarea>
                                         </label>
-                                        <label for="price">상품가격
-                                            <input type="text" name="price" placeholder="가격" required="required" value="" class="form-control bg-light border-0 small" style="width: 80%; max-width:100%;">
-                                        </label>
-                                        <label for="destination">여행지
-                                            <input type="text" name="destination" placeholder="여행지" required="required" value="" class="form-control bg-light border-0 small" style="width: 80%; max-width:100%;">
-                                        </label>
-                                        <label for="start_date">체크인날짜
-                                            <input type="date" name="start_date" required="required" value="" class="form-control bg-light border-0 small" style="width: 80%; max-width:100%;">
-                                        </label>
-                                        <label for="end_date">체크아웃날짜
-                                            <input type="date" name="end_date" required="required" value="" class="form-control bg-light border-0 small" style="width: 80%; max-width:100%;">
-                                        </label>
-
-                                    
-                                        <br>
-                                        <textarea name="content" required="required" class="form-control bg-light border-0 small" style="width: 100%; max-width:100%;"></textarea>
-                                        <div style="margin-top: 1.5rem;">
-                                            <button class="btn btn-primary" type="submit" style="float:right">등록하기</button>
-                                        </div>
-                                    
                                     </div>
                                 </div>
                             </form>
                         </div>
                     </div>
                     {% endblock %}
-
+                    <div class="col-lg-13 mb-4">
+                        <div class="card shadow mb-4 size50">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">답변 작성하기</h6>
+                            </div>
+                            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" method="POST" action="{%url 'trip:report_complete' report_detail.id%}" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="card-body-write">
+                                    
+                                    <div class="card-body-report">
+                                        <br>
+                                        <label for="reported_user_id">가해자 ID
+                                            <input type="text" name="reported_user_id" value="{{reported_user_info.username}}" class="form-control bg-light border-0 small" style="width: 85%; max-width:100%;">
+                                        </label>
+                                        <label for="caution_cnt">경고 횟수
+                                            <input type="text" name="caution_cnt" value="{{reported_user_info.caution_cnt}}회" class="form-control bg-light border-0 small" style="width: 85%; max-width:100%;">
+                                        </label>
+                                        <br>
+                                        <label for="reply">답변내용
+                                        <textarea name="reply" class="form-control bg-light border-0 small" style="width: 85%; max-width:100%; margin-left : 0.2rem;">{%if report_detail.report_reply %}{{report_detail.report_reply}}{% else %}{% endif %}</textarea>
+                                        </label>
+                                        <div style="display: flex; flex-direction: row; float: right;">
+                                            {%if report_detail.report_reply %}
+                                                <div style="margin-top: 1.5rem;">   
+                                                    <button class="btn btn-primary" type="submit" name="action" value="update">답변 수정하기</button>
+                                                </div>
+                                                <div style="margin-top: 1.5rem;">   
+                                                    <button class="btn btn-danger" type="submit" name="action" value="delete">답변 삭제</button>
+                                                </div>
+                                            {% else %}
+                                                <div style="margin-top: 1.5rem;">   
+                                                    <button class="btn btn-primary" type="submit" name="action" value="commit">답변만 등록</button>
+                                                </div>
+                                                <div style="margin-top: 1.5rem;">   
+                                                    <button class="btn btn-primary" type="submit" name="action" value="count_up">경고카운트 증가 및 답변등록</button>
+                                                </div>
+                                                <div style="margin-top: 1.5rem;">   
+                                                    <button class="btn btn-danger" type="submit" name="action" value="delete">답변 삭제</button>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>                    
                 </div>
                 <!-- /.container-fluid -->
 

@@ -5,9 +5,10 @@ from django.conf.urls.static import static
 
 app_name = 'trip'
 urlpatterns = [
+    #마이페이지 by 준경
     path('mypage/profile/', views.profile, name='profile'),
     path('mypage/mytopics/', views.mytopics, name='mytopics'),
-    path('mypage/myreviews/', views.myreviews, name='myreviews'),
+    path('mypage/myfeadback/', views.myfeadback, name='myfeadback'),
     path('mypage/like_schedule/', views.like_schedule, name='like_schedule'),
     path('mypage/chatting_room/', views.chatting_room, name='chatting_room'),
 
@@ -24,8 +25,10 @@ urlpatterns = [
     path("admin_page/delivery_tracking", views.delivery_tracking, name="delivery_tracking"),
     path("admin_page/return_management", views.return_management, name="return_management"),
     path("admin_page/report_detail", views.report_detail, name="report_detail"),
-    path("admin_page/user_management", views.user_management, name="user_management"),
+    path("admin_page/report_detail/<int:id>", views.view_report_detail, name="view_report_detail"),
+    path("admin_page/report_complete/<int:id>", views.report_complete, name="report_complete"),
     path("admin_page/blacklist_management", views.blacklist_management, name="blacklist_management"),
+    path("admin_page/black_cancel/<int:blacklist_id>", views.black_cancel, name="black_cancel"),
     # 관리자 페이지 관련 urlpatterns 종료
 
     #by 건영
@@ -35,6 +38,8 @@ urlpatterns = [
     path('contact/',views.contact, name='contact'),
     path('elements/',views.elements, name='elements'),
     path('main/',views.main, name='main'),
+  
+    # 여행 상품 페이지 By 수현
     path('packages/',views.packages, name='packages'),
     path('single_blog/<int:post_id>/',views.single_blog, name='single_blog'), 
     path('add_comment/<int:post_id>/', views.add_comment, name='add_comment'),
@@ -52,6 +57,10 @@ urlpatterns = [
     #실시간 채팅 BY 영민
     path('chat/', views.chatting, name='chatting'),
     path('chat/<str:room_name>/', views.room, name='room'),
+
+
+    #동행모집글 By 수현
+    path('community/', views.community, name='community'),
 ]
 
 if settings.DEBUG:
