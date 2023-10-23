@@ -24,8 +24,10 @@ urlpatterns = [
     path("admin_page/delivery_tracking", views.delivery_tracking, name="delivery_tracking"),
     path("admin_page/return_management", views.return_management, name="return_management"),
     path("admin_page/report_detail", views.report_detail, name="report_detail"),
-    path("admin_page/user_management", views.user_management, name="user_management"),
+    path("admin_page/report_detail/<int:id>", views.view_report_detail, name="view_report_detail"),
+    path("admin_page/report_complete/<int:id>", views.report_complete, name="report_complete"),
     path("admin_page/blacklist_management", views.blacklist_management, name="blacklist_management"),
+    path("admin_page/black_cancel/<int:blacklist_id>", views.black_cancel, name="black_cancel"),
     # 관리자 페이지 관련 urlpatterns 종료
 
     #by 건영
