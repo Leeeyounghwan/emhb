@@ -5,9 +5,10 @@ from django.conf.urls.static import static
 
 app_name = 'trip'
 urlpatterns = [
+    #마이페이지 by 준경
     path('mypage/profile/', views.profile, name='profile'),
     path('mypage/mytopics/', views.mytopics, name='mytopics'),
-    path('mypage/myreviews/', views.myreviews, name='myreviews'),
+    path('mypage/myfeadback/', views.myfeadback, name='myfeadback'),
     path('mypage/like_schedule/', views.like_schedule, name='like_schedule'),
     path('mypage/chatting_room/', views.chatting_room, name='chatting_room'),
 
