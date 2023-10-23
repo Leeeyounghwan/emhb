@@ -39,6 +39,7 @@ urlpatterns = [
     path('elements/',views.elements, name='elements'),
     path('main/',views.main, name='main'),
     
+    # 여행 상품 페이지 By 수현
     path('packages/',views.packages, name='packages'),
     
     # path('single_blog/1/',views.single_blog, name='single_blog'), 
@@ -61,6 +62,10 @@ urlpatterns = [
     #실시간 채팅 BY 영민
     path('chat/', views.chatting, name='chatting'),
     path('chat/<str:room_name>/', views.room, name='room'),
+
+
+    #동행모집글 By 수현
+    path('community/', views.community, name='community'),
 ]
 
 if settings.DEBUG:
