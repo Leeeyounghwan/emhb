@@ -72,9 +72,10 @@
                   <div class="blog_details">
                      <h2>{{ post.post_title }}</h2>
                      <ul class="blog-info-link mt-3 mb-4">
-                        <li><a href="#"><i class="fa fa-user"></i> Travel, Lifestyle</a></li>
-                        <li><a href="#"><i class="fa fa-comments"></i> 03 Comments</a></li>
+                        <li>지역 {{ post.region }}</a></li>
+                        <li>모집인원 {{ post.recuited_people }}명</li>
                      </ul>
+                     {% comment %} <ul>{{ post.start_date}} ~ {{ post.end_date }}</ul> {% endcomment %}
                      <p class="excert">
                         {{ post.post_content }}
                      </p>
@@ -149,14 +150,15 @@
                      </div>
                   </div>
                </div>
+               {% block content %}
                <div class="comments-area">
                   <h4>05 Comments</h4>
-                  {% for comment in comments %}
+                  {% for comment in post.togethercomment_set.all %}
                   <div class="comment-list">
                       <div class="single-comment justify-content-between d-flex">
                           <div class="user justify-content-between d-flex">
                               <div class="thumb">
-                                 <img src="{{ user.author.profile.url }}" alt="">
+                                 {% comment %} <img src="{{ user.author.profile.url }}" alt=""> {% endcomment %}
                               </div>
                               <div class="desc">
                                   <p class="comment">
@@ -184,12 +186,12 @@
                </div>
                <div class="comment-form">
                   <h4>Leave a Reply</h4>
-                  {% comment %} <form class="form-contact comment_form" method="post" action="{% url 'comment' %}" id="commentForm"> {% endcomment %}
+                  {% comment %} <form class="form-contact comment_form" method="post" action="{% url 'add_comment' post.id %}"> {% endcomment %}
                      {% csrf_token %}
                      <div class="row">
                          <div class="col-12">
                              <div class="form-group">
-                                 <textarea class="form-control w-100" name="text" id="comment" cols="30" rows="9" placeholder="Write Comment" required></textarea>
+                                 <textarea class="form-control w-100" name="text" id="comment" cols="30" rows="9" placeholder="댓글을 입력해주세요."></textarea>
                              </div>
                          </div>
                      </div>
@@ -199,6 +201,7 @@
                  </form>
                </div>
             </div>
+            {% endblock %}
             <div class="col-lg-4">
                <div class="blog_right_sidebar">
                   <aside class="single_sidebar_widget search_widget">
