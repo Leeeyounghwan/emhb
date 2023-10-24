@@ -31,22 +31,25 @@ class ChatConsumer(AsyncWebsocketConsumer):
         text_data_json = json.loads(text_data)
         message = text_data_json["message"]
         username = text_data_json['username']
-        print(username)
         # DB에 메시지 저장
         await self.save_message(username, message)
         # Send message to room group
         await self.channel_layer.group_send(
-            self.room_group_name, {"type": "chat.message", "message": message}
+            self.room_group_name, {"type": "chat.message",
+                                   "message": message,
+                                   "username":username
+                                   }
         )
 
     @database_sync_to_async
     def save_message(self, username, message):
-        print(username)
         user = User.objects.get(username=username)
-        print(user)
-        chat_room = GroupChat.objects.get(room_name=self.room_name)
+        
+        # 동시에 같은 행에 대한 업데이트 또는 수정 작업을 수행할 때 데이터베이스 데드락을 방지하기 위해 사용
+        chat_room = GroupChat.objects.select_for_update().get(room_name=self.room_name)
         chat_room.last_message = message
         chat_room.last_message_sender = user
+        chat_room.save()
         
         Message.objects.create(
             group_chat = chat_room,

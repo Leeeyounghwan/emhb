@@ -2,7 +2,7 @@ from django.urls import path
 from . import views 
 from django.conf import settings
 from django.conf.urls.static import static
-
+from .testviews import test
 app_name = 'trip'
 urlpatterns = [
     path('mypage/profile/', views.profile, name='profile'),
@@ -58,6 +58,9 @@ urlpatterns = [
     #실시간 채팅 BY 영민
     path('chat/', views.chatting, name='chatting'),
     path('chat/<str:room_name>/', views.room, name='room'),
+    path('test/', views.chat_test, name="chat_test"),
+    
+    path("testview/", test.test, name='ttttt'),
 ]
 
 if settings.DEBUG:
