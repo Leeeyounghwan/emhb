@@ -64,7 +64,7 @@ urlpatterns = [
 
     #동행모집글 By 수현
     path('community/', views.community, name='community'),
-
+]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
