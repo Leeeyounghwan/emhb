@@ -1,5 +1,6 @@
 import json
 
+from django.db import transaction
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 from . models import User, GroupChat, Message
@@ -42,6 +43,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
 
     @database_sync_to_async
+    @transaction.atomic
     def save_message(self, username, message):
         user = User.objects.get(username=username)
         
