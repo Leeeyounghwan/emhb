@@ -44,22 +44,6 @@
       {% include "nav.html" %}
       <!-- Header End -->
   </header>
-   <!-- slider Area Start-->
-   <div class="slider-area ">
-      <!-- Mobile Menu -->
-      <div class="single-slider slider-height2 d-flex align-items-center" data-background="{% static 'img/hero/contact_hero.jpg' %}">
-          <div class="container">
-              <div class="row">
-                  <div class="col-xl-12">
-                      <div class="hero-cap text-center">
-                          <h2>동행 글 상세 페이지</h2>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-   </div>
-   <!-- slider Area End-->
    <!--================Blog Area =================-->
    <section class="blog_area single-post-area section-padding">
       <div class="container">
@@ -74,8 +58,9 @@
                      <ul class="blog-info-link mt-3 mb-4">
                         <li>지역 {{ post.region }}</a></li>
                         <li>모집인원 {{ post.recuited_people }}명</li>
+                        <br>
+                        {{ post.start_date|date:"Y.m.d" }} ~ {{ post.end_date|date:"Y.m.d" }}
                      </ul>
-                     {% comment %} <ul>{{ post.start_date}} ~ {{ post.end_date }}</ul> {% endcomment %}
                      <p class="excert">
                         {{ post.post_content }}
                      </p>
@@ -138,27 +123,15 @@
                      </div>
                   </div>
                </div>
-               <div class="blog-author">
-                  <div class="media align-items-center">
-                     <img src="{% static 'img/blog/author.png' %}" alt="">
-                     <div class="media-body">
-                        <a href="#">
-                           <h4>Harvard milan</h4>
-                        </a>
-                        <p>Second divided from form fish beast made. Every of seas all gathered use saying you're, he
-                           our dominion twon Second divided from</p>
-                     </div>
-                  </div>
-               </div>
                {% block content %}
                <div class="comments-area">
                   <h4>05 Comments</h4>
                   {% for comment in post.togethercomment_set.all %}
                   <div class="comment-list">
-                      <div class="single-comment justify-content-between d-flex">
+                      <div class="single-comment justify-conte nt-between d-flex">
                           <div class="user justify-content-between d-flex">
                               <div class="thumb">
-                                 {% comment %} <img src="{{ user.author.profile.url }}" alt=""> {% endcomment %}
+                                 <img src="{{ user.profile_image.url }}" alt="">
                               </div>
                               <div class="desc">
                                   <p class="comment">
@@ -167,7 +140,7 @@
                                   <div class="d-flex justify-content-between">
                                       <div class="d-flex align-items-center">
                                           <h5>
-                                              <a href="#">{{ comment.author.username }}</a>
+                                              <a href="#">{{ user.nickname }}</a>
                                           </h5>
                                           <p class="date">{{ comment.created_at|date:"F j, Y P" }}</p>
                                       </div>
@@ -191,7 +164,7 @@
                      <div class="row">
                          <div class="col-12">
                              <div class="form-group">
-                                 <textarea class="form-control w-100" name="text" id="comment" cols="30" rows="9" placeholder="댓글을 입력해주세요."></textarea>
+                                 <textarea class="form-control w-100" name="text" id="comment" cols="30" placeholder="댓글을 입력해주세요."></textarea>
                              </div>
                          </div>
                      </div>
@@ -205,19 +178,16 @@
             <div class="col-lg-4">
                <div class="blog_right_sidebar">
                   <aside class="single_sidebar_widget search_widget">
-                     <form action="#">
                         <div class="form-group">
                            <div class="input-group mb-3">
-                              <input type="text" class="form-control" placeholder='Search Keyword'
-                                 onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Keyword'">
-                              <div class="input-group-append">
-                                 <button class="btns" type="button"><i class="ti-search"></i></button>
+                              <div class="profile_detail">
+                                 <img src="{{ user.profile_image.url }}" alt="">
+                                 {{ user.nickname }}
                               </div>
                            </div>
                         </div>
                         <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
-                           type="submit">Search</button>
-                     </form>
+                           >채팅하기</button>
                   </aside>
                   <aside class="single_sidebar_widget post_category_widget">
                      <h4 class="widget_title">Category</h4>
@@ -259,45 +229,6 @@
                            </a>
                         </li>
                      </ul>
-                  </aside>
-                  <aside class="single_sidebar_widget popular_post_widget">
-                     <h3 class="widget_title">Recent Post</h3>
-                     <div class="media post_item">
-                        <img src="{% static 'img/post/post_1.png' %}" alt="post">
-                        <div class="media-body">
-                           <a href="single-blog.html">
-                              <h3>From life was you fish...</h3>
-                           </a>
-                           <p>January 12, 2019</p>
-                        </div>
-                     </div>
-                     <div class="media post_item">
-                        <img src="{% static 'img/post/post_2.png' %}" alt="post">
-                        <div class="media-body">
-                           <a href="single-blog.html">
-                              <h3>The Amazing Hubble</h3>
-                           </a>
-                           <p>02 Hours ago</p>
-                        </div>
-                     </div>
-                     <div class="media post_item">
-                        <img src="{% static 'img/post/post_3.png' %}" alt="post">
-                        <div class="media-body">
-                           <a href="single-blog.html">
-                              <h3>Astronomy Or Astrology</h3>
-                           </a>
-                           <p>03 Hours ago</p>
-                        </div>
-                     </div>
-                     <div class="media post_item">
-                        <img src="{% static 'img/post/post_4.png' %}" alt="post">
-                        <div class="media-body">
-                           <a href="single-blog.html">
-                              <h3>Asteroids telescope</h3>
-                           </a>
-                           <p>01 Hours ago</p>
-                        </div>
-                     </div>
                   </aside>
                   <aside class="single_sidebar_widget tag_cloud_widget">
                      <h4 class="widget_title">Tag Clouds</h4>
@@ -362,17 +293,6 @@
                            </a>
                         </li>
                      </ul>
-                  </aside>
-                  <aside class="single_sidebar_widget newsletter_widget">
-                     <h4 class="widget_title">Newsletter</h4>
-                     <form action="#">
-                        <div class="form-group">
-                           <input type="email" class="form-control" onfocus="this.placeholder = ''"
-                              onblur="this.placeholder = 'Enter email'" placeholder='Enter email' required>
-                        </div>
-                        <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
-                           type="submit">Subscribe</button>
-                     </form>
                   </aside>
                </div>
             </div>

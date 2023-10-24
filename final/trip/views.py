@@ -323,8 +323,10 @@ def packages(request):
 def single_blog(request):
     post = get_object_or_404(TogetherPost)
     return render(request, 'single-blog.html',{'post':post})
+@login_required
 def add_comment(request, post_id):
     if request.method == 'POST':
+        user = request.user
         content = request.POST['content']
         comment = TogetherComment(post_id_id=post_id, content=content)
         comment.save()
