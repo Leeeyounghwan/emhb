@@ -6,13 +6,14 @@ from .models import TogetherPost,TogetherComment
 
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Package, User, Report,Schedule,ScheduleComment
+from .models import Package, User, Report,Schedule,ScheduleComment, GroupChat
 from django.contrib.auth.decorators import login_required
 import openai
 from django.http import JsonResponse
 import json
 from django.contrib import messages
-from .forms import UserForm
+from django.contrib.auth.models import User
+from .forms import UserForm, UserLoginForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import JsonResponse
@@ -335,6 +336,7 @@ def add_comment(request, post_id):
 
 # 로그인, 회원가입 페이지 by 문정
 
+
 def user_login(request):
     if request.method == "POST":
         username = request.POST.get('username')
@@ -348,7 +350,7 @@ def user_login(request):
     #     else:
     #         return render(request,'login.html', {'error':'username or password is incorrect'})
     # else:
-    return render(request,'login.html')
+    return render(request,'login.html', {"form":form})
     # if request.method == 'POST':
     #     form = UserCreationForm(request.form)
     #     if form.is_valid():
@@ -371,6 +373,7 @@ def register(request):
         form = UserForm(request.POST)
         if form.is_valid():
             form.save()
+            print(form)
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)  # 사용자 인증
@@ -411,10 +414,38 @@ def chatbot(request):
 def packages(request):
   return render(request, 'packages.html', {'items' : Package.objects.all()})
 
+
+
+# 실시간 채팅 뷰
 def chatting(request):
     return render(request, 'chat/index.html')
 
+@login_required
 def room(request, room_name):
+    chat_rooms = GroupChat.objects.filter(room_name=room_name)
+    if request.method == "GET":
+        if chat_rooms.exists():
+            chat_room = chat_rooms.first()
+            chat_room.members.set([request.user])
+            return render(request, 'chat/room.html', {"room_name": room_name,"username":request.user})
+        else:
+            chat_room = GroupChat.objects.create()
+            chat_room.members.set([request.user])
+            return render(request, 'chat/room.html', {"room_name": chat_room.room_name,
+                                                      "username": request.user})
+        
+    return redirect("trip:main")
+
+@login_required
+def chat_test(request):
+    chat_room_list = GroupChat.objects.filter(members=request.user)
+    context = {
+        'username':request.user,
+        'chat_room_list':chat_room_list
+    }
+    print("start")
+    print(chat_room_list)
+    return render(request, 'chat/test.html', context)
     return render(request, 'chat/room.html', {"room_name": room_name})
 
 def community(request):

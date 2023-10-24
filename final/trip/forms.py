@@ -1,7 +1,7 @@
 from django import forms
 from .models import Package
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from . models import User
 
 
 class Package(forms.ModelForm):
@@ -11,11 +11,46 @@ class Package(forms.ModelForm):
     fields = ['destination', 'title', 'price', 'image', 'content', 'start_date', 'end_date', 'created_at', 'updated_at']
 
 class UserForm(UserCreationForm):
+    nickname = forms.CharField(max_length=40, required=False)
 
-  class Meta:
-    model = User
-    fields= ('username', 'password1', 'password2')
+    class Meta:
+        model = User
+        fields= ['username', 'password1', 'password2', 'nickname']
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs['class'] = 'form-control form-control-user'
+        self.fields['username'].widget.attrs['id'] = 'username'
+        self.fields['password1'].widget.attrs['class'] = 'form-control form-control-user'
+        self.fields['password1'].widget.attrs['id'] = 'password1'
+        self.fields['password2'].widget.attrs['class'] = 'form-control form-control-user'
+        self.fields['password2'].widget.attrs['id'] = 'password2'
+        self.fields['nickname'].widget.attrs['class'] = 'form-control form-control-user'
+        self.fields['nickname'].widget.attrs['id'] = 'nickname'
 
+
+class UserLoginForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields= ['username', 'password']
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs['class'] = 'form-control form-control-user'
+        self.fields['username'].widget.attrs['id'] = 'username'
+        self.fields['password'].widget.attrs['class'] = 'form-control form-control-user'
+        self.fields['password'].widget.attrs['id'] = 'password'
+# class UserModelForm(forms.ModelForm):
+    
+#     class Meta:
+#         model = User
+#         fields = ['username', 'password', 'nickname']
+        
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         self.fields['username'].widget.attrs['class'] = 'form-control form-control-user'
+#         self.fields['username'].widget.attrs['id'] = 'username'
 
 #마이페이지 정보수정form by 준경
 class UserProfileForm(forms.Form):
