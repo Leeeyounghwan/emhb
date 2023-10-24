@@ -41,36 +41,20 @@
                             <form method = "post" class="user" action= "{% url 'trip:register'%}">
                                 {% csrf_token %}
                                 <div class="form-group">
-                                    {% comment %} <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                            placeholder="First Name">
-                                    </div> {% endcomment %}
-                                    {% comment %} <div class="col-sm-6"> {% endcomment %}
-                                        {% comment %} <input type="text" class="form-control form-control-user" name = "username" id="username"
-                                            placeholder="Id"> {% endcomment %}
-                                    {% comment %} </div> {% endcomment %}
                                     {{form.username}}
                                 </div>
                                 <div class="form-group">
-                                    {% comment %} <input type="text" class="form-control form-control-user" name = "nickname" id="nickname"
-                                        placeholder="Nickname"> {% endcomment %}
                                     {{form.nickname}}
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        {% comment %} <input type="password" class="form-control form-control-user"
-                                            name="password1" id="password1" placeholder="Password"> {% endcomment %}
                                             {{form.password1}}
                                     </div>
                                     <div class="col-sm-6">
-                                        {% comment %} <input type="password" class="form-control form-control-user"
-                                            name="password2" id="password2" placeholder="Repeat Password"> {% endcomment %}
+
                                             {{form.password2}}
                                     </div>
                                 </div>
-                                {% comment %} <a href="{% url 'trip:login' %}" class="btn btn-primary btn-user btn-block">
-                                    Register Account
-                                </a> {% endcomment %}
                                 <button type= "submit" class="btn btn-primary btn-user btn-block">
                                     Register Account
                                 </button>
