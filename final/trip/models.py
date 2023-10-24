@@ -1,12 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 # Create your models here.
 class User(AbstractUser):
-    nickname = models.CharField(max_length=40)
+    nickname = models.CharField(max_length=40, blank=True)
     profile_image = models.ImageField(upload_to="", null=True)
     review = models.IntegerField(default=0)
     number_of_written = models.IntegerField(default=0)
     is_black = models.BooleanField(default=False)
+    caution_cnt = models.IntegerField(default=0)
+    
+    # 경고 횟수 관련 내용 추가 - 2023.10.23 by 영환
+    caution_cnt = models.IntegerField(default=0)
     
     # AbstractUser 기본 필드
     # username_validator = UnicodeUsernameValidator()
@@ -31,6 +36,7 @@ class TogetherPost(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
+    
 
 class TogetherComment(models.Model):
     post_id = models.ForeignKey(TogetherPost, on_delete=models.CASCADE)
@@ -86,12 +92,12 @@ class Voucher(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
     
-#추가 모델 2023-10-18 package.html에 사용(이수현)
+# packages.html에 사용할 추가 모델 2023-10-18 by 수현
 class Package(models.Model):
     destination = models.CharField(max_length=40)
     title = models.CharField(max_length=200)
     price = models.IntegerField()
-    image = models.ImageField(upload_to='', null=True,blank=True)
+    image = models.ImageField(upload_to='package_images/', null=True,blank=True)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -101,12 +107,44 @@ class Package(models.Model):
     is_deleted = models.BooleanField(default=False)
 
 # 신고 관련 모델 추가 - 2023.10.19 by 영환
+# default관련 옵션 변경 - 2023.10.23 by 영환
 class Report(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     reported_user = models.CharField(max_length=40)
     report_reason = models.TextField(null=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    is_completed = models.BooleanField(default=False)
-    completed_at = models.DateTimeField(auto_now=False)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
+    is_completed = models.BooleanField(default=False, null=True)
+    completed_at = models.DateTimeField(auto_now=False, null=True)
     is_deleted = models.BooleanField(default=False)
+    report_reply = models.TextField(null=False, default="")
+
+#받은후기 관련 모델 추가 - 2023.10.22 by 준경
+# class Feedback(models.Model):
+#     receiver_id = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+#     sender_id = 
+
+    
+class GroupChat(models.Model):
+    room_name = models.AutoField(primary_key=True)
+    members = models.ManyToManyField(User, related_name='group_chat_rooms')
+    created_at = models.DateTimeField(auto_now_add=True)
+    last_message = models.TextField(null=True, blank=True)
+    last_message_sender = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='last_message_sender')
+
+class Message(models.Model):
+    group_chat = models.ForeignKey(GroupChat, on_delete=models.CASCADE, related_name="chat_messages")
+    sender = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+# 동행모집글 관련 모델 추가 2023-10-23 by 수현
+class Community(models.Model):
+    nickname = models.ForeignKey(User, on_delete=models.CASCADE)
+    # profileImage = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    recruitment = models.IntegerField()
+    start_date = models.DateField()
+    end_date = models.DateField()
+    

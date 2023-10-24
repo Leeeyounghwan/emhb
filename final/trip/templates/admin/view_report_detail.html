@@ -1,0 +1,192 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>EMHB 관리페이지</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="{% static 'admin_vendor/fontawesome-free/css/all.min.css'%}" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="{% static 'css/reset.css' %}" rel="stylesheet">
+    <link href="{% static 'css/sb-admin-2.css' %}" rel="stylesheet">
+    <link href="{% static 'css/fontawesome-all.min.css'%}" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        {% include 'admin/admin_sidebar.html'%}
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                {% include 'admin/admin_topbar.html'%}
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">신고 상세</h1>
+                        {% comment %} <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> {% endcomment %}
+                    </div>
+
+                    <!-- Content Row -->
+                    <div style ="display:flex; flex-directions: row; justify-content: space-around;">
+                    {% block content %}
+                    <div class="col-lg-13 mb-4">
+                        <div class="card shadow mb-4 size50">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">신고 상세내역</h6>
+                            </div>
+                            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" method="POST" action="" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="card-body-write">
+                                    
+                                    <div class="card-body-report">
+                                        <br>
+                                        <label for="title">신고자 ID
+                                            <input type="text" name="title" value="{{user_info.username}}" class="form-control bg-light border-0 small" style="width: 85%; max-width:100%;">
+                                        </label>
+                                        <label for="price">가해자 ID
+                                            <input type="text" name="price" value="{{reported_user_info.username}}" class="form-control bg-light border-0 small" style="width: 85%; max-width:100%;">
+                                        </label>
+                                        <br>
+                                        <label for="content">신고 내용
+                                        <textarea name="content" class="form-control bg-light border-0 small" style="width: 85%; max-width:100%; margin-left : 0.2rem;">{{report_detail.report_reason}}</textarea>
+                                        </label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    {% endblock %}
+                    <div class="col-lg-13 mb-4">
+                        <div class="card shadow mb-4 size50">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">답변 작성하기</h6>
+                            </div>
+                            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" method="POST" action="{%url 'trip:report_complete' report_detail.id%}" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="card-body-write">
+                                    
+                                    <div class="card-body-report">
+                                        <br>
+                                        <label for="reported_user_id">가해자 ID
+                                            <input type="text" name="reported_user_id" value="{{reported_user_info.username}}" class="form-control bg-light border-0 small" style="width: 85%; max-width:100%;">
+                                        </label>
+                                        <label for="caution_cnt">경고 횟수
+                                            <input type="text" name="caution_cnt" value="{{reported_user_info.caution_cnt}}회" class="form-control bg-light border-0 small" style="width: 85%; max-width:100%;">
+                                        </label>
+                                        <br>
+                                        <label for="reply">답변내용
+                                        <textarea name="reply" class="form-control bg-light border-0 small" style="width: 85%; max-width:100%; margin-left : 0.2rem;">{%if report_detail.report_reply %}{{report_detail.report_reply}}{% else %}{% endif %}</textarea>
+                                        </label>
+                                        <div style="display: flex; flex-direction: row; float: right;">
+                                            {%if report_detail.report_reply %}
+                                                <div style="margin-top: 1.5rem;">   
+                                                    <button class="btn btn-primary" type="submit" name="action" value="update">답변 수정하기</button>
+                                                </div>
+                                                <div style="margin-top: 1.5rem;">   
+                                                    <button class="btn btn-danger" type="submit" name="action" value="delete">답변 삭제</button>
+                                                </div>
+                                            {% else %}
+                                                <div style="margin-top: 1.5rem;">   
+                                                    <button class="btn btn-primary" type="submit" name="action" value="commit">답변만 등록</button>
+                                                </div>
+                                                <div style="margin-top: 1.5rem;">   
+                                                    <button class="btn btn-primary" type="submit" name="action" value="count_up">경고카운트 증가 및 답변등록</button>
+                                                </div>
+                                                <div style="margin-top: 1.5rem;">   
+                                                    <button class="btn btn-danger" type="submit" name="action" value="delete">답변 삭제</button>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>                    
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            {% include 'admin/admin_footer.html'%}
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">로그아웃?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">로그아웃 하시면 저장하지 않은 데이터는 삭제됩니다.<br>로그아웃 하시겠습니까?</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'admin_vendor/jquery/jquery.min.js'%} "></script>
+    <script src="{% static 'admin_vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'admin_vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+
+    <script src="{% static 'admin_vendor/modernizr-3.5.0.min.js' %}' $"></script>
+	
+	<!-- Jquery, Popper, Bootstrap -->
+	<script src="{% static 'admin_vendor/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+
+    <!-- Jquery Mobile Menu -->
+    <script src="{% static 'js/jquery.slicknav.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/write.js' %}"></script>
+
+</body>
+
+</html>
