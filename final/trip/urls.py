@@ -2,6 +2,7 @@ from django.urls import path
 from . import views 
 from django.conf import settings
 from django.conf.urls.static import static
+
 app_name = 'trip'
 urlpatterns = [
     #마이페이지 by 준경
@@ -57,8 +58,6 @@ urlpatterns = [
     path('chat/', views.chatting, name='chatting'),
     path('chat/<str:room_name>/', views.room, name='room'),
     path('test/', views.chat_test, name="chat_test"),
-    
-
 
     #동행모집글 By 수현
     path('community/', views.community, name='community'),

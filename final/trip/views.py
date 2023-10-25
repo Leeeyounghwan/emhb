@@ -347,7 +347,9 @@ def user_login(request):
         print(user)
         if user is not None:
             login(request, user)
-            return redirect('trip:main')
+
+            return redirect('trip:index')
+
     #     else:
     #         return render(request,'login.html', {'error':'username or password is incorrect'})
     # else:
@@ -366,7 +368,7 @@ def user_login(request):
 
 def user_logout(request):
     logout(request)
-    redirect('trip:main')
+    return redirect('trip:index')
 
 def register(request):
     # return render(request, 'register.html')
