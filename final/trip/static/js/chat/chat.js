@@ -65,6 +65,6 @@ function changeWindow (e) {
     back.addEventListener("click", e=>{
         chatWindow.style.display ='none';
         chatList.style.display = 'flex'
-        chatSocket.close()
+        chatSocket.close();
     })
 }
