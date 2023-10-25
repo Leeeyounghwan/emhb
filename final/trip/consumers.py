@@ -61,7 +61,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def load_previous_messages(self):
         chat_room = GroupChat.objects.get(room_name=self.room_name)
-        messages = chat_room.chat_messages.all()
+        messages = chat_room.chat_messages.all()[:30]
         return [(message.content, message.sender.username) for message in messages]   
         
         

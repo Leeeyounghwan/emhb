@@ -427,11 +427,11 @@ def room(request, room_name):
     if request.method == "GET":
         if chat_rooms.exists():
             chat_room = chat_rooms.first()
-            chat_room.members.set([request.user])
+            chat_room.members.add(request.user)
             return render(request, 'chat/room.html', {"room_name": room_name,"username":request.user})
         else:
             chat_room = GroupChat.objects.create()
-            chat_room.members.set([request.user])
+            chat_room.members.add(request.user)
             return render(request, 'chat/room.html', {"room_name": chat_room.room_name,
                                                       "username": request.user})
         
@@ -444,8 +444,6 @@ def chat_test(request):
         'username':request.user,
         'chat_room_list':chat_room_list
     }
-    print("start")
-    print(chat_room_list)
     return render(request, 'chat/test.html', context)
 
 def community(request):
