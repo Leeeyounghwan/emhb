@@ -1,7 +1,7 @@
 <div class='bottom-right fixed shadow' id="open-chat">
     채팅
 </div>
-<div class='flex-center shadow chat-modal'>
+<div class='flex-center shadow chat-modal' id='chat-list'> 
     <div class="user-list">
 
     </div>
@@ -10,7 +10,7 @@
     </div>
     <div class="block" id='chat-log'>
         {% for chat_room in chat_room_list %}
-            <div class='chatroom-box' id ='room_{{chat_room.room_name}}' .onclick='changeWindow'>
+            <div class='chatroom-box' id ='room_{{chat_room.room_name}}' onclick='changeWindow(event)'>
                 <div class='chatroom'>
                     {{chat_room.room_name}}
                 </div>
@@ -20,15 +20,20 @@
             </div>
         {% endfor %}
     </div>
-    <div class="modal-input-box">
-        <input class="modal-input" type="text">
-    </div>
 </div>
 <div id='chat-window' class="flex-center shadow chat-modal">
-
+    <div class='chat-header'>
+        <div class ='back flex-center'>
+            뒤로가기
+        </div>
+    </div>
+    <div class="rt-window">
+    </div>
+    <div class="input-box flex-center">
+        <input type='text' id='chat-input' class='input-box-style'></input>
+    </div>
 </div>
 <script>
     const username = "{{username}}";
-    
 
 </script>
