@@ -140,6 +140,7 @@ class Message(models.Model):
 class Community(models.Model):
     nickname = models.ForeignKey(User, on_delete=models.CASCADE)
     # profileImage = models.ForeignKey(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='community_images/', null=True,blank=True)
     title = models.CharField(max_length=200)
     content = models.TextField()
     recruitment = models.IntegerField()
