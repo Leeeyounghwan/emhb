@@ -140,6 +140,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 AUTH_USER_MODEL = 'trip.User'
 
+#로그인 안될시 리다이렉트
+LOGIN_URL = '/login/'
+
 # 실시간 채팅 설정
 
 ASGI_APPLICATION = "final.asgi.application"
