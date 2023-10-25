@@ -75,29 +75,25 @@
 
             
             <div class="row">
-                {%for item in items %}
+                {%for item in community_items %}
                 <div class="col-xl-4 col-lg-4 col-md-6">
                     <div class="single-place mb-30">
                         <div class="place-img">
                             {% if item.image %}
-                                <img src="{{ item.image.url }}" alt="{{ item.destination }}">
+                                <img src="{{ item.image.url }}" alt="{{ item.title }}">
                             {% endif %}
                         </div>
 
                         <div class="place-cap">
                             <div class="place-cap-top">
-                                <span><i class="fas fa-star"></i><span>8.0superb</span></span>
                                 <h3><a href="#">{{ item.title }}</a></h3>
                                 <p class="dolor">{{ item.content }}</p>
-                                <p class="dolor">{{ item.price|intcomma }}원<span>/ 인원 당</span></p>
+                                <p class="dolor">{{ item.recruitment }}<span>명 모집중</span></p>
                             </div>
 
                             <div class="place-cap-bottom">
                                 <ul>
-                                    <li><i class="far fa-clock">{{ item.start_date }}</i></li>
-                                    <!-- 날짜계산기를 이용하기 위해 숨김값으로 가져옴 -->
-                                    <li><i class="far fa-clock" style="display:none">{{ item.end_date }}</i></li>
-                                    <li><i class="fas fa-map-marker-alt"></i>{{ item.destination }}</li>
+                                    <li><i class="far fa-clock">{{ item.start_date }}<span> ~ </span>{{ item.end_date }}</i></li>
                                 </ul>
                             </div>
                         </div>
