@@ -452,3 +452,6 @@ def chat_test(request):
 
 def community(request):
     return render(request, 'community.html', {"community_items": Community.objects.all()})
+
+def community_write(request):
+    return render(request, 'community.html')
