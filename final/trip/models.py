@@ -3,11 +3,12 @@ from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 # Create your models here.
 class User(AbstractUser):
-    nickname = models.CharField(max_length=40)
+    nickname = models.CharField(max_length=40, blank=True)
     profile_image = models.ImageField(upload_to="", null=True)
     review = models.IntegerField(default=0)
     number_of_written = models.IntegerField(default=0)
     is_black = models.BooleanField(default=False)
+    caution_cnt = models.IntegerField(default=0)
     
     # 경고 횟수 관련 내용 추가 - 2023.10.23 by 영환
     caution_cnt = models.IntegerField(default=0)
@@ -35,6 +36,7 @@ class TogetherPost(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
+    
 
 class TogetherComment(models.Model):
     post_id = models.ForeignKey(TogetherPost, on_delete=models.CASCADE)
@@ -124,14 +126,14 @@ class Report(models.Model):
 
     
 class GroupChat(models.Model):
-    name = models.CharField(max_length=255)
+    room_name = models.AutoField(primary_key=True)
     members = models.ManyToManyField(User, related_name='group_chat_rooms')
     created_at = models.DateTimeField(auto_now_add=True)
     last_message = models.TextField(null=True, blank=True)
     last_message_sender = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='last_message_sender')
 
 class Message(models.Model):
-    group_chat = models.ForeignKey(GroupChat, on_delete=models.CASCADE)
+    group_chat = models.ForeignKey(GroupChat, on_delete=models.CASCADE, related_name="chat_messages")
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

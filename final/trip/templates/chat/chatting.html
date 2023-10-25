@@ -1,0 +1,34 @@
+<div class='bottom-right fixed shadow' id="open-chat">
+    채팅
+</div>
+<div class='flex-center shadow chat-modal'>
+    <div class="user-list">
+
+    </div>
+    <div class="flex-center modal-header">
+        <h3>그룹대화</h2>
+    </div>
+    <div class="block" id='chat-log'>
+        {% for chat_room in chat_room_list %}
+            <div class='chatroom-box' id ='room_{{chat_room.room_name}}' .onclick='changeWindow'>
+                <div class='chatroom'>
+                    {{chat_room.room_name}}
+                </div>
+                <div class="last-message">
+                    {{chat_room.last_message}}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="modal-input-box">
+        <input class="modal-input" type="text">
+    </div>
+</div>
+<div id='chat-window' class="flex-center shadow chat-modal">
+
+</div>
+<script>
+    const username = "{{username}}";
+    
+
+</script>

@@ -13,7 +13,7 @@ from django.http import JsonResponse
 import json
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .forms import UserForm
+from .forms import UserForm, UserLoginForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import JsonResponse
@@ -58,8 +58,8 @@ def profile(request): #내 정보 수정
 def mytopics(request):#내가 쓴 글 보기
   return render(request, 'mypage/mytopics.html', {'posts' : TogetherPost.objects.all()})
 
-def myreviews(request): #내가받은 후기 보기
-    return render(request,'mypage/myreviews.html')
+def myfeadback(request): #내가받은 후기 보기
+    return render(request,'mypage/myfeadback.html')
 
 def like_schedule(request): #찜한 일정 리스트
     return render(request,'mypage/like_schedule.html',{'schedules' : Schedule.objects.all()})
@@ -181,7 +181,7 @@ def deleted_product(request):
     # else:
     #     return redirect("trip:main")
 
-def delete_cancel(request, package_id):
+def delete_cancel(package_id):
 
     package = get_object_or_404(Package, id=package_id)
     print(package.is_deleted)
@@ -203,40 +203,105 @@ def return_management(request):
 
 def report_detail(request):
 
-    if admin_check(request) == True :
-        reports = Report.objects.all()
-        context = {
-            "reports" : reports
-        }
+    reports = Report.objects.all().order_by('is_completed', 'created_at', 'updated_at')
+    
+    context = {
+        "reports" : reports
+    }
 
-        return render(request, "admin/report_detail.html", context)
-    else:
-        return redirect("trip:main")
+    return render(request, "admin/report_detail.html", context)
 
-def user_management(request):
+    # if admin_check(request) == True :
+    #     reports = Report.objects.all()
+    #     context = {
+    #         "reports" : reports
+    #     }
 
-    if admin_check(request) == True :
-        users = User.objects.all()
-        context = {
-            "users" : users
-        }
+    #     return render(request, "admin/report_detail.html", context)
+    # else:
+    #     return redirect("trip:main")
 
-        return render(request, "admin/user_management.html", context)
-    else:
-        return redirect("trip:main")
+def view_report_detail(request, id):
+    report_detail = Report.objects.filter(id=id)
+    # 신고한 유저 정보
+    user_info = get_object_or_404(User, id=report_detail[0].user_id_id)
+    # 신고당한 유저 정보
+    reported_user_info = get_object_or_404(User, username=report_detail[0].reported_user)
+    context = {
+        "report_detail" : report_detail[0],
+        "user_info" : user_info,
+        "reported_user_info" : reported_user_info
+    }
+    return render(request, "admin/view_report_detail.html", context)
+
+def report_complete(request, id):
+    report = get_object_or_404(Report, id=id)
+    reported_user_info = get_object_or_404(User, username=report.reported_user)
+
+    if request.method == "POST":
+        action = request.POST.get('action')
+        if action == 'commit':
+            report.report_reply = request.POST['reply']
+            report.is_completed = True
+            report.completed_at = timezone.now()
+            report.save()
+        
+        elif action == 'count_up':
+            report.report_reply = request.POST['reply']
+            report.is_completed = True
+            report.completed_at = timezone.now()
+            report.save()
+            if reported_user_info.caution_cnt >= 9 :
+                reported_user_info.is_black = True
+            else:
+                reported_user_info.caution_cnt += 1
+            reported_user_info.save()
+        
+        elif action == 'update':
+            report.report_reply = request.POST['reply']
+            report.updated_at = timezone.now()
+            report.save()
+
+        elif action == 'delete':
+            report.report_reply = ""
+            report.is_completed = False
+            report.updated_at = timezone.now()
+            report.save()
+
+    reports = Report.objects.all().order_by('is_completed', 'created_at', 'updated_at')
+    
+    context = {
+        "reports" : reports
+    }
+    return render(request, "admin/report_detail.html", context)
+
 
 def blacklist_management(request):
 
-    if admin_check(request) == True :
-        blacklist = User.objects.filter(is_black=True)
-        context = {
-            "blacklist" : blacklist
-        }
+    blacklists = User.objects.filter(is_black=True)
+    context = {
+        "blacklists" : blacklists
+    }
+    return render(request, "admin/blacklist_management.html", context)
+    # if admin_check(request) == True :
+    #     blacklist = User.objects.filter(is_black=True)
+    #     context = {
+    #         "blacklist" : blacklist
+    #     }
 
-        return render(request, "admin/blacklist_management.html", context)
-    else:
-        return redirect("trip:main")
+    #     return render(request, "admin/blacklist_management.html", context)
+    # else:
+    #     return redirect("trip:main")
 
+def black_cancel(request, blacklist_id):
+    # print(blacklist_id)
+    blacklist = get_object_or_404(User, id=blacklist_id)
+    print(blacklist.is_black)
+
+    blacklist.is_black = False
+    blacklist.save()
+
+    return redirect("trip:blacklist_management")
 
 # 관리자페이지 종료
 
@@ -259,40 +324,35 @@ def main(request):
 def single_blog(request):
     post = get_object_or_404(TogetherPost)
     return render(request, 'single-blog.html',{'post':post})
-
-# def together_comment(request, post_id):
-#     post = TogetherPost.objects.get(pk=post_id)
-
-#     if request.method == 'POST':
-#         form = CommentForm(request.POST)
-#         if form.is_valid():
-#             comment = form.save(commit=False)
-#             comment.user = request.user
-#             comment.save()
-#             return redirect('view_post', post_id=post_id)
-#     else:
-#         form = CommentForm()
-
-#     return render(request, 'single-blog.html', {'form': form})
+@login_required
+def add_comment(request, post_id):
+    if request.method == 'POST':
+        user = request.user
+        content = request.POST['content']
+        comment = TogetherComment(post_id_id=post_id, content=content)
+        comment.save()
+        return redirect('single-blog.html', post_id=post_id)
+    return redirect('single-blog.html')
 
 #by 건영 종료
 
 # 로그인, 회원가입 페이지 by 문정
 
-from django.contrib.auth.forms import UserCreationForm
+
 def user_login(request):
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
+        print(user)
         if user is not None:
             login(request, user)
-            # return redirect('trip:main')
+            return redirect('trip:main')
             return render(request,'register.html')
     #     else:
     #         return render(request,'login.html', {'error':'username or password is incorrect'})
     # else:
-    return render(request,'login.html')
+    return render(request,'login.html', {"form":form})
     # if request.method == 'POST':
     #     form = UserCreationForm(request.form)
     #     if form.is_valid():
@@ -315,6 +375,7 @@ def register(request):
         form = UserForm(request.POST)
         if form.is_valid():
             form.save()
+            print(form)
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)  # 사용자 인증
@@ -355,10 +416,38 @@ def chatbot(request):
 def packages(request):
   return render(request, 'packages.html', {'items' : Package.objects.all()})
 
+
+
+# 실시간 채팅 뷰
 def chatting(request):
     return render(request, 'chat/index.html')
 
+@login_required
 def room(request, room_name):
+    chat_rooms = GroupChat.objects.filter(room_name=room_name)
+    if request.method == "GET":
+        if chat_rooms.exists():
+            chat_room = chat_rooms.first()
+            chat_room.members.set([request.user])
+            return render(request, 'chat/room.html', {"room_name": room_name,"username":request.user})
+        else:
+            chat_room = GroupChat.objects.create()
+            chat_room.members.set([request.user])
+            return render(request, 'chat/room.html', {"room_name": chat_room.room_name,
+                                                      "username": request.user})
+        
+    return redirect("trip:main")
+
+@login_required
+def chat_test(request):
+    chat_room_list = GroupChat.objects.filter(members=request.user)
+    context = {
+        'username':request.user,
+        'chat_room_list':chat_room_list
+    }
+    print("start")
+    print(chat_room_list)
+    return render(request, 'chat/test.html', context)
     return render(request, 'chat/room.html', {"room_name": room_name})
 
 def community(request):
