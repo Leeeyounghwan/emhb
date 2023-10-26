@@ -312,6 +312,7 @@ def index(request):
 def about(request):
     return render(request, 'about.html')
 def blog(request):
+    post = get_object_or_404(TogetherPost)
     return render(request, 'blog.html')
 def contact(request):
     return render(request, 'contact.html')
