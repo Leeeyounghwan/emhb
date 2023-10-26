@@ -55,6 +55,12 @@
                                         </ul>
                                     </li>
                                     <li><a href="{% url 'trip:contact' %}">Contact Us</a></li>
+                                    <!-- 로그인/로그아웃 버튼 -->
+                                    {% if user.is_authenticated %}
+                                        <li><a href="{% url 'trip:logout' %}">Logout</a></li>
+                                    {% else %}
+                                        <li><a href="{% url 'trip:login' %}">Login</a></li>
+                                    {% endif %}
                                 </ul>
                             </nav>
                         </div>

@@ -1,30 +1,70 @@
+document.addEventListener("DOMContentLoaded", function(){
+
+})
+
+
 function changeWindow (e) {
     const chatWindow = document.getElementById("chat-window");
-    chatWindow.style.display = 'block';
-    const html = `
-        <div class="rtwindow">
-        </div>
-        <div class="input-box">
-            <input type='text>
-        </div>
-    `;
-    chatWindow.innerHTML += html;
+    const chatList = document.getElementById('chat-list');
+    const input = document.getElementById('chat-input');
+    const rtwindow = document.getElementsByClassName("rt-window")[0];
+    const back = document.getElementsByClassName("back")[0];
+    chatList.style.display = 'none';
+    chatWindow.style.display = 'flex';
 
-    const roomName = e.id.split("_")[1];
-    console.log(roomName);
+    rtwindow.innerHTML = '';
+    const roomName = e.currentTarget.id.split('_')[1];
 
     const chatSocket = new WebSocket('ws://' + window.location.host + '/ws/chat/' + roomName + '/')
 
-    chatSocket.onmessage(e=>{
+    const scroll = function (div){
+        div.scrollTop = div.scrollHeight;
+    }
+    chatSocket.onmessage = (e=>{
         const data = JSON.parse(e.data);
-        const messageHtml = `
-            <div class='message-box'>
+        if (data.username != username){
+            let messageHtml = `
+            <div class='other-message-box'>
+                <div class='user-name'>
+                    ${data.username}
+                </div>
                 <div class='other-message'>
-                    ${data}
+                    ${data.message}
                 </div>
             </div>
-        `;
-        const rtwindow = document.getElementsByClassName("rtwindow");
-        rtwindow.innerHTML += messageHtml;
+            `;
+            rtwindow.innerHTML += messageHtml;
+        }
+        else{
+            let sendHtml = `
+            <div class='your-message-box'>
+                <div class='user-name'>
+                    ${data.username}
+                </div>
+                <div class='your-message'>
+                    ${data.message}
+                </div>
+            </div>
+            `;
+            rtwindow.innerHTML += sendHtml;
+        }
+        scroll(rtwindow);
+    })
+
+    input.focus()
+    input.onkeyup = function(e){
+        if (e.key === 'Enter'){
+            let mydata = input.value;
+            chatSocket.send(JSON.stringify({
+                'username': username,
+                'message': mydata
+            }));
+            input.value = '';
+        }
+    }
+    back.addEventListener("click", e=>{
+        chatWindow.style.display ='none';
+        chatList.style.display = 'flex'
+        chatSocket.close();
     })
 }
