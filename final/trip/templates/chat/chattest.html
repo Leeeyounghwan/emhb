@@ -1,0 +1,56 @@
+<div id="chatbox">
+    <div id="friendslist">
+        <div id="topmenu">
+            <span class="friends"></span>
+              <span class="chats"></span>
+              <span class="history"></span>
+          </div>
+          
+          <div id="friends">
+            {% for chat_room in chat_room_list %}
+                <div class="friend" id="room_{{chat_room.room_name}}" >
+                    <img src=""/>
+                    <p>
+                        <strong>room_{{chat_room.room_name}}</strong>
+                        <span>{{chat_room.last_message}}</span>
+                    </p>
+                    <p class='lastmessage'>{{chat_room.last_message}}</p>
+                    <div class="status available">
+                    </div>
+                </div>
+            {% endfor %}
+              
+              <div id="search">
+                <input type="text" id="searchfield" value="Search contacts..." />
+              </div>
+              
+          </div>                
+          
+      </div>  
+      
+      <div id="chatview" class="p1">      
+          <div id="profile">
+  
+              <div id="close">
+                  <div class="cy"></div>
+                  <div class="cx"></div>
+              </div>
+              
+              <p>Miro Badev</p>
+              <span>miro@badev@gmail.com</span>
+          </div>
+          <div id="chat-messages">
+                       
+          </div>
+        
+          <div id="sendmessage">
+                <input type="text" value="Send message..." />
+                <button id="send"></button>
+          </div>
+      
+      </div>        
+  </div>
+  <script>
+    const username = "{{username}}";
+  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

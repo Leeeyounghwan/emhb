@@ -6,7 +6,7 @@ from .models import TogetherPost,TogetherComment
 
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Package, User, Report,Schedule,ScheduleComment, Community
+from .models import Package, User, Report,Schedule,ScheduleComment, Community, GroupChat
 from django.contrib.auth.decorators import login_required
 import openai
 from django.http import JsonResponse
