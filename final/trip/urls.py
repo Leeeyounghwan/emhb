@@ -61,6 +61,9 @@ urlpatterns = [
 
     #동행모집글 By 수현
     path('community/', views.community, name='community'),
+
+    path('community_write/', views.community_write, name='community_write'),
+
 ]
 
 if settings.DEBUG:
