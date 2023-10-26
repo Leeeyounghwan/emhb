@@ -452,4 +452,23 @@ def community(request):
     return render(request, 'community.html', {"community_items": Community.objects.all()})
 
 def community_write(request):
-    return render(request, 'community.html')
+    return render(request, 'community_write.html')
+
+def set_write(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        start_date = request.POST.get('start_date')
+        end_date = request.POST.get('end_date')
+        messages = request.POST.get('messages')
+
+        detail = {
+            "title" : title,
+            "start_date" : start_date,
+            "end_date" : end_date,
+            "messages" : messages
+        }
+
+        
+
+
+        return render(request, 'community_write.html', {"detail": detail})
