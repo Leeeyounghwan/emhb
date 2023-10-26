@@ -1,5 +1,5 @@
 from django import forms
-from .models import Package
+from .models import Package, Community
 from django.contrib.auth.forms import UserCreationForm
 from . models import User
 
@@ -9,6 +9,12 @@ class Package(forms.ModelForm):
     model = Package
     exclude = ['created_at','updated_at']
     fields = ['destination', 'title', 'price', 'image', 'content', 'start_date', 'end_date', 'created_at', 'updated_at']
+
+class Package(forms.ModelForm):
+  class Meta:
+    model = Community
+    exclude = ['created_at','updated_at']
+    fields = ['community_destination', 'nickname', 'title', 'image', 'content', 'start_date', 'end_date', 'recruitment']
 
 class UserForm(UserCreationForm):
     nickname = forms.CharField(max_length=40, required=False)

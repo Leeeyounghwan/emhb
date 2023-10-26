@@ -6,7 +6,7 @@ from .models import TogetherPost,TogetherComment
 
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Package, User, Report,Schedule,ScheduleComment, GroupChat
+from .models import Package, User, Report,Schedule,ScheduleComment, Community
 from django.contrib.auth.decorators import login_required
 import openai
 from django.http import JsonResponse
@@ -319,8 +319,8 @@ def elements(request):
     return render(request, 'elements.html')
 def main(request):
     return render(request, 'main.html')
-def packages(request):
-    return render(request, 'packages.html')
+
+
 def single_blog(request):
     post = get_object_or_404(TogetherPost)
     return render(request, 'single-blog.html',{'post':post})
@@ -449,4 +449,7 @@ def chat_test(request):
     return render(request, 'chat/test.html', context)
 
 def community(request):
-    render(request, 'community.html')
+    return render(request, 'community.html', {"community_items": Community.objects.all()})
+
+def community_write(request):
+    return render(request, 'community.html')

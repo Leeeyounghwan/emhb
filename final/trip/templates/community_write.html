@@ -75,60 +75,13 @@
                 </div>
             </div>
 
+            <div>MAP TEST</div>
+	          <div id="map" style="width:500px;height:400px;"></div>
+
             
-            <div class="row">
-                {%for item in community_items %}
-                <div class="col-xl-4 col-lg-4 col-md-6">
-                    <div class="single-place mb-30">
-                        <div class="place-img">
-                          {% if item.image %}
-                          <img src="{{ item.image.url }}" alt="{{ item.title }}">
-                          {% endif %}
-                        </div>
-
-                        <div class="place-cap">
-                            <div class="place-cap-top">
-                                <h3><a href="#">{{ item.title }}</a></h3>
-                                <p class="dolor">{{ item.content }}</p>
-                                <p class="dolor">{{ item.recruitment }}<span>명 모집중 / {{ item.community_destination }}</span></p>
-                            </div>
-
-                            <div class="place-cap-bottom">
-                                <ul>
-                                  <li><span>여행기간</span></li>
-                                    <li><i class="far fa-clock"> <span> </span> {{ item.start_date }}<span> ~ </span>{{ item.end_date }}</i></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    <!-- Favourite Places End -->
-
-      <!-- Pagination-area Start -->
-      <div class="pagination-area pb-100 text-center">
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-12">
-              <div class="single-wrap d-flex justify-content-center">
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination justify-content-start">
-                    <li class="page-item"><a class="page-link" href="#"><span class="flaticon-arrow roted left-arrow"></span></a></li>
-                    <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                    <li class="page-item"><a class="page-link" href="#">02</a></li>
-                    <li class="page-item"><a class="page-link" href="#">03</a></li>
-                    <li class="page-item"><a class="page-link" href="#"><span class="flaticon-arrow right-arrow"></span></a></li>
-                  </ul>
-                </nav>
-              </div>
-            </div>
-          </div>
+            
         </div>
       </div>
-      <!-- Pagination-area End -->
     </main>
 
     <footer>
@@ -196,7 +149,7 @@
               <div class="row pt-padding">
                <div class="col-xl-7 col-lg-7 col-md-7">
                   <div class="footer-copy-right">
-                       <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                       <p style="color:black;"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
                   </div>
