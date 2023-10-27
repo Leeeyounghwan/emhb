@@ -12,7 +12,6 @@ import openai
 from django.http import JsonResponse
 import json
 from django.contrib import messages
-from django.contrib.auth.models import User
 from .forms import UserForm, UserLoginForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -415,7 +414,11 @@ def chatapi(request, question):
 def chatbot(request):
     return render(request, 'test.html')
 def packages(request):
-  return render(request, 'packages.html', {'items' : Package.objects.all()})
+  items =  Package.objects.filter(is_deleted=False)
+  context = {
+      'items' : items
+  }
+  return render(request, 'packages.html', context)
 
 
 
