@@ -2,7 +2,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{%url 'trip:main'%}">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{%url 'trip:index'%}">
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa fa-suitcase"></i>
         </div>
@@ -16,7 +16,7 @@
     <li class="nav-item active">
         <a class="nav-link" href="{%url 'trip:admin_page'%}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>요약 보기</span></a>
+            <span>페이지 바로가기</span></a>
     </li>
 
     <!-- Divider -->
@@ -26,6 +26,13 @@
     <div class="sidebar-heading">
         Management
     </div>
+
+    <!-- Nav Item - Charts -->
+    <li class="nav-item">
+        <a class="nav-link" href="{%url 'trip:admin_management'%}">
+            <i class="fas fa fa-user"></i>
+            <span>관리자 설정</span></a>
+    </li>
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">

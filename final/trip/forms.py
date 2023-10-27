@@ -61,6 +61,17 @@ class UserLoginForm(AuthenticationForm):
 
 #마이페이지 정보수정form by 준경
 class UserProfileForm(forms.Form):
+    nickname = forms.CharField(
+        widget=forms.TextInput(
+           attrs={
+            'placeholder': '새로운 닉네임를 입력해주세요', 
+            'class': 'form-control bg-light border-0 small',
+            'style':  'width: 80%; max-width: 100%;'
+           }
+        ),
+        required=False
+    )
+
     password = forms.CharField(
         widget=forms.PasswordInput(
            attrs={
@@ -83,5 +94,6 @@ class UserProfileForm(forms.Form):
         required=False
     )
 
+    nickname.label = ""
     password.label = ""
     password_confirm.label = ""
