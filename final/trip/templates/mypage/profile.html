@@ -142,10 +142,13 @@
                   </div>
                   <div class="card-body">
                     {% comment %} <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" method="POST" action="" enctype="multipart/form-data"> {% endcomment %}
-                    <form  method="POST" action="" enctype="multipart/form-data">
+                    <form  method="POST" action="{% url 'trip:profile' %}" enctype="multipart/form-data">
                       {% csrf_token %}
                       아이디 : <br>
-                      <input type="text" name="username" value="{{reuqest.user.username}}" class="form-control bg-light border-0 small" style="width: 80%; max-width:100%;">
+                      <input type="text" name="username" value="{{request.user.username}}" class="form-control bg-light border-0 small" style="width: 80%; max-width:100%;" readonly>
+                      <br>
+                      새로운 닉네임 :
+                      {{ form.nickname }}
                       <br>
                       새로운 비밀번호 :
                       {{ form.password }}
@@ -175,45 +178,6 @@
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
     </a>
-
-    <!-- Logout Modal-->
-    <div
-      class="modal fade"
-      id="logoutModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-            <button
-              class="close"
-              type="button"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            Select "Logout" below if you are ready to end your current session.
-          </div>
-          <div class="modal-footer">
-            <button
-              class="btn btn-secondary"
-              type="button"
-              data-dismiss="modal"
-            >
-              Cancel
-            </button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="{% static 'admin_vendor/jquery/jquery.min.js' %}"></script>
