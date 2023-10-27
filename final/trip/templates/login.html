@@ -41,7 +41,11 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Login</h1>
                                     </div>
-                                    
+                                    {% if error %}
+                                    <script>
+                                        alert("{{error}}");
+                                    </script>
+                                    {% endif %}
                                     <form class="user" method= "post"> 
                                         {% csrf_token %}
                                         <div class="form-group">
@@ -71,6 +75,11 @@
                                             <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
                                         </a>
                                     </form>
+                                    {% if form.non_field_errors %}
+                                    <script>
+                                        alert("{{ form.non_field_errors|join:' ' }}");
+                                    </script>
+                                    {% endif %}
                                     <hr>
                                     {% comment %} <div class="text-center">
                                         <a class="small" href="forgot-password.html">비밀번호 찾기</a>
