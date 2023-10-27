@@ -74,50 +74,51 @@
      <!-- slider Area End-->
     <!--================Blog Area =================-->
     <section class="blog_area section-padding" style="display: flex; flex-wrap: nowrap; overflow-x: auto;">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 mb-5 mb-lg-0">
-                    <div class="blog_left_sidebar" style="max-width: 50%;">
-                        <article class="blog_item">
+        <div class="container" style="justify-content:center; align-items:center;">
+            <div style="max-width: 1500px;">
+                <div>
+                    {% for post in posts %}
+                        <article class="blog_item" style="max-width: 20%;">
                             <div class="blog_item_img">
-                                <img class="card-img rounded-0" src="{% static 'img/blog_images.jpeg' %}" alt="">
-                            </div>
-                            
+                                <img class="card-img rounded-0" src="{{ post.post_image.url }}" alt="posts.post_title">
+                            </div> 
+
                             <div class="blog_details" style="margin: 0 auto;">
                                 <a class="d-inline-block" href="{% url 'trip:single_blog' %}">
                                     <h2 style="font-size: 18px;">{{ post.post_title }}</h2>
                                 </a>
-                                <p style="font-size: 14px;">오사카</p>
+                                <p style="font-size: 14px;">{{ post.post_content|truncatechars:15 }}</p>
                                 <ul class="blog-info-link">
-                                    <li style="font-size: 14px;"><a href="#"><i class="fa fa-user"></i> {{ user.nickname}}</a></li>
-                                    <li style="font-size: 14px;"><a href="#"><i class="fa fa-comments"></i> 03 Comments</a></li>
+                                    <li style="font-size: 14px;"><a href="#"><i class="fa fa-user"></i> {{ post.user_id }}</a></li>
+                                    <li style="font-size: 14px;"><a href="#"><i class="fa fa-comments"></i> {{ post.user_id }}</a></li>
                                 </ul>
                             </div>
                         </article>
-
-                        <nav class="blog-pagination justify-content-center d-flex">
-                            <ul class="pagination">
-                                <li class="page-item">
-                                    <a href="#" class="page-link" aria-label="Previous">
-                                        <i class="ti-angle-left"></i>
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link">1</a>
-                                </li>
-                                <li class="page-item active">
-                                    <a href="#" class="page-link">2</a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link" aria-label="Next">
-                                        <i class="ti-angle-right"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
+                    {% endfor %}
                 </div>
-
+            </div>
+        </div>
+    </section>
+    <nav class="blog-pagination justify-content-center d-flex">
+        <ul class="pagination">
+            <li class="page-item">
+                <a href="#" class="page-link" aria-label="Previous">
+                    <i class="ti-angle-left"></i>
+                </a>
+            </li>
+            <li class="page-item">
+                <a href="#" class="page-link">1</a>
+            </li>
+            <li class="page-item active">
+                <a href="#" class="page-link">2</a>
+            </li>
+            <li class="page-item">
+                <a href="#" class="page-link" aria-label="Next">
+                    <i class="ti-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
     <!--================Blog Area =================-->
     <footer>
         <!-- Footer Start-->

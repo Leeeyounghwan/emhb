@@ -1,12 +1,10 @@
 from django.shortcuts import render, redirect
 from django.shortcuts import render, get_object_or_404
-from .models import TogetherPost,TogetherComment
-
 # from .forms import CommentForm
 
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Package, User, Report,Schedule,ScheduleComment, Community
+from .models import Package, User, Report,Schedule,ScheduleComment, Community, TogetherPost,TogetherComment
 from django.contrib.auth.decorators import login_required
 import openai
 from django.http import JsonResponse
@@ -312,21 +310,19 @@ def index(request):
 def about(request):
     return render(request, 'about.html')
 def blog(request):
-    post = get_object_or_404(TogetherPost)
-    return render(request, 'blog.html')
+    posts = TogetherPost.objects.all()
+    return render(request, 'blog.html',{'posts':posts})
 def contact(request):
     return render(request, 'contact.html')
 def elements(request):
     return render(request, 'elements.html')
 def main(request):
     return render(request, 'main.html')
-
-
-def single_blog(request):
-    post = get_object_or_404(TogetherPost)
-    return render(request, 'single-blog.html',{'post':post})
+def single_blog(request, id):   
+    posts = TogetherPost.objects.get(id=id)
+    return render(request, 'single-blog.html',{'posts':posts})
 @login_required
-def add_comment(request, post_id):
+def add_comment(request, id):
     if request.method == 'POST':
         user = request.user
         content = request.POST['content']
