@@ -23,7 +23,9 @@ from django.views.generic import RedirectView
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("trip.urls")),
+    path('board/', include('board.urls')),
     path('favicon.ico', RedirectView.as_view(url='/static/trip_app/favicon.ico', permanent=True)),
+    path('summernote/', include('django_summernote.urls')),
 ] 
 
 if settings.DEBUG:

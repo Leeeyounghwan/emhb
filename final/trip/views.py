@@ -353,7 +353,7 @@ def user_login(request):
                 login(request, user)
                 return redirect('trip:index')
             else:
-                return render(request, 'login.html', {'form': form, 'error': 'Invalid username or password'})
+                return render(request, 'login.html', {'form': form, 'error': '아이디 또는 비밀번호가 틀렸습니다.'})
         else:
             print("error")
             print(form.errors)
