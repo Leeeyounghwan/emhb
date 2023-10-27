@@ -1,21 +1,17 @@
-from django.shortcuts import render, redirect
-from django.shortcuts import render, get_object_or_404
-# from .forms import CommentForm
-
-from django.utils import timezone
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Package, User, Report,Schedule,ScheduleComment, Community, TogetherPost,TogetherComment
-from django.contrib.auth.decorators import login_required
-import openai
-from django.http import JsonResponse
-import json
-from django.contrib import messages
+from .models import Package, User, Report, Schedule, ScheduleComment, Community, TogetherPost,TogetherComment
 from .forms import UserForm, UserLoginForm
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import AuthenticationForm
-from django.http import JsonResponse
 from .forms import UserProfileForm
-from django.contrib.auth import update_session_auth_hash
+
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
+from django.shortcuts import render, redirect, get_object_or_404
+from django.utils import timezone
+from django.http import JsonResponse
+
+import openai
+import json
 
 # Create your views here.
 
