@@ -12,7 +12,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>내 작성글 보기</title>
 
     <!-- Custom fonts for this template-->
     <link
@@ -108,392 +108,19 @@
   </head>
 
   <body id="page-top">
-    <header>
-      <!-- Header Start -->
-      <div class="header-area">
-        <div class="main-header">
-          <div class="header-bottom header-sticky">
-            <div class="container">
-              <div class="row align-items-center">
-                <!-- Logo -->
-                <div class="col-xl-2 col-lg-2 col-md-1">
-                  <div class="logo">
-                    <a href="index.html"
-                      ><img src="{% static 'img_m/logo/logo.png' %}" alt=""
-                    /></a>
-                  </div>
-                </div>
-                <div class="col-xl-10 col-lg-10 col-md-10">
-                  <!-- Main-menu -->
-                  <div class="main-menu f-right d-none d-lg-block">
-                    <nav>
-                      <ul id="navigation">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About US</a></li>
-                        <li><a href="packages.html">Package</a></li>
-                        <li>
-                          <a href="blog.html">Blog</a>
-                          <ul class="submenu">
-                            <li><a href="blog.html">Blog</a></li>
-                            <li><a href="single-blog.html">Blog Details</a></li>
-                          </ul>
-                        </li>
-                        <li>
-                          <a href="#">Pages</a>
-                          <ul class="submenu">
-                            <li><a href="elements.html">Element</a></li>
-                          </ul>
-                        </li>
-                        <li><a href="contact.html">Contact Us</a></li>
-                        <li><a href>LOGOUT</a></li>
-                      </ul>
-                    </nav>
-                  </div>
-                </div>
-                <!-- Mobile Menu -->
-                <div class="col-12">
-                  <div class="mobile_menu d-block d-lg-none"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Header End -->
-    </header>
+    {% include 'mypage/my_header.html'%}
+    
     <!-- Page Wrapper -->
     <div id="wrapper">
-      <!-- Sidebar -->
-      <ul
-        class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
-        id="accordionSidebar"
-      >
-        <!-- Sidebar - Brand -->
-        <a
-          class="sidebar-brand d-flex align-items-center justify-content-center"
-          href="index.html"
-          style="background-color: #ffc107"
-        >
-          <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
-          </div>
-          <div class="sidebar-brand-text mx-3">Go trip</div>
-        </a>
 
-        <!-- Divider -->
-        <hr class="sidebar-divider my-0" />
+      {% include 'mypage/my_sidebar.html'%}
 
-        <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
-          <a class="nav-link" href="{% url 'trip:profile' %}">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>내 정보 수정</span></a
-          >
-          <a class="nav-link" href="{% url 'trip:mytopics' %}">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>내 작성글 보기</span></a
-          >
-          <a class="nav-link" href="{% url 'trip:myfeadback' %}">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>내가 받은 동행 후기</span></a
-          >
-          <a class="nav-link" href="{% url 'trip:like_schedule' %}">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>찜한 일정 리스트</span></a
-          >
-          <a class="nav-link" href="{% url 'trip:chatting_room' %}">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>채팅방</span></a
-          >
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block" />
-
-        <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline">
-          <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
-      </ul>
-      <!-- End of Sidebar -->
 
       <!-- Content Wrapper -->
       <div id="content-wrapper" class="d-flex flex-column">
         <!-- Main Content -->
         <div id="content">
-          <!-- Topbar -->
-          <nav
-            class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
-          >
-            <!-- Sidebar Toggle (Topbar) -->
-            <button
-              id="sidebarToggleTop"
-              class="btn btn-link d-md-none rounded-circle mr-3"
-            >
-              <i class="fa fa-bars"></i>
-            </button>
-
-            <!-- Topbar Navbar -->
-            <ul class="navbar-nav ml-auto">
-              <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-              <li class="nav-item dropdown no-arrow d-sm-none">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="searchDropdown"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <i class="fas fa-search fa-fw"></i>
-                </a>
-                <!-- Dropdown - Messages -->
-                <div
-                  class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                  aria-labelledby="searchDropdown"
-                >
-                  <form class="form-inline mr-auto w-100 navbar-search">
-                    <div class="input-group">
-                      <input
-                        type="text"
-                        class="form-control bg-light border-0 small"
-                        placeholder="Search for..."
-                        aria-label="Search"
-                        aria-describedby="basic-addon2"
-                      />
-                      <div class="input-group-append">
-                        <button class="btn btn-primary" type="button">
-                          <i class="fas fa-search fa-sm"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </li>
-
-              <!-- Nav Item - Alerts -->
-              <li class="nav-item dropdown no-arrow mx-1">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="alertsDropdown"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <i class="fas fa-bell fa-fw"></i>
-                  <!-- Counter - Alerts -->
-                  <span class="badge badge-danger badge-counter">3+</span>
-                </a>
-                <!-- Dropdown - Alerts -->
-                <div
-                  class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                  aria-labelledby="alertsDropdown"
-                >
-                  <h6 class="dropdown-header">Alerts Center</h6>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                      <div class="icon-circle bg-primary">
-                        <i class="fas fa-file-alt text-white"></i>
-                      </div>
-                    </div>
-                    <div>
-                      <div class="small text-gray-500">December 12, 2019</div>
-                      <span class="font-weight-bold"
-                        >A new monthly report is ready to download!</span
-                      >
-                    </div>
-                  </a>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                      <div class="icon-circle bg-success">
-                        <i class="fas fa-donate text-white"></i>
-                      </div>
-                    </div>
-                    <div>
-                      <div class="small text-gray-500">December 7, 2019</div>
-                      $290.29 has been deposited into your account!
-                    </div>
-                  </a>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                      <div class="icon-circle bg-warning">
-                        <i class="fas fa-exclamation-triangle text-white"></i>
-                      </div>
-                    </div>
-                    <div>
-                      <div class="small text-gray-500">December 2, 2019</div>
-                      Spending Alert: We've noticed unusually high spending for
-                      your account.
-                    </div>
-                  </a>
-                  <a
-                    class="dropdown-item text-center small text-gray-500"
-                    href="#"
-                    >Show All Alerts</a
-                  >
-                </div>
-              </li>
-
-              <!-- Nav Item - Messages -->
-              <li class="nav-item dropdown no-arrow mx-1">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="messagesDropdown"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <i class="fas fa-envelope fa-fw"></i>
-                  <!-- Counter - Messages -->
-                  <span class="badge badge-danger badge-counter">7</span>
-                </a>
-                <!-- Dropdown - Messages -->
-                <div
-                  class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                  aria-labelledby="messagesDropdown"
-                >
-                  <h6 class="dropdown-header">Message Center</h6>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="dropdown-list-image mr-3">
-                      <img
-                        class="rounded-circle"
-                        src="{% static 'img/undraw_profile_1.svg' %}"
-                        alt="..."
-                      />
-                      <div class="status-indicator bg-success"></div>
-                    </div>
-                    <div class="font-weight-bold">
-                      <div class="text-truncate">
-                        Hi there! I am wondering if you can help me with a
-                        problem I've been having.
-                      </div>
-                      <div class="small text-gray-500">Emily Fowler · 58m</div>
-                    </div>
-                  </a>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="dropdown-list-image mr-3">
-                      <img
-                        class="rounded-circle"
-                        src="{% static 'img/undraw_profile_2.svg' %}"
-                        alt="..."
-                      />
-                      <div class="status-indicator"></div>
-                    </div>
-                    <div>
-                      <div class="text-truncate">
-                        I have the photos that you ordered last month, how would
-                        you like them sent to you?
-                      </div>
-                      <div class="small text-gray-500">Jae Chun · 1d</div>
-                    </div>
-                  </a>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="dropdown-list-image mr-3">
-                      <img
-                        class="rounded-circle"
-                        src="{% static 'img/undraw_profile_3.svg' %}"
-                        alt="..."
-                      />
-
-                      <div class="status-indicator bg-warning"></div>
-                    </div>
-                    <div>
-                      <div class="text-truncate">
-                        Last month's report looks great, I am very happy with
-                        the progress so far, keep up the good work!
-                      </div>
-                      <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                    </div>
-                  </a>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="dropdown-list-image mr-3">
-                      <img
-                        class="rounded-circle"
-                        src="{% static 'https://source.unsplash.com/Mv9hjnEUHR4/60x60' %}"
-                        alt="..."
-                      />
-                      <div class="status-indicator bg-success"></div>
-                    </div>
-                    <div>
-                      <div class="text-truncate">
-                        Am I a good boy? The reason I ask is because someone
-                        told me that people say this to all dogs, even if they
-                        aren't good...
-                      </div>
-                      <div class="small text-gray-500">
-                        Chicken the Dog · 2w
-                      </div>
-                    </div>
-                  </a>
-                  <a
-                    class="dropdown-item text-center small text-gray-500"
-                    href="#"
-                    >Read More Messages</a
-                  >
-                </div>
-              </li>
-
-              <div class="topbar-divider d-none d-sm-block"></div>
-
-              <!-- Nav Item - User Information -->
-              <li class="nav-item dropdown no-arrow">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="userDropdown"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <span class="mr-2 d-none d-lg-inline text-gray-600 small"
-                    >User Name</span
-                  >
-                  <img
-                    class="img-profile rounded-circle"
-                    src="{% static 'img/undraw_profile.svg' %}"
-                    alt="..."
-                  />
-                </a>
-                <!-- Dropdown - User Information -->
-                <div
-                  class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                  aria-labelledby="userDropdown"
-                >
-                  <a class="dropdown-item" href="#">
-                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Profile
-                  </a>
-                  <a class="dropdown-item" href="#">
-                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Settings
-                  </a>
-                  <a class="dropdown-item" href="#">
-                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Activity Log
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <a
-                    class="dropdown-item"
-                    href="#"
-                    data-toggle="modal"
-                    data-target="#logoutModal"
-                  >
-                    <i
-                      class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"
-                    ></i>
-                    Logout
-                  </a>
-                </div>
-              </li>
-            </ul>
-          </nav>
-          <!-- End of Topbar -->
+          {% include 'mypage/my_topbar.html'%}
 
           <!-- Begin Page Content -->
           <div class="container-fluid">
@@ -504,30 +131,7 @@
               <h1 class="h3 mb-0 text-gray-800">내 작성글 보기</h1>
               
             </div>
-      
-            <!-- Content Row -->
-            {% comment %} <div class="row">
-              <!-- Content Column -->
-              <div class="col-lg-10 mb-4">
-                <!-- Project Card Example -->
-                <div class="card shadow mb-4">
-                  <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Profile</h6>
-                  </div>
-                  <div class="card-body">
-                    
-                  </div>
-                  
-                </div>
 
-              <div class="col-lg-6 mb-4">
-              
-                <div class="card shadow mb-4">
-                 
-                  
-                </div>
-              </div>
-            </div> {% endcomment %}
             <div class="row">
               {%for post in posts %}
               <div class="col-xl-4 col-lg-4 col-md-6">
@@ -547,16 +151,15 @@
 
                           <div class="place-cap-bottom">
                               <ul>
-                                  <li><i class="far fa-clock">{{ post.start_date }}</i></li>
+                                  <li><i class="far fa-clock">출발일 : {{ post.start_date|date:"Y년 m월 d일" }}</i></li>
                                   <!-- 날짜계산기를 이용하기 위해 숨김값으로 가져옴 -->
-                                  <li><i class="far fa-clock">{{ post.end_date }}</i></li>
+                                  <li><i class="far fa-clock">도착일 : {{ post.end_date|date:"Y년 m월 d일" }}</i></li>
                                   <li><i class="fas fa-map-marker-alt"></i>{{ post.region }}</li>
                               </ul>
                           </div>
                       </div>
                   </div>
               </div>
-              
               {% endfor %}
             </div>
             
@@ -565,15 +168,8 @@
         </div>
         <!-- End of Main Content -->
 
-        <!-- Footer -->
-        <footer class="sticky-footer bg-white">
-          <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-              <span>Copyright &copy; Your Website 2021</span>
-            </div>
-          </div>
-        </footer>
-        <!-- End of Footer -->
+        {% include 'mypage/my_footer.html'%}
+        
       </div>
       <!-- End of Content Wrapper -->
     </div>
@@ -596,7 +192,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <h5 class="modal-title" id="exampleModalLabel">로그아웃</h5>
             <button
               class="close"
               type="button"
@@ -607,7 +203,7 @@
             </button>
           </div>
           <div class="modal-body">
-            Select "Logout" below if you are ready to end your current session.
+            로그아웃 하시겠습니까?
           </div>
           <div class="modal-footer">
             <button
@@ -615,9 +211,9 @@
               type="button"
               data-dismiss="modal"
             >
-              Cancel
+              취소
             </button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
+            <a class="btn btn-primary" href="{% url 'trip:logout'%}">로그아웃</a>
           </div>
         </div>
       </div>

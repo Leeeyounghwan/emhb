@@ -60,23 +60,27 @@ class UserLoginForm(forms.ModelForm):
 
 #마이페이지 정보수정form by 준경
 class UserProfileForm(forms.Form):
-    username = forms.CharField(
-        widget=forms.TextInput(attrs={'placeholder': '아이디를 입력해주세요', 'class': 'login-input'}),
-        label='아이디',
-        label_suffix='',
-        required=True
-    )
-
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'placeholder': '새로운 비밀번호를 입력해주세요', 'class': 'login-input'}),
-        label='새로운 비밀번호',
-        label_suffix='',
+        widget=forms.PasswordInput(
+           attrs={
+            'placeholder': '새로운 비밀번호를 입력해주세요', 
+            'class': 'form-control bg-light border-0 small',
+            'style':  'width: 80%; max-width: 100%;'
+           }
+        ),
         required=False
     )
 
     password_confirm = forms.CharField(
-        widget=forms.PasswordInput(attrs={'placeholder': '새로운 비밀번호를 다시 입력해주세요', 'class': 'login-input'}),
-        label='새로운 비밀번호 확인',
-        label_suffix='',
+        widget=forms.PasswordInput(
+           attrs={
+            'placeholder': '새로운 비밀번호를 다시 입력해주세요', 
+            'class': 'form-control bg-light border-0 small',
+            'style':  'width: 80%; max-width: 100%;'
+            }
+        ),
         required=False
     )
+
+    password.label = ""
+    password_confirm.label = ""

@@ -1,0 +1,49 @@
+<!-- Sidebar -->
+<ul
+class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+id="accordionSidebar"
+>
+<!-- Sidebar - Brand -->
+<a
+  class="sidebar-brand d-flex align-items-center justify-content-center"
+  href="index.html"
+  style="background-color: #ffc107"
+>
+  <div class="sidebar-brand-icon rotate-n-15">
+    <i class="fas fa-laugh-wink"></i>
+  </div>
+  <div class="sidebar-brand-text mx-3">Go trip</div>
+</a>
+<!-- Nav Item - Dashboard -->
+<li class="nav-item active">
+  <a class="nav-link" href="{% url 'trip:profile' %}">
+    <i class="fas fa-fw fa-tachometer-alt"></i>
+    <span>내 정보 수정</span></a
+  >
+  <a class="nav-link" href="{% url 'trip:mytopics' %}">
+    <i class="fas fa-fw fa-tachometer-alt"></i>
+    <span>내 작성글 보기</span></a
+  >
+  <a class="nav-link" href="{% url 'trip:myfeadback' %}">
+    <i class="fas fa-fw fa-tachometer-alt"></i>
+    <span>내가 받은 동행 후기</span></a
+  >
+  <a class="nav-link" href="{% url 'trip:like_schedule' %}">
+    <i class="fas fa-fw fa-tachometer-alt"></i>
+    <span>찜한 일정 리스트</span></a
+  >
+  <a class="nav-link" href="{% url 'trip:chatting_room' %}">
+    <i class="fas fa-fw fa-tachometer-alt"></i>
+    <span>채팅방</span></a
+  >
+</li>
+
+<!-- Divider -->
+<hr class="sidebar-divider d-none d-md-block" />
+
+<!-- Sidebar Toggler (Sidebar) -->
+<div class="text-center d-none d-md-inline">
+  <button class="rounded-circle border-0" id="sidebarToggle"></button>
+</div>
+</ul>
+<!-- End of Sidebar -->
