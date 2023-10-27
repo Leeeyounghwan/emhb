@@ -37,15 +37,15 @@ urlpatterns = [
     #by 건영
     path('',views.index, name = "index"),
     path('about/',views.about, name='about'),
-    path('blog/',views.blog, name='blog'),
     path('contact/',views.contact, name='contact'),
     path('elements/',views.elements, name='elements'),
     path('main/',views.main, name='main'),
+    path('blog/',views.blog, name='blog'),
   
     # 여행 상품 페이지 By 수현
     path('packages/',views.packages, name='packages'),
-    path('single_blog/<int:post_id>/',views.single_blog, name='single_blog'), 
-    path('add_comment/<int:post_id>/', views.add_comment, name='add_comment'),
+    path('single_blog/<int:id>/',views.single_blog, name='single_blog'), 
+    path('add_comment/<int:id>/', views.add_comment, name='add_comment'),
     path('single_blog/',views.single_blog, name='single_blog'),
 
     # 로그인, 회원가입 페이지 by 문정

@@ -3063,7 +3063,9 @@ hr {
 }
 
 .blog_item {
-    margin-bottom: 50px
+    margin-bottom: 50px;
+    float: left;
+    margin-right: 48px;
 }
 
 .blog_details {
@@ -3073,7 +3075,7 @@ hr {
 
 @media (min-width: 768px) {
     .blog_details {
-        padding: 60px 30px 35px 35px
+        padding: 20px
     }
 }
 
@@ -3374,7 +3376,10 @@ hr {
 }
 
 .blog-pagination {
-    margin-top: 80px
+    margin-bottom: 80px;
+    position: sticky;
+    bottom: 0;
+    background-color: #fff;
 }
 
 .blog-pagination .page-link {
