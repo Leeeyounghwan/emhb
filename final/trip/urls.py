@@ -7,6 +7,7 @@ app_name = 'trip'
 urlpatterns = [
     #마이페이지 by 준경
     path('mypage/profile/', views.profile, name='profile'),
+    path('mypage/post_detail/<int:post_id>', views.post_detail, name='post_detail'),
     path('mypage/mytopics/', views.mytopics, name='mytopics'),
     path('mypage/myfeadback/', views.myfeadback, name='myfeadback'),
     path('mypage/like_schedule/', views.like_schedule, name='like_schedule'),
@@ -16,6 +17,8 @@ urlpatterns = [
     
     # 관리자 페이지 관련 urlpatterns by 영환
     path("admin_page/", views.admin_page, name="admin_page"),
+    path("admin_page/admin_management", views.admin_management, name="admin_management"),
+    path("admin_page/change_state/<str:username>", views.change_state, name="change_state"),
     path("admin_page/create_product", views.create_product, name="create_product"),
     path("admin_page/update_product/<int:package_id>", views.update_product, name="update_product"),
     path("admin_page/product_management", views.product_management, name="product_management"),
@@ -61,7 +64,6 @@ urlpatterns = [
 
     #동행모집글 By 수현
     path('community/', views.community, name='community'),
-
     path('community_write/', views.community_write, name='community_write'),
 
 ]

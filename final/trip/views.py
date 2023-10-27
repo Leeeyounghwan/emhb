@@ -10,7 +10,6 @@ import openai
 from django.http import JsonResponse
 import json
 from django.contrib import messages
-from django.contrib.auth.models import User
 from .forms import UserForm, UserLoginForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -20,9 +19,9 @@ from django.contrib.auth import update_session_auth_hash
 
 # Create your views here.
 
-#마이페이지 by 준경
+# 마이페이지 시작 by 영환
 
-#@login_required
+@login_required
 def profile(request): #내 정보 수정
     user = request.user
     form = UserProfileForm(initial={'username': user.username})
@@ -31,17 +30,18 @@ def profile(request): #내 정보 수정
         form = UserProfileForm(request.POST)
 
         if form.is_valid():
-            username = form.cleaned_data['username']
+            nickname = form.cleaned_data['nickname']
             password = form.cleaned_data['password']
             password_confirm = form.cleaned_data['password_confirm']
 
-            if username != user.username:
-                user.username = username
+            if nickname != user.nickname:
+                user.nickname = nickname
                 user.save()
-                messages.success(request, '아이디가 업데이트되었습니다.')
+                messages.success(request, '닉네임이 업데이트되었습니다.')
 
             if password:
                 if password == password_confirm:
+                    
                     user.set_password(password)
                     user.save()
                     update_session_auth_hash(request, user)
@@ -49,28 +49,44 @@ def profile(request): #내 정보 수정
                 else:
                     messages.error(request, '비밀번호와 비밀번호 확인이 일치하지 않습니다.')
 
-            return redirect('profile')
+            return redirect('trip:index')
 
     return render(request, 'mypage/profile.html', {'form': form})
 
+@login_required
 def mytopics(request):#내가 쓴 글 보기
-  return render(request, 'mypage/mytopics.html', {'posts' : TogetherPost.objects.all()})
+    
+    login_username = request.user.username
+    login_user = get_object_or_404(User, username=login_username)
 
+    my_posts = TogetherPost.objects.filter(user_id_id=login_user.id)
+
+    context = {
+        "my_posts" : my_posts
+    }
+
+    return render(request, 'mypage/mytopics.html', context)
+
+@login_required
 def myfeadback(request): #내가받은 후기 보기
     return render(request,'mypage/myfeadback.html')
 
+@login_required
 def like_schedule(request): #찜한 일정 리스트
     return render(request,'mypage/like_schedule.html',{'schedules' : Schedule.objects.all()})
 
+@login_required
 def chatting_room(request): #채팅방리스트
     return render(request,'mypage/chatting_room.html')
 
+# 마이페이지 종료
 
+def post_detail(request, post_id):
+    return render(request, 'post_detail.html')
 
 # 관리자페이지 시작 by 영환
-def main(request):
-    return render(request, "main.html")
 
+@login_required
 def admin_check(request):
     if request.user.is_authenticated:
         user = request.user.username
@@ -79,44 +95,55 @@ def admin_check(request):
             return True
         else:
             return False
-
+        
+@login_required
 def admin_page(request):
 
-    # if admin_check(request) == True :
-    #     return redirect("trip:admin_page")
-    # else:
-        return render(request, "admin/admin_page.html")
+    if admin_check(request) == True :
+        return render(request,"admin/admin_page.html")
+    else:
+        return render(request, "index.html")
 
+def admin_management(request):
 
+    if admin_check(request) == True :
+        user_list = User.objects.all().order_by('-is_staff')
+        context = {
+            'user_list' : user_list
+        }
+
+        return render(request, "admin/admin_management.html", context)
+    else:
+        return render(request, "index.html")
+
+@login_required
+def change_state(request, username):
+    
+    if admin_check(request) == True :
+        if request.method == "POST":
+            user = get_object_or_404(User, username=username)
+            action = request.POST.get('action')
+        if action == 'to_user':
+            user.is_staff = False
+            user.save()
+        elif action == 'to_admin':
+            user.is_staff = True
+            user.save()
+
+        user_list = User.objects.all().order_by('-is_staff')
+        context = {
+            'user_list' : user_list
+        }
+        return render(request, "admin/admin_management.html", context)
+    else:
+        return render(request, "main.html")
+
+@login_required 
 def create_product(request):
 
-    package = Package()
-    if request.method == "POST":
-        package.title = request.POST['title']
-        package.price = request.POST['price']
-        package.destination = request.POST['destination']
-        package.start_date = request.POST['start_date']
-        package.end_date = request.POST['end_date']
-        package.content = request.POST['content']
-        if 'package_image' in request.FILES:
-            package.image = request.FILES['package_image']
-        package.save()
-        return redirect('trip:product_management')
-    
-    # if admin_check(request) == True :
-    return render(request, "admin/create_product.html")
-    # else:
-    #     return redirect("trip:main")
-
-def update_product(request, package_id):
-
-    package = get_object_or_404(Package, id=package_id)
-    if package:
-        package.content = package.content.strip()
-    
-    if request.method == "POST":
-        action = request.POST.get('action')
-        if action == 'update':
+    if admin_check(request) == True :
+        package = Package()
+        if request.method == "POST":
             package.title = request.POST['title']
             package.price = request.POST['price']
             package.destination = request.POST['destination']
@@ -127,179 +154,204 @@ def update_product(request, package_id):
                 package.image = request.FILES['package_image']
             package.save()
             return redirect('trip:product_management')
+
+        return render(request, "admin/create_product.html")
+    else :
+        return redirect("trip:main")
+
+@login_required
+def update_product(request, package_id):
+
+    if admin_check(request) == True :
+        package = get_object_or_404(Package, id=package_id)
+        if package:
+            package.content = package.content.strip()
         
-        elif action == 'delete':
-            package.is_deleted = True
-            package.save()
-            return redirect('trip:product_management')
+        if request.method == "POST":
+            action = request.POST.get('action')
+            if action == 'update':
+                package.title = request.POST['title']
+                package.price = request.POST['price']
+                package.destination = request.POST['destination']
+                package.start_date = request.POST['start_date']
+                package.end_date = request.POST['end_date']
+                package.content = request.POST['content']
+                if 'package_image' in request.FILES:
+                    package.image = request.FILES['package_image']
+                package.save()
+                return redirect('trip:product_management')
+            
+            elif action == 'delete':
+                package.is_deleted = True
+                package.save()
+                return redirect('trip:product_management')
 
-    context = {
-        'package' : package
-    }
+        context = {
+            'package' : package
+        }
+        return render(request, "admin/update_product.html", context)
+    else:
+        return redirect("trip:main")
 
-    # if admin_check(request) == True :
-    return render(request, "admin/update_product.html", context)
-    # else:
-    #     return redirect("trip:main")
-
-
+@login_required
 def product_management(request):
 
-    packages = Package.objects.filter(is_deleted=False).order_by('id')
-    context = {
-        "packages" : packages
-    }
-    return render(request, "admin/product_management.html", context)
+    if admin_check(request) == True :
+        packages = Package.objects.filter(is_deleted=False).order_by('id')
+        context = {
+            "packages" : packages
+        }
+        return render(request, "admin/product_management.html", context)
 
-    # if admin_check(request) == True :
-    #     packages = Package.objects.all()
-    #     context = {
-    #         "packages" : packages
-    #     }
+    else:
+        return redirect("trip:main")    
 
-    #     return render(request, "admin/product_management.html", context)
-    # else:
-    #     return redirect("trip:main")    
-
+@login_required
 def deleted_product(request):
+    if admin_check(request) == True :
+        deleted_packages = Package.objects.filter(is_deleted=True).order_by('-updated_at')
+        context = {
+            "deleted_packages" : deleted_packages
+        }
+        return render(request, "admin/deleted_product.html", context)
+    else:
+        return redirect("trip:main")
 
-    deleted_packages = Package.objects.filter(is_deleted=True).order_by('-updated_at')
-    context = {
-        "deleted_packages" : deleted_packages
-    }
-    return render(request, "admin/deleted_product.html", context)
+@login_required
+def delete_cancel(request, package_id):
 
-    # if admin_check(request) == True :
-    #     deleted_packages = Package.objects.filter(is_deleted=True).order_by('-updated_at')
-    #     context = {
-    #         "deleted_packages" : deleted_packages
-    #     }
+    if admin_check(request) == True :
+        package = get_object_or_404(Package, id=package_id)
+        package.is_deleted = False
+        package.save()
 
-    #     return render(request, "admin/deleted_product.html", context)
-    # else:
-    #     return redirect("trip:main")
+        return redirect("trip:product_management")
+    else:
+        return redirect("trip:main")
 
-def delete_cancel(package_id):
-
-    package = get_object_or_404(Package, id=package_id)
-    print(package.is_deleted)
-
-    package.is_deleted = False
-    package.save()
-    print(package.is_deleted)
-
-    return redirect("trip:product_management")
-
+@login_required
 def order_inquiry(request):
-    return render(request, "admin/order_inquiry.html")
+    if admin_check(request) == True :
+        return render(request, "admin/order_inquiry.html")
+    else:
+        return redirect("trip:main")
 
+@login_required
 def delivery_tracking(request):
-    return render(request, "admin/delivery_tracking.html")
-
+    if admin_check(request) == True :
+        return render(request, "admin/delivery_tracking.html")
+    else:
+        return redirect("trip:main")
+    
+@login_required
 def return_management(request):
-    return render(request, "admin/return_management.html")
+    if admin_check(request) == True :
+        return render(request, "admin/return_management.html")
+    else:
+        return redirect("trip:main")
 
+@login_required
 def report_detail(request):
 
-    reports = Report.objects.all().order_by('is_completed', 'created_at', 'updated_at')
-    
-    context = {
-        "reports" : reports
-    }
+    if admin_check(request) == True :
+        reports = Report.objects.all().order_by('is_completed', 'created_at', 'updated_at')
+        
+        context = {
+            "reports" : reports
+        }
+        return render(request, "admin/report_detail.html", context)
+    else:
+        return redirect("trip:main")
 
-    return render(request, "admin/report_detail.html", context)
-
-    # if admin_check(request) == True :
-    #     reports = Report.objects.all()
-    #     context = {
-    #         "reports" : reports
-    #     }
-
-    #     return render(request, "admin/report_detail.html", context)
-    # else:
-    #     return redirect("trip:main")
-
+@login_required
 def view_report_detail(request, id):
-    report_detail = Report.objects.filter(id=id)
-    # 신고한 유저 정보
-    user_info = get_object_or_404(User, id=report_detail[0].user_id_id)
-    # 신고당한 유저 정보
-    reported_user_info = get_object_or_404(User, username=report_detail[0].reported_user)
-    context = {
-        "report_detail" : report_detail[0],
-        "user_info" : user_info,
-        "reported_user_info" : reported_user_info
-    }
-    return render(request, "admin/view_report_detail.html", context)
 
+    if admin_check(request) == True :
+        report_detail = Report.objects.filter(id=id)
+        # 신고한 유저 정보
+        user_info = get_object_or_404(User, id=report_detail[0].user_id_id)
+        # 신고당한 유저 정보
+        reported_user_info = get_object_or_404(User, username=report_detail[0].reported_user)
+        context = {
+            "report_detail" : report_detail[0],
+            "user_info" : user_info,
+            "reported_user_info" : reported_user_info
+        }
+        return render(request, "admin/view_report_detail.html", context)
+    else:
+        return redirect("trip:main")
+
+@login_required
 def report_complete(request, id):
-    report = get_object_or_404(Report, id=id)
-    reported_user_info = get_object_or_404(User, username=report.reported_user)
 
-    if request.method == "POST":
-        action = request.POST.get('action')
-        if action == 'commit':
-            report.report_reply = request.POST['reply']
-            report.is_completed = True
-            report.completed_at = timezone.now()
-            report.save()
+    if admin_check(request) == True :
+        report = get_object_or_404(Report, id=id)
+        reported_user_info = get_object_or_404(User, username=report.reported_user)
+
+        if request.method == "POST":
+            action = request.POST.get('action')
+            if action == 'commit':
+                report.report_reply = request.POST['reply']
+                report.is_completed = True
+                report.completed_at = timezone.now()
+                report.save()
+            
+            elif action == 'count_up':
+                report.report_reply = request.POST['reply']
+                report.is_completed = True
+                report.completed_at = timezone.now()
+                report.save()
+                if reported_user_info.caution_cnt >= 9 :
+                    reported_user_info.is_black = True
+                else:
+                    reported_user_info.caution_cnt += 1
+                reported_user_info.save()
+            
+            elif action == 'update':
+                report.report_reply = request.POST['reply']
+                report.updated_at = timezone.now()
+                report.save()
+
+            elif action == 'delete':
+                report.report_reply = ""
+                report.is_completed = False
+                report.updated_at = timezone.now()
+                report.save()
+
+        reports = Report.objects.all().order_by('is_completed', 'created_at', 'updated_at')
         
-        elif action == 'count_up':
-            report.report_reply = request.POST['reply']
-            report.is_completed = True
-            report.completed_at = timezone.now()
-            report.save()
-            if reported_user_info.caution_cnt >= 9 :
-                reported_user_info.is_black = True
-            else:
-                reported_user_info.caution_cnt += 1
-            reported_user_info.save()
-        
-        elif action == 'update':
-            report.report_reply = request.POST['reply']
-            report.updated_at = timezone.now()
-            report.save()
+        context = {
+            "reports" : reports
+        }
+        return render(request, "admin/report_detail.html", context)
+    else:
+        return redirect("trip:main")
 
-        elif action == 'delete':
-            report.report_reply = ""
-            report.is_completed = False
-            report.updated_at = timezone.now()
-            report.save()
-
-    reports = Report.objects.all().order_by('is_completed', 'created_at', 'updated_at')
-    
-    context = {
-        "reports" : reports
-    }
-    return render(request, "admin/report_detail.html", context)
-
-
+@login_required
 def blacklist_management(request):
 
-    blacklists = User.objects.filter(is_black=True)
-    context = {
-        "blacklists" : blacklists
-    }
-    return render(request, "admin/blacklist_management.html", context)
-    # if admin_check(request) == True :
-    #     blacklist = User.objects.filter(is_black=True)
-    #     context = {
-    #         "blacklist" : blacklist
-    #     }
+    if admin_check(request) == True :
+        blacklists = User.objects.filter(is_black=True)
+        context = {
+            "blacklists" : blacklists
+        }
+        return render(request, "admin/blacklist_management.html", context)
+    else:
+        return redirect("trip:main")
 
-    #     return render(request, "admin/blacklist_management.html", context)
-    # else:
-    #     return redirect("trip:main")
-
+@login_required
 def black_cancel(request, blacklist_id):
-    # print(blacklist_id)
-    blacklist = get_object_or_404(User, id=blacklist_id)
-    print(blacklist.is_black)
 
-    blacklist.is_black = False
-    blacklist.save()
+    if admin_check(request) == True :
+        blacklist = get_object_or_404(User, id=blacklist_id)
+        print(blacklist.is_black)
 
-    return redirect("trip:blacklist_management")
+        blacklist.is_black = False
+        blacklist.save()
+
+        return redirect("trip:blacklist_management")
+    else:
+        return redirect("trip:main") 
 
 # 관리자페이지 종료
 
@@ -338,14 +390,29 @@ def add_comment(request, id):
 
 def user_login(request):
     if request.method == "POST":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        print(user)
-        if user is not None:
-            login(request, user)
-
-            return redirect('trip:index')
+        form = UserLoginForm(request, request.POST)
+        # username = request.POST.get('username')
+        # password = request.POST.get('password')
+        # user = authenticate(request, username=username, password=password)
+        
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                is_admin = get_object_or_404(User, username=username)
+                if is_admin.is_staff:
+                    # return render(request, 'admin/admin_page.html')
+                    return redirect('trip:admin_page')
+                else:
+                    return redirect('trip:index')
+            else:
+                return render(request, 'login.html', {'form': form, 'error': '아이디 또는 비밀번호가 틀렸습니다.'})
+        else:
+            print("error")
+            print(form.errors)
+    form = UserLoginForm()
 
     #     else:
     #         return render(request,'login.html', {'error':'username or password is incorrect'})
@@ -378,7 +445,7 @@ def register(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)  # 사용자 인증
             login(request, user)  # 로그인
-            return redirect('trip:main')
+            return redirect('trip:index')
     else:
         form = UserForm()
     return render(request, 'register.html', {'form': form})
@@ -412,7 +479,11 @@ def chatapi(request, question):
 def chatbot(request):
     return render(request, 'test.html')
 def packages(request):
-  return render(request, 'packages.html', {'items' : Package.objects.all()})
+  items =  Package.objects.filter(is_deleted=False)
+  context = {
+      'items' : items
+  }
+  return render(request, 'packages.html', context)
 
 
 
