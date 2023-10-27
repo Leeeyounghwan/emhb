@@ -1,3 +1,4 @@
+{% load static %}
 <div class='bottom-right fixed open-modal-box shadow' id="open-modal">
     1:1 채팅
 </div>
@@ -19,3 +20,6 @@
         <input class="modal-input" type="text">
     </div>
 </div>
+<script>
+    const baseURL = "{% url 'trip:index' %}";
+</script>

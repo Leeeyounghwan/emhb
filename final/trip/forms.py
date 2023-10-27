@@ -1,6 +1,7 @@
 from django import forms
 from .models import Package, Community
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
 from . models import User
 
 
@@ -35,12 +36,12 @@ class UserForm(UserCreationForm):
         self.fields['nickname'].widget.attrs['id'] = 'nickname'
 
 
-class UserLoginForm(forms.ModelForm):
-
+class UserLoginForm(AuthenticationForm):
+    
     class Meta:
         model = User
-        fields= ['username', 'password']
-    
+        fields = ['username', 'password']
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['username'].widget.attrs['class'] = 'form-control form-control-user'

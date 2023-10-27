@@ -341,14 +341,24 @@ def add_comment(request, post_id):
 
 def user_login(request):
     if request.method == "POST":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        print(user)
-        if user is not None:
-            login(request, user)
-
-            return redirect('trip:index')
+        form = UserLoginForm(request, request.POST)
+        # username = request.POST.get('username')
+        # password = request.POST.get('password')
+        # user = authenticate(request, username=username, password=password)
+        
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('trip:index')
+            else:
+                return render(request, 'login.html', {'form': form, 'error': 'Invalid username or password'})
+        else:
+            print("error")
+            print(form.errors)
+    form = UserLoginForm()
 
     #     else:
     #         return render(request,'login.html', {'error':'username or password is incorrect'})
@@ -381,7 +391,7 @@ def register(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)  # 사용자 인증
             login(request, user)  # 로그인
-            return redirect('trip:main')
+            return redirect('trip:index')
     else:
         form = UserForm()
     return render(request, 'register.html', {'form': form})
