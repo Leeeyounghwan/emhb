@@ -5,17 +5,21 @@ from django.conf.urls.static import static
 
 app_name = 'trip'
 urlpatterns = [
-    #마이페이지 by 준경
+
+    # 메인페이지 by 영환
+    path('search_trip/', views.search_trip, name='search_trip'),
+    
+    # 메인페이지 종료
+
+    # 마이페이지 by 준경
     path('mypage/profile/', views.profile, name='profile'),
     path('mypage/post_detail/<int:post_id>', views.post_detail, name='post_detail'),
     path('mypage/mytopics/', views.mytopics, name='mytopics'),
     path('mypage/myfeadback/', views.myfeadback, name='myfeadback'),
     path('mypage/like_schedule/', views.like_schedule, name='like_schedule'),
     path('mypage/chatting_room/', views.chatting_room, name='chatting_room'),
-
     
-    
-    # 관리자 페이지 관련 urlpatterns by 영환
+    # 관리자 페이지 by 영환
     path("admin_page/", views.admin_page, name="admin_page"),
     path("admin_page/admin_management", views.admin_management, name="admin_management"),
     path("admin_page/change_state/<str:username>", views.change_state, name="change_state"),
@@ -32,7 +36,7 @@ urlpatterns = [
     path("admin_page/report_complete/<int:id>", views.report_complete, name="report_complete"),
     path("admin_page/blacklist_management", views.blacklist_management, name="blacklist_management"),
     path("admin_page/black_cancel/<int:blacklist_id>", views.black_cancel, name="black_cancel"),
-    # 관리자 페이지 관련 urlpatterns 종료
+    # 관리자 페이지 종료
 
     #by 건영
     path('',views.index, name = "index"),
