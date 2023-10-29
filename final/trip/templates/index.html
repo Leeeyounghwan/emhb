@@ -29,7 +29,7 @@
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    <img src="{% static 'img/logo/logo.png' %}" alt="">
+                    <img src="{% static 'img/logo.png' %}" alt="">
                 </div>
             </div>
         </div>
@@ -47,13 +47,13 @@
         <div class="slider-area ">
             <!-- Mobile Menu -->
             <div class="slider-active">
-                <div class="single-slider hero-overly  slider-height d-flex align-items-center" data-background="{% static 'img/hero/h1_hero.jpg' %}">
+                <div class="single-slider hero-overly  slider-height d-flex align-items-center" data-background="{% static 'img/main_backround.jpg' %}" style="background-image: url(&quot;/../img/main_backround.jpeg&quot;);">
                     <div class="container">
                         <div class="row">
                             <div class="col-xl-9 col-lg-9 col-md-9">
                                 <div class="hero__caption">
-                                    <h1>Find your <span>Next tour!</span> </h1>
-                                    <p>Where would you like to go?</p>
+                                    <h1>어디로 <span>가고 싶으신가요?!</span> </h1>
+                                    <p>검색창에 가고 싶은 지역을 검색해서 동행을 찾아보세요!</p>
                                 </div>
                             </div>
                         </div>
@@ -61,22 +61,13 @@
                         <div class="row">
                             <div class="col-xl-12">
                                 <!-- form -->
-                                <form action="#" class="search-box">
+                                <form method="POST" action="{% url 'trip:search_trip' %}" class="search-box">
+                                    {% csrf_token %}
                                     <div class="input-form mb-30">
-                                        <input type="text" placeholder="When Would you like to go ?">
-                                    </div>
-                                    <div class="select-form mb-30">
-                                        <div class="select-itms">
-                                            <select name="select" id="select1">
-                                                <option value="">When</option>
-                                                <option value="">Services-1</option>
-                                                <option value="">Services-2</option>
-                                                <option value="">Services-3</option>
-                                            </select>
-                                        </div>
+                                        <input type="text" placeholder="어디로 가고 싶으신가요?" name="region">
                                     </div>
                                     <div class="search-form mb-30">
-                                        <a href="#">Search</a>
+                                        <button type="submit" value="search" name="action">SEARCH</button>
                                     </div>	
                                 </form>	
                             </div>
@@ -96,7 +87,7 @@
                                 <span class="flaticon-tour"></span>
                             </div>
                             <div class="services-cap">
-                                <h5>8000+ Our Local<br>Guides</h5>
+                                <h5>사용자와 함께<br>만들어가는 문화</h5>
                             </div>
                         </div>
                     </div>
@@ -106,7 +97,7 @@
                                 <span class="flaticon-pay"></span>
                             </div>
                             <div class="services-cap">
-                                <h5>100% Trusted Tour<br>Agency</h5>
+                                <h5>100% 함께 할 수 있는<br>동행</h5>
                             </div>
                         </div>
                     </div>
@@ -116,7 +107,7 @@
                                 <span class="flaticon-experience"></span>
                             </div>
                             <div class="services-cap">
-                                <h5>28+ Years of Travel<br>Experience</h5>
+                                <h5>다양한 사람들과<br>함께하는 여행</h5>
                             </div>
                         </div>
                     </div>
@@ -126,7 +117,7 @@
                                 <span class="flaticon-good"></span>
                             </div>
                             <div class="services-cap">
-                                <h5>98% Our Travelers<br>are Happy</h5>
+                                <h5>사용자들의 선호도가<br>높은 사이트</h5>
                             </div>
                         </div>
                     </div>
@@ -141,8 +132,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="section-tittle text-center">
-                            <span>FEATURED TOURS Packages</span>
-                            <h2>Favourite Places</h2>
+                            <span>다양한 동행 모집 게시글</span>
+                            <h2>같이 여행가요!</h2>
                         </div>
                     </div>
                 </div>

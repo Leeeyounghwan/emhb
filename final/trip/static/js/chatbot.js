@@ -58,7 +58,7 @@ modalInput.addEventListener('keyup', e=>{
         loading.className = 'answer';
         scroll(contentDiv);
 
-        const resp = fetch("http://127.0.0.1:8000/chatapi/" + question).then(
+        const resp = fetch(baseURL + 'chatapi/' + question).then(
             resp =>{
                 return resp.json()
             }

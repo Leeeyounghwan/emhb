@@ -3063,7 +3063,9 @@ hr {
 }
 
 .blog_item {
-    margin-bottom: 50px
+    margin-bottom: 50px;
+    float: left;
+    margin-right: 48px;
 }
 
 .blog_details {
@@ -3073,7 +3075,7 @@ hr {
 
 @media (min-width: 768px) {
     .blog_details {
-        padding: 60px 30px 35px 35px
+        padding: 20px
     }
 }
 
@@ -3374,7 +3376,10 @@ hr {
 }
 
 .blog-pagination {
-    margin-top: 80px
+    margin-bottom: 80px;
+    position: sticky;
+    bottom: 0;
+    background-color: #fff;
 }
 
 .blog-pagination .page-link {
@@ -5896,13 +5901,19 @@ del {
     margin-top: -1px
 }
 
+@font-face {
+    font-family: 'KCCMurukmuruk';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/KCCMurukmuruk.woff2') format('woff2');
+    font-weight: 100;
+    font-style: normal;
+}
+
 .slider-area .hero__caption h1 {
-    font-size: 100px;
-    font-weight: 400;
+    font-size: 80px;
     margin-bottom: 14px;
     color: #fde02f;
-    font-family: "Satisfy";
-    line-height: 1.3;
+    font-family: 'KCCMurukmuruk', cursive;
+    line-height: 1;
     margin-bottom: 17px
 }
 
@@ -5946,11 +5957,11 @@ del {
 
 .slider-area .hero__caption p {
     color: #fff;
-    font-size: 30px;
+    font-size: 25px;
     line-height: 1.2;
-    font-weight: 400;
+    font-weight: 100;
     margin-bottom: 39px;
-    font-family: "Barlow Condensed"
+    font-family: 'KCCMurukmuruk', cursive;
 }
 
 @media (max-width: 767px) {
@@ -5968,6 +5979,7 @@ del {
     position: absolute;
     content: "";
     background-color: rgba(32, 54, 38, 0.3);
+    background-image: url('/../img/main_background.jpg');
     width: 100%;
     height: 100%;
     left: 0;
@@ -5975,7 +5987,22 @@ del {
     bottom: 0;
     right: 0;
     z-index: -1;
-    background-repeat: no-repeat
+    background-repeat: repeat
+}
+
+.hero-overly::after {
+    position: absolute;
+    content: "";
+    background-color: rgba(32, 54, 38, 0.3);
+    background-image: url('/../img/main_background.jpg');
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: -1;
+    background-repeat: repeat
 }
 
 .slider-area .hero-cap h2 {
@@ -6004,12 +6031,19 @@ form.search-box .input-form {
     }
 }
 
+@font-face {
+    font-family: 'omyu_pretty';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
 form.search-box .input-form input {
     height: 55px;
     width: 100%;
     color: #777777;
-    font-size: 18px;
-    font-weight: 400;
+    font-size: 20px;
+    font-family: 'omyu_pretty';
     padding: 9px 9px 9px 22px;
     border: none;
     border-radius: 5px
@@ -6082,7 +6116,7 @@ form.search-box .search-form a {
     width: 100%;
     height: 55px;
     background: #fde02f;
-    font-size: 20px;
+    font-size: 40px;
     line-height: 1;
     text-align: center;
     color: #000;
@@ -6090,7 +6124,27 @@ form.search-box .search-form a {
     padding: 15px;
     border-radius: 5px;
     text-transform: uppercase;
-    font-family: "Barlow Condensed";
+    font-family: "omyu_pretty";
+    letter-spacing: 0.1em;
+    line-height: 1.2;
+    line-height: 24px;
+    font-size: 14px
+}
+
+form.search-box .search-form button {
+    width: 100%;
+    height: 55px;
+    background: #fde02f;
+    font-size: 40px;
+    line-height: 1;
+    text-align: center;
+    color: #000;
+    display: block;
+    padding: 15px;
+    border-radius: 5px;
+    border: none;
+    text-transform: uppercase;
+    font-family: "omyu_pretty";
     letter-spacing: 0.1em;
     line-height: 1.2;
     line-height: 24px;
@@ -7196,15 +7250,32 @@ form.search-box .search-form a {
 }
 
 .blog-info-link {
-    border: 1px solid #ccc; 
+    border: 1px solid #ccc;
     padding: 10px;
     margin: 10px 0;
 }
 
-.profile_detail img{
+.profile_detail img {
     width: 60px;
     height: 60px;
     border-radius: 50%;
     border: 1px solid #d2bfbf;
     margin: 7px;
+}
+
+.btns {
+    width: 8rem;
+    background: #fde02f;
+    font-size: 40px;
+    line-height: 1;
+    text-align: center;
+    color: #000;
+    display: block;
+    padding: 0.375rem 0.75rem;
+    border-radius: 5px;
+    border: none;
+    text-transform: uppercase;
+    font-family: "omyu_pretty";
+    font-size: 20px;
+    align-items: center;
 }

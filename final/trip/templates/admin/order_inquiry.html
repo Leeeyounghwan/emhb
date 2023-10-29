@@ -56,21 +56,17 @@
                                     <thead>
                                         <tr>
                                             <th>목차</th>
-                                            <th>시설명</th>
-                                            <th>가격</th>
-                                            <th>체크인날짜</th>
-                                            <th>체크아웃날짜</th>
-                                            <th>판매여부</th>
+                                            <th>주문자 ID</th>
+                                            <th>주문 상품</th>
+                                            <th>결제일</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>목차</th>
-                                            <th>시설명</th>
-                                            <th>가격</th>
-                                            <th>체크인날짜</th>
-                                            <th>체크아웃날짜</th>
-                                            <th>판매여부</th>
+                                            <th>주문자 ID</th>
+                                            <th>주문 상품</th>
+                                            <th>결제일</th>
                                     </tfoot>
                                     <tbody>
                                         {% for package in packages %}
@@ -107,27 +103,7 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">로그아웃?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">로그아웃 하시면 저장하지 않은 데이터는 삭제됩니다.<br>로그아웃 하시겠습니까?</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    
     <!-- Bootstrap core JavaScript-->
     <script src="{% static 'admin_vendor/jquery/jquery.min.js'%} "></script>
     <script src="{% static 'admin_vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>

@@ -44,38 +44,13 @@
         <!-- Header Start -->
        <div class="header-area">
             <div class="main-header ">
-                <div class="header-top top-bg d-none d-lg-block">
-                   <div class="container">
-                    <div class="row justify-content-between align-items-center">
-                        <div class="col-lg-8">
-                            <div class="header-info-left">
-                                <ul>                          
-                                    <li>heip@trip.com</li>
-                                    <li>02-123-4567</li>
-                                    <li>서울특별시 영등포구 당산동</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="header-info-right f-right">
-                                <ul class="header-social">    
-                                    <li><a href="https://www.twitter.com/"><i class="fab fa-twitter"></i></a></li>
-                                    <li><a href="https://kr.linkedin.com/"><i class="fab fa-linkedin-in"></i></a></li>
-                                    <li><a href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a></li>
-                                   <li> <a href="https://www.pinterest.co.kr/"><i class="fab fa-pinterest-p"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                       </div>
-                   </div>
-                </div>
                <div class="header-bottom  header-sticky">
                     <div class="container">
                         <div class="row align-items-center">
                             <!-- Logo -->
                             <div class="col-xl-2 col-lg-2 col-md-1">
                                 <div class="logo">
-                                  <a href="{% url 'trip:index' %}"><img src="{% static 'img/logo/logo.png' %}" alt=""></a>
+                                  <a href="{% url 'trip:index' %}"><img src="{% static 'img/logo.png' %}" alt=""></a>
                                 </div>
                             </div>
                             <div class="col-xl-10 col-lg-10 col-md-10">
@@ -92,10 +67,7 @@
                                                     <li><a href="{% url 'trip:single_blog' %}">Blog Details</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="#">Pages</a>
-                                                <ul class="submenu">
-                                                    <li><a href="{% url 'trip:elements' %}">Element</a></li>
-                                                </ul>
+                                            <li><a href="{% url 'trip:profile' %}">My Pages</a>
                                             </li>
                                             <li><a href="{% url 'trip:contact' %}">Contact Us</a></li>
                                         </ul>
@@ -118,7 +90,7 @@
         <!-- slider Area Start-->
         <div class="slider-area ">
             <!-- Mobile Menu -->
-            <div class="single-slider slider-height2 d-flex align-items-center">
+            <div class="single-slider slider-height2 d-flex align-items-center" data-background="{% static 'img/packages.jpg' %}">
                 <div class="container">
                     <div class="row">
                         <div class="col-xl-12">
