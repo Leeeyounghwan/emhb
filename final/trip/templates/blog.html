@@ -54,15 +54,34 @@
             <div class="container">
                 <div class="row">
                     <div class="col-xl-12">
-                        <form action="#">
+                        <form method="POST" action="{% url 'trip:search_trip' %}">
+                            {% csrf_token %}
                             <div class="form-group">
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control custom-input" placeholder='어디로 떠나시나요?'
-                                        onfocus="this.placeholder = ''"
-                                        onblur="this.placeholder = '어디로 떠나시나요?'">
-                                    <div class="input-group-append">
-                                        <button class="btns" type="button"><i class="ti-search"></i></button>
+                                    <div class="col-xl-9 col-lg-9 col-md-9">
+                                        <div class="hero__caption">
+                                            <h1>동행을 구해볼까요?</h1>
+                                            <p>가고 싶은 지역을 검색해서 동행을 찾아보세요!</p>
+                                            {% if search_region %}
+                                                <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                                    <input type="text" class="form-control custom-input" value="{{search_region}}" name="region"
+                                                    onfocus="this.placeholder = '{{search_region}}'"
+                                                    onblur="this.placeholder = '{{search_region}}'">
+                                                    <button class="btns" type="submit" value="search" name="action"><i class="ti-search"></i></button>
+                                                </div>
+                                            {% else %}
+                                                <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                                    <input type="text" class="form-control custom-input" placeholder='어디로 떠나시나요?' name="region"
+                                                        onfocus="this.placeholder = ''"
+                                                        onblur="this.placeholder = '어디로 떠나시나요?'">
+                                                    <button class="btns" type="submit" value="search" name="action"><i class="ti-search"></i></button>
+                                                </div>
+                                            {% endif %}
+                                            
+                                        </div>
                                     </div>
+
+                                    
                                 </div>
                             </div>
                         </form>
@@ -84,7 +103,7 @@
                             </div> 
 
                             <div class="blog_details" style="margin: 0 auto;">
-                                <a class="d-inline-block" href="{% url 'trip:single_blog' %}">
+                                <a class="d-inline-block" href="{% url 'trip:single_blog' post.id %}">
                                     <h2 style="font-size: 18px;">{{ post.post_title }}</h2>
                                 </a>
                                 <p style="font-size: 14px;">{{ post.post_content|truncatechars:15 }}</p>

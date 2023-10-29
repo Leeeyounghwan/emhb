@@ -15,8 +15,24 @@ import json
 
 # Create your views here.
 
-# 마이페이지 시작 by 영환
+# 메인페이지 시작 By 영환
 
+def search_trip(request):
+
+    if request.method == "POST":
+        action = request.POST.get('action')
+        if action == 'search':
+            search_region = request.POST['region']
+            posts = TogetherPost.objects.filter(region=search_region)
+        context = {
+            "search_region" : search_region,
+            "posts" : posts
+        }
+    return render(request, 'blog.html',context)
+
+# 메인페이지 종료
+
+# 마이페이지 시작 By 영환
 @login_required
 def profile(request): #내 정보 수정
     user = request.user
@@ -367,8 +383,12 @@ def elements(request):
 def main(request):
     return render(request, 'main.html')
 def single_blog(request, id):   
-    posts = TogetherPost.objects.get(id=id)
-    return render(request, 'single-blog.html',{'posts':posts})
+    post = TogetherPost.objects.get(id=id)
+    context = {
+        "post" : post
+    }
+    return render(request, 'single-blog.html', context)
+
 @login_required
 def add_comment(request, id):
     if request.method == 'POST':
