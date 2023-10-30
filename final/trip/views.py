@@ -538,21 +538,45 @@ def community(request):
 def community_write(request):
     return render(request, 'community_write.html')
 
+# def set_write(request):
+
+
+def set_region(request):
+  if 'region-button' in request.POST:
+    region = request.POST.get('region-setting')
+    area = {"region": region}
+    
+    # 확인용(region)
+    print(region)
+    
+    return render(request, 'community_write.html', area)
+
+  
 def set_write(request):
-    if request.method == 'POST':
+    if 'set_write_button' in request.POST:
         title = request.POST.get('title')
         start_date = request.POST.get('start_date')
         end_date = request.POST.get('end_date')
-        messages = request.POST.get('messages')
+        content = request.POST.get('messages')
+        image = request.POST.get('staticMap')
+        community_destination = request.POST.get('community_destination')
+        recruitment = request.POST.get('recruitment')
 
         detail = {
+            "community_destination" : community_destination,
+            "recruitment" : recruitment,
             "title" : title,
             "start_date" : start_date,
             "end_date" : end_date,
-            "messages" : messages
+            "messages" : content,
+            "image" : image,
         }
+    
+        #확인용(detail)
+        print(detail)
 
+        community_post = Community.objects.create()
+        community_post.detail = detail
         
-
-
-        return render(request, 'community_write.html', {"detail": detail})
+        community_post.save()
+        return render(request, 'community.html')
