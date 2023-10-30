@@ -10,7 +10,7 @@ from .forms import PostWriteForm
 class BoardListView(ListView):
     model = Post
     paginate_by = 10
-    template_name = "board_test.html"
+    template_name = "boards/board_test.html"
     context_object_name = "post_list"
     
     def get_queryset(self):
@@ -43,7 +43,7 @@ def post_detail_view(request, pk):
     context = {
         'post':post,
     }
-    return render(request, 'post_test.html', context)
+    return render(request, 'boards/post_test.html', context)
 
 @login_required
 def post_write_view(request):
@@ -57,7 +57,7 @@ def post_write_view(request):
             return redirect('board:board_list')
     else:
         form = PostWriteForm()          
-    return render(request, 'write.html', {'form':form})
+    return render(request, 'boards/write.html', {'form':form})
 
 def post_update_view(request):
     return

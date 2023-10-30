@@ -1,4 +1,4 @@
-from .models import Package, User, Report, Schedule, ScheduleComment, Community, TogetherPost,TogetherComment
+from .models import Package, User, Report, Schedule, ScheduleComment, Community, TogetherPost,TogetherComment, GroupChat
 from .forms import UserForm, UserLoginForm
 from .forms import UserProfileForm
 
