@@ -1,12 +1,12 @@
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded", function () {
 
 })
 
 
-function changeWindow (e) {
+function changeWindow(e) {
     const chatWindow = document.getElementById("chat-window");
     const chatList = document.getElementById('chat-list');
-    const input = document.getElementById('chat-input');
+    const input = document.getElementById('modal-input');
     const rtwindow = document.getElementsByClassName("rt-window")[0];
     const back = document.getElementsByClassName("back")[0];
     chatList.style.display = 'none';
@@ -17,12 +17,12 @@ function changeWindow (e) {
 
     const chatSocket = new WebSocket('ws://' + window.location.host + '/ws/chat/' + roomName + '/')
 
-    const scroll = function (div){
+    const scroll = function (div) {
         div.scrollTop = div.scrollHeight;
     }
-    chatSocket.onmessage = (e=>{
+    chatSocket.onmessage = (e => {
         const data = JSON.parse(e.data);
-        if (data.username != username){
+        if (data.username != username) {
             let messageHtml = `
             <div class='other-message-box'>
                 <div class='user-name'>
@@ -35,7 +35,7 @@ function changeWindow (e) {
             `;
             rtwindow.innerHTML += messageHtml;
         }
-        else{
+        else {
             let sendHtml = `
             <div class='your-message-box'>
                 <div class='user-name'>
@@ -52,8 +52,8 @@ function changeWindow (e) {
     })
 
     input.focus()
-    input.onkeyup = function(e){
-        if (e.key === 'Enter'){
+    input.onkeyup = function (e) {
+        if (e.key === 'Enter') {
             let mydata = input.value;
             chatSocket.send(JSON.stringify({
                 'username': username,
@@ -62,8 +62,8 @@ function changeWindow (e) {
             input.value = '';
         }
     }
-    back.addEventListener("click", e=>{
-        chatWindow.style.display ='none';
+    back.addEventListener("click", e => {
+        chatWindow.style.display = 'none';
         chatList.style.display = 'flex'
         chatSocket.close();
     })
