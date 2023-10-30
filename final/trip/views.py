@@ -391,13 +391,19 @@ def together_detail(request, id):
 
 @login_required
 def add_comment(request, id):
+    post = TogetherPost.objects.get(id=id)  # 해당 포스트를 가져옵니다
     if request.method == 'POST':
-        user = request.user
-        content = request.POST['content']
-        comment = TogetherComment(post_id_id=post_id, content=content)
-        comment.save()
-        return redirect('together_detail.html', post_id=post_id)
-    return redirect('together_detail.html')
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post  # 위에서 정의한 post 변수를 사용합니다
+            comment.save()
+            return redirect('together_detail', id=id)  # 상세 페이지로 리다이렉트
+    else:
+        form = CommentForm()
+    
+    return render(request, 'together_detail.html', {'form': form, 'id': id})
+
 
 #by 건영 종료
 

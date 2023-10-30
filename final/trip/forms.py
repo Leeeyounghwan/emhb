@@ -2,7 +2,7 @@ from django import forms
 from .models import Package, Community
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
-from . models import User
+from . models import User, TogetherComment
 
 
 class Package(forms.ModelForm):
@@ -97,3 +97,8 @@ class UserProfileForm(forms.Form):
     nickname.label = ""
     password.label = ""
     password_confirm.label = ""
+    
+    class CommentForm(forms.ModelForm):
+        class Meta:
+            model = TogetherComment
+            fields = ['content']
