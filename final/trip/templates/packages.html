@@ -25,6 +25,7 @@
             <link rel="stylesheet" type="text/css" href="{% static 'css/nice-select.css' %}"/>
             <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
             <link rel="stylesheet" type="text/css" href="{% static 'admin_vendor/fontawesome-free/css/all.min.css'%}">
+            <link rel="stylesheet" href="{% static 'css/chatbot.css' %}">
    </head>
 
    <body>
@@ -176,6 +177,7 @@
         </div>
         <!-- Pagination-area End -->
     </main>
+    {% include "chatbot.html" %}
     <footer>
         
         <!-- Footer Start-->
@@ -260,7 +262,7 @@
             </div>
         </div>
         <!-- Footer End-->
- 
+        
     </footer>
 
 	<!-- JS here -->
@@ -298,6 +300,9 @@
 		<!-- Jquery Plugins, main Jquery -->	
         <script src="{% static 'js/plugins.js' %}"></script>
         <script src="{% static 'js/main.js' %}"></script>
+
+        <!-- ChatBot -->
+        <script src="{% static 'js/chatbot.js' %}"></script>
 
         <!-- 날짜계산기 -->
         <!-- 맞는지 확인해봐야함 -->
