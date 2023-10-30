@@ -1,3 +1,4 @@
+{% load static %}
 <div class='bottom-right fixed open-modal-box shadow' id="open-modal">
     1:1 채팅
 </div>
@@ -6,7 +7,7 @@
 </div>
 <div id="modal" class='shadow'>
     <div class="flex-center modal-header">
-        <h3>AI 챗봇 무엇이든 물어봐주세요</h2>
+        <h4 class="modal-h4">AI 챗봇 무엇이든 물어봐주세요</h4>
     </div>
     <div class="modal-content">
         <div class="answer-box">
@@ -16,6 +17,9 @@
         </div>
     </div>
     <div class="modal-input-box">
-        <input class="modal-input" type="text">
+        <input class="modal-input" type="text" id="modal-input" placeholder="여기에 궁금한 내용을 적어주세요">
     </div>
 </div>
+<script>
+    const baseURL = "{% url 'trip:index' %}";
+</script>

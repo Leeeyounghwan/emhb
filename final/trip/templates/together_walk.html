@@ -1,0 +1,191 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Travel HTML-5 Template </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- <link rel="manifest" href="site.webmanifest"> -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.png' %}">
+    <!-- Place favicon.ico in the root directory -->
+    
+  <!-- CSS here -->
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/slicknav.css' %}">
+  <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+  <link rel="stylesheet" href="{% static 'css/fontawesome-all.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'css/slick.css' %}">
+  <link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+  <link rel="stylesheet" href="{% static 'css/chatbot.css' %}">
+</head>
+
+<body>
+    <!-- Preloader Start -->
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <img src="{% static 'img/logo/logo.png' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Preloader Start-->
+    <header>
+        <!-- Header Start -->
+        {% include "nav.html" %}
+        <!-- Header End -->
+    </header>
+  
+     <!-- slider Area Start-->
+     <div class="slider-area ">
+        <!-- Mobile Menu -->
+        <div class="single-slider slider-height2 d-flex align-items-center" data-background="{% static 'img/blog_images.jpeg' %}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <form method="POST" action="{% url 'trip:search_trip' %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <div class="col-xl-9 col-lg-9 col-md-9">
+                                        <div class="hero__caption">
+                                            <h1>동행을 구해볼까요?</h1>
+                                            <p>가고 싶은 지역을 검색해서 동행을 찾아보세요!</p>
+                                            {% if search_region %}
+                                                <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                                    <input type="text" class="form-control custom-input" value="{{search_region}}" name="region"
+                                                    onfocus="this.placeholder = '{{search_region}}'"
+                                                    onblur="this.placeholder = '{{search_region}}'">
+                                                    <button class="btns" type="submit" value="search" name="action"><i class="ti-search"></i></button>
+                                                </div>
+                                            {% else %}
+                                                <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                                    <input type="text" class="form-control custom-input" placeholder='어디로 떠나시나요?' name="region"
+                                                        onfocus="this.placeholder = ''"
+                                                        onblur="this.placeholder = '어디로 떠나시나요?'">
+                                                    <button class="btns" type="submit" value="search" name="action"><i class="ti-search"></i></button>
+                                                </div>
+                                            {% endif %}
+                                            
+                                        </div>
+                                    </div>
+
+                                    
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+     <!-- slider Area End-->
+    <!--================Blog Area =================-->
+    <section class="blog_area section-padding" style="display: flex; flex-wrap: nowrap; overflow-x: auto;">
+        <div class="container" style="justify-content:center; align-items:center;">
+            <div style="max-width: 1500px;">
+                <div>
+                    {% for post in posts %}
+                        <article class="blog_item" style="max-width: 20%;">
+                            <div class="blog_item_img">
+                                <img class="card-img rounded-0" src="{{ post.post_image.url }}" alt="posts.post_title">
+                            </div> 
+
+                            <div class="blog_details" style="margin: 0 auto;">
+                                <a class="d-inline-block" href="{% url 'trip:together_detail' post.id %}">
+                                    <h2 style="font-size: 18px;">{{ post.post_title }}</h2>
+                                </a>
+                                <p style="font-size: 14px;">{{ post.post_content|truncatechars:15 }}</p>
+                                <ul class="blog-info-link">
+                                    <li style="font-size: 14px;"><a href="#"><i class="fa fa-user"></i> {{ post.user_id }}</a></li>
+                                    <li style="font-size: 14px;"><a href="#"><i class="fa fa-comments"></i> {{ post.user_id }}</a></li>
+                                </ul>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <nav class="blog-pagination justify-content-center d-flex">
+        <ul class="pagination">
+            <li class="page-item">
+                <a href="#" class="page-link" aria-label="Previous">
+                    <i class="ti-angle-left"></i>
+                </a>
+            </li>
+            <li class="page-item">
+                <a href="#" class="page-link">1</a>
+            </li>
+            <li class="page-item active">
+                <a href="#" class="page-link">2</a>
+            </li>
+            <li class="page-item">
+                <a href="#" class="page-link" aria-label="Next">
+                    <i class="ti-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <!--================Blog Area =================-->
+    {% include "chatbot.html" %}
+    <footer>
+        <!-- Footer Start-->
+        {% include "footer.html" %}
+        <!-- Footer End-->
+    </footer>
+
+<!-- JS here -->
+	
+		<!-- All JS Custom Plugins Link Here here -->
+        <script src="{% static 'js/vendor/modernizr-3.5.0.min.js' %}"></script>
+		
+		<!-- Jquery, Popper, Bootstrap -->
+		<script src="{% static 'js/vendor/jquery-1.12.4.min.js' %}"></script>
+        <script src="{% static 'js/popper.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+	    <!-- Jquery Mobile Menu -->
+        <script src="{% static 'js/jquery.slicknav.min.js' %}"></script>
+
+		<!-- Jquery Slick , Owl-Carousel Plugins -->
+        <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'js/slick.min.js' %}"></script>
+
+		<!-- One Page, Animated-HeadLin -->
+        <script src="{% static 'js/wow.min.js' %}"></script>
+		<script src="{% static 'js/animated.headline.js' %}"></script>
+		
+		<!-- Scrollup, nice-select, sticky -->
+        <script src="{% static 'js/jquery.scrollUp.min.js' %}"></script>
+        <script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+		<script src="{% static 'js/jquery.sticky.js' %}"></script>
+        <script src="{% static 'js/jquery.magnific-popup.js' %}"></script>
+
+        <!-- contact js -->
+        <script src="{% static 'js/contact.js' %}"></script>
+        <script src="{% static 'js/jquery.form.js' %}"></script>
+        <script src="{% static 'js/jquery.validate.min.js' %}"></script>
+        <script src="{% static 'js/mail-script.js' %}"></script>
+        <script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
+        
+		<!-- Jquery Plugins, main Jquery -->	
+        <script src="{% static 'js/plugins.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
+
+        <!-- ChatBot -->
+        <script src="{% static 'js/chatbot.js' %}"></script>
+
+</body>
+</html>

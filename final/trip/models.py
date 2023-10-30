@@ -29,6 +29,7 @@ class TogetherPost(models.Model):
     post_title = models.CharField(max_length=40)
     post_content = models.TextField()
     post_image = models.ImageField(upload_to="", null=True)
+    likes = models.ManyToManyField(User, related_name='liked_posts', blank=True)
     start_date = models.DateField()
     end_date = models.DateField()
     region = models.CharField(max_length=20)
