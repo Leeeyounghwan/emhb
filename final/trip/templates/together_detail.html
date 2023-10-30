@@ -125,7 +125,7 @@
                </div>
                {% block content %}
                <div class="comments-area">
-                  <h4>05 Comments</h4>
+                  <h4></h4>
                   {% for comment in post.togethercomment_set.all %}
                   <div class="comment-list">
                       <div class="single-comment justify-conte nt-between d-flex">
@@ -158,20 +158,20 @@
                   
                </div>
                <div class="comment-form">
-                  <h4>Leave a Reply</h4>
-                  {% comment %} <form class="form-contact comment_form" method="post" action="{% url 'add_comment' post.id %}"> {% endcomment %}
+                  <form class="form-contact comment_form" method="post">
                      {% csrf_token %}
+                     {{ form.as_p }}
                      <div class="row">
                          <div class="col-12">
                              <div class="form-group">
-                                 <textarea class="form-control w-100" name="text" id="comment" cols="30" placeholder="댓글을 입력해주세요."></textarea>
+                                 <textarea class="form-control w-100" name="content" id="comment" cols="30" placeholder="댓글을 입력해주세요."></textarea>
                              </div>
                          </div>
                      </div>
                      <div class="form-group">
                          <button type="submit" class="button button-contactForm btn_1 boxed-btn">댓글 달기</button>
                      </div>
-                 </form>
+                   </form>
                </div>
             </div>
             {% endblock %}
@@ -344,6 +344,6 @@
 		<!-- Jquery Plugins, main Jquery -->	
       <script src="{% static 'js/plugins.js' %}"></script>
       <script src="{% static 'js/main.js' %}"></script>
-        
+      
 </body>
 </html>
