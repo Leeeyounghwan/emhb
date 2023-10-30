@@ -32,7 +32,7 @@ def search_trip(request):
             "search_region" : search_region,
             "posts" : posts
         }
-    return render(request, 'blog.html',context)
+    return render(request, 'together_walk.html',context)
 
 # 메인페이지 종료
 
@@ -408,31 +408,37 @@ def index(request):
     return render(request, 'index.html', context)
 def about(request):
     return render(request, 'about.html')
-def blog(request):
+def together_walk(request):
     posts = TogetherPost.objects.all()
-    return render(request, 'blog.html',{'posts':posts})
+    return render(request, 'together_walk.html',{'posts':posts})
 def contact(request):
     return render(request, 'contact.html')
 def elements(request):
     return render(request, 'elements.html')
 def main(request):
     return render(request, 'main.html')
-def single_blog(request, id):   
+def together_detail(request, id):   
     post = TogetherPost.objects.get(id=id)
     context = {
         "post" : post
     }
-    return render(request, 'single-blog.html', context)
+    return render(request, 'together_detail.html', context)
 
 @login_required
 def add_comment(request, id):
+    post = TogetherPost.objects.get(id=id)  # 해당 포스트를 가져옵니다
     if request.method == 'POST':
-        user = request.user
-        content = request.POST['content']
-        comment = TogetherComment(post_id_id=post_id, content=content)
-        comment.save()
-        return redirect('single-blog.html', post_id=post_id)
-    return redirect('single-blog.html')
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post  # 위에서 정의한 post 변수를 사용합니다
+            comment.save()
+            return redirect('together_detail', id=id)  # 상세 페이지로 리다이렉트
+    else:
+        form = CommentForm()
+    
+    return render(request, 'together_detail.html', {'form': form, 'id': id})
+
 
 #by 건영 종료
 

@@ -104,7 +104,7 @@
                             </div> 
 
                             <div class="blog_details" style="margin: 0 auto;">
-                                <a class="d-inline-block" href="{% url 'trip:single_blog' post.id %}">
+                                <a class="d-inline-block" href="{% url 'trip:together_detail' post.id %}">
                                     <h2 style="font-size: 18px;">{{ post.post_title }}</h2>
                                 </a>
                                 <p style="font-size: 14px;">{{ post.post_content|truncatechars:15 }}</p>
