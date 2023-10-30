@@ -28,7 +28,7 @@ def search_trip(request):
             "search_region" : search_region,
             "posts" : posts
         }
-    return render(request, 'blog.html',context)
+    return render(request, 'together_walk.html',context)
 
 # 메인페이지 종료
 
@@ -373,21 +373,21 @@ def index(request):
     return render(request, 'index.html')
 def about(request):
     return render(request, 'about.html')
-def blog(request):
+def together_walk(request):
     posts = TogetherPost.objects.all()
-    return render(request, 'blog.html',{'posts':posts})
+    return render(request, 'together_walk.html',{'posts':posts})
 def contact(request):
     return render(request, 'contact.html')
 def elements(request):
     return render(request, 'elements.html')
 def main(request):
     return render(request, 'main.html')
-def single_blog(request, id):   
+def together_detail(request, id):   
     post = TogetherPost.objects.get(id=id)
     context = {
         "post" : post
     }
-    return render(request, 'single-blog.html', context)
+    return render(request, 'together_detail.html', context)
 
 @login_required
 def add_comment(request, id):
@@ -396,8 +396,8 @@ def add_comment(request, id):
         content = request.POST['content']
         comment = TogetherComment(post_id_id=post_id, content=content)
         comment.save()
-        return redirect('single-blog.html', post_id=post_id)
-    return redirect('single-blog.html')
+        return redirect('together_detail.html', post_id=post_id)
+    return redirect('together_detail.html')
 
 #by 건영 종료
 

@@ -44,13 +44,13 @@ urlpatterns = [
     path('contact/',views.contact, name='contact'),
     path('elements/',views.elements, name='elements'),
     path('main/',views.main, name='main'),
-    path('blog/',views.blog, name='blog'),
+    path('together_walk/',views.together_walk, name='together_walk'),
   
     # 여행 상품 페이지 By 수현
     path('packages/',views.packages, name='packages'),
-    path('single_blog/<int:id>/',views.single_blog, name='single_blog'), 
+    path('together_detail/<int:id>/',views.together_detail, name='together_detail'), 
     path('add_comment/<int:id>/', views.add_comment, name='add_comment'),
-    path('single_blog/',views.single_blog, name='single_blog'),
+    path('together_detail/',views.together_detail, name='together_detail'),
 
     # 로그인, 회원가입 페이지 by 문정
     path('login/', views.user_login, name = 'login'),
