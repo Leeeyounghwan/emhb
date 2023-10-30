@@ -1,4 +1,7 @@
 {% load static%}
+
+<link rel="stylesheet" href="{% static 'css/chatbot.css' %}">
+
 <!-- Topbar -->
 <nav
 class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
@@ -64,13 +67,12 @@ class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
         {% if user.is_authenticated %}
         {{user.nickname}}님
         {% endif %}
-      </span
-      >
-      <img
-        class="img-profile rounded-circle"
-        src="{% static 'img/undraw_profile.svg' %}"
-        alt="..."
-      />
+      </span>
+      {% if user.profile_image %}
+        <img src = "{{user.profile_image.url}}" class="img-profile rounded-circle" alt="..."/>
+      {% else %}
+      <img src="{% static 'img/undraw_profile.svg' %}" class="img-profile rounded-circle" alt="..."/>
+      {% endif %}
     </a>
     <!-- Dropdown - User Information -->
     <div
@@ -132,3 +134,8 @@ aria-hidden="true"
   </div>
 </div>
 </div>
+
+{% include "chatbot.html" %}
+
+<!-- ChatBot -->
+<script src="{% static 'js/chatbot.js' %}"></script>
