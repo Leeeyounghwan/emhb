@@ -519,7 +519,7 @@ def chatapi(request, question):
         messages=[
             {
             "role": "system",
-            "content": "너는 우리 트립웹에 Trip봇이야. 답변은 400자 내로 깔끔하게"},
+            "content": "너는 우리 트립웹에 Trip봇이야. 답변은 200자 내로 .으로완결지어 "},
             {"role": "user", "content": f"'{question}'"},
         ],
         temperature=0.5,
