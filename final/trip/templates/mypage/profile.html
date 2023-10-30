@@ -134,16 +134,25 @@
             <!-- Content Row -->
             <div class="row">
               <!-- Content Column -->
-              <div class="col-lg-13 mb-4" style="max-width: 100%; width: 50rem;">
+              <div class="col-lg-13 mb-4" style="max-width: 100%; width: 50rem; z-index: 1;">
                 <!-- Project Card Example -->
                 <div class="card shadow mb-4">
                   <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Profile</h6>
                   </div>
                   <div class="card-body">
-                    {% comment %} <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" method="POST" action="" enctype="multipart/form-data"> {% endcomment %}
                     <form  method="POST" action="{% url 'trip:profile' %}" enctype="multipart/form-data">
                       {% csrf_token %}
+                      <div style="display:flex; justify-content: center;">
+                        <label class="border-bottom-primary write-img">
+                          {% if user_info.profile_image %}
+                          <img src="{{user_info.profile_image.url}}" alt="이미지 설명" id="imagePreview" style="width:15rem;">
+                          {% else %}
+                          <img src="{% static 'img/icon_photo.png' %}" alt="이미지 설명" id="imagePreview" style="width:15rem;">
+                          {% endif %}
+                          <input type="file" name="profile_img" accept="image/*" style="display: none;" onchange="previewImage(event);"  id="productImage">
+                        </label>
+                      </div>
                       아이디 : <br>
                       <input type="text" name="username" value="{{request.user.username}}" class="form-control bg-light border-0 small" style="width: 80%; max-width:100%;" readonly>
                       <br>
@@ -229,5 +238,7 @@
     <!-- Jquery Plugins, main Jquery -->
     <script src="{% static 'js/plugins.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+
+    <script src="{% static 'js/write.js' %}"></script>
   </body>
 </html>

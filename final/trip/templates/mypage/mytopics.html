@@ -139,7 +139,7 @@
             
             <div class="my-post">
               {%for post in my_posts %}
-                <div class="card shadow mb-4" style="width: 20rem; height: 22rem; max-height: 25rem;">
+                <div class="card shadow mb-4" style="width: 20rem; height: 22rem; max-height: 25rem; z-index: 1;">
                   <div class="card-header py-3">
                       <h3 class="m-0 font-weight-bold text-primary"><a href="{%url 'trip:single_blog' post.id%}">{{ post.post_title }}</a></h6>
                   </div>
