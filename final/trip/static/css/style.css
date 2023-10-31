@@ -5639,7 +5639,8 @@ del {
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .header-area .header-bottom {
-        padding: 15px 0
+        padding: 15px 0;
+        background-color: #fff;
     }
 }
 
@@ -5829,7 +5830,8 @@ del {
     -webkit-transition: .6s;
     -moz-transition: .6s;
     -o-transition: .6s;
-    transition: .6s
+    transition: .6s;
+    background-color: #fff;
 }
 
 .slicknav_menu .slicknav_icon-bar {
@@ -7292,22 +7294,55 @@ form.search-box .search-form button {
     font-size: 20px;
     align-items: center;
 }
+
 a.delete-button {
-  color: #888; /* 연한 회색 */
-  text-decoration: none; /* 링크 밑줄 제거 */
-  font-size: 16px; /* 버튼 텍스트 크기 줄이기 */
-  padding: 5px 10px; /* 버튼 패딩 조절 (크기 조절) */
-  position: relative; /* 위치 조정을 위해 상대 위치 설정 */
-  top: 2px; /* 위로 조금 이동 (선택 사항) */
+    color: #888;
+    /* 연한 회색 */
+    text-decoration: none;
+    /* 링크 밑줄 제거 */
+    font-size: 16px;
+    /* 버튼 텍스트 크기 줄이기 */
+    padding: 5px 10px;
+    /* 버튼 패딩 조절 (크기 조절) */
+    position: relative;
+    /* 위치 조정을 위해 상대 위치 설정 */
+    top: 2px;
+    /* 위로 조금 이동 (선택 사항) */
 }
 
 a.delete-button:hover {
-  color: red; /* 이동 시 빨간색으로 변경 (선택 사항) */
+    color: red;
+    /* 이동 시 빨간색으로 변경 (선택 사항) */
 }
 
 /* 삭제 버튼 모양을 X로 만듭니다. */
 a.delete-button::before {
-  content: "X";
-  display: inline-block;
-  margin-right: 3px; /* X와 텍스트 사이의 간격을 조절 (선택 사항) */
+    content: "X";
+    display: inline-block;
+    margin-right: 3px;
+    /* X와 텍스트 사이의 간격을 조절 (선택 사항) */
+}
+
+.single-post {
+    border-bottom: 1px solid #c2c2c2;
+}
+
+.pay-area {
+    margin-top: 10px;
+    display: flex;
+    float: right;
+    font-size: 25px;
+    font-weight: 500;
+    align-items: center;
+}
+
+.pay-btn {
+    margin-left: 20px;
+    float: right;
+    border-radius: 5px;
+    outline: none;
+    box-shadow: none;
+    border: none;
+    padding: 10px 15px;
+    font-size: 20px;
 }

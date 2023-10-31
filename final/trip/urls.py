@@ -24,8 +24,6 @@ urlpatterns = [
     path('mypage/view_user_report/<int:id>', views.view_user_report, name='view_user_report'),
     path('mypage/report_update/<int:id>', views.report_update, name='report_update'),
     
-    
-    
     # 관리자 페이지 by 영환
     path("admin_page/", views.admin_page, name="admin_page"),
     path("admin_page/admin_management", views.admin_management, name="admin_management"),
@@ -57,6 +55,7 @@ urlpatterns = [
   
     # 여행 상품 페이지 By 수현
     path('packages/',views.packages, name='packages'),
+    path('packages/package_detail/<int:id>',views.package_detail, name='package_detail'),
     path('together_detail/<int:id>/',views.together_detail, name='together_detail'), 
     path('together_detail/',views.together_detail, name='together_detail'),
 

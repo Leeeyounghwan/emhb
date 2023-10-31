@@ -605,12 +605,20 @@ def chatapi(request, question):
 
 def chatbot(request):
     return render(request, 'test.html')
+
 def packages(request):
   items =  Package.objects.filter(is_deleted=False)
   context = {
       'items' : items
   }
   return render(request, 'packages.html', context)
+
+def package_detail(request, id):
+    package = get_object_or_404(Package, id=id)
+    context = {
+        "package" : package
+    }
+    return render(request, 'package_detail.html', context)
 
 
 
