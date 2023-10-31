@@ -17,12 +17,12 @@
                 <div>
                     {{ post.content|safe }}
                 </div>
+                <div class='content-btn'>
+                    <button id="write" class= 'btn btn-sm' onclick="location.href='/board/'">목록으로</button>
+                </div>
             </div>
         </div>
-        <div class='content-btn'>
-            <button id="write" class= 'btn btn-sm' onclick="location.href='/board/'">목록으로</button>
-        </div>
-
+        
     </div>
     <div class="post_comment">
         <div class="comment-header">
@@ -30,7 +30,7 @@
                 <p>댓글 {{ comment|length }} 개</p>
             </div>
             <div class="comment-input">
-                <input type="text" placeholder"댓글을 입력해주세요" name='comment_input'>
+                <input type="text" placeholder="댓글을 입력해주세요" name='comment_input'>
             </div>
         </div>
         <div class="comment-content">
@@ -38,20 +38,21 @@
                 <div class="comment-box">
                     <div class="user-profile-img">
                         {% if data.writer.profile_image %}
-                            <img src="{{data.writer.profile_image.url}}" alt="">
+                            <img src="{{data.writer.profile_image.url}}"  class="img-profile rounded-circle" style= "width: 2rem; height: 2rem;"alt="">
                         {% else %}
                             <img src="" alt="">
                         {% endif %}
-                    </div>
-                    <div class="user-comment">
                         <div class="user-info">
                             <div class="user-name">
-                                {{data.writer.username}}
+                                {{data.writer.username}}님
                             </div>
                             <div class="date">
                                 {{data.create_at|timesince:current_time}}
                             </div>
                         </div>
+                    </div>
+                    <div class="user-comment">
+                        
                         <div class="user-comment-content">
                             {{data.content}}
                         </div>

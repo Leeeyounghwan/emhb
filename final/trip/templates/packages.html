@@ -89,7 +89,7 @@
                             <div class="place-cap">
                                 <div class="place-cap-top">
                                     <span><i class="fas fa-star"></i><span>8.0superb</span></span>
-                                    <h3><a href="#">{{ item.title }}</a></h3>
+                                    <h3><a href="{% url 'trip:package_detail' item.id%}">{{ item.title }}</a></h3>
                                     <p class="dolor">{{ item.content }}</p>
                                     <p class="dolor">{{ item.price|intcomma }}원<span>/ 인원 당</span></p>
                                 </div>
