@@ -23,3 +23,5 @@ class PostComment(models.Model):
     content = models.TextField(max_length=300, verbose_name='댓글내용')
     is_deleted = models.BooleanField(default=False)
     
+    class Meta:
+        ordering = ['-create_at']

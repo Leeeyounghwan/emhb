@@ -37,7 +37,11 @@
             {% for data in comment %}
                 <div class="comment-box">
                     <div class="user-profile-img">
-                        <img src="{{data.writer.profile_image.url}}" alt="">
+                        {% if data.writer.profile_image %}
+                            <img src="{{data.writer.profile_image.url}}" alt="">
+                        {% else %}
+                            <img src="" alt="">
+                        {% endif %}
                     </div>
                     <div class="user-comment">
                         <div class="user-info">
@@ -60,34 +64,34 @@
         var postPk = "{{post.id}}";
         const input = document.querySelector('input[name="comment_input"]');
         
-        console.log(input);
         
-        input.addEventListener('onkeyup', e =>{
-
-            if 
-            addComment(e);
+        input.addEventListener('keyup', e =>{
+            console.log(e);
+            if (e.keyCode === 13){
+                addComment(e);
+            }
         })
 
         function addComment(e){
-
-            let value = e.value;
+            let value = input.value;
             var csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value;
+            console.log(value);
 
-            var data = {
-                'content':value,
-            };
+            let formData = new FormData();
+            formData.append('content', value);
 
-            let resp = fetch('/board/add_comment/'+postPk, {
+            let resp = fetch('/board/add_comment/'+ postPk, {
                 method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
                     'X-CSRFToken': csrf_token,  // CSRF 토큰 설정
                 },
-                body:JSON.stringify(data),
+                body:formData,
             })
             .then(resp => resp.json())
             .then(data =>{
+                document.location.reload();
                 console.log(data)
+                input.value = '';
             })
         }
     </script>
