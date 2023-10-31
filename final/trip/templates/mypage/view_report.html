@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 {% load static %}
-{% load humanize %}
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -12,7 +11,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>내 작성글 보기</title>
+    <title>내 정보 수정</title>
 
     <!-- Custom fonts for this template-->
     <link
@@ -25,8 +24,6 @@
       href="{% static 'admin_vendor/fontawesome-free/css/all.min.css' %}"
       type="text/css"
       rel="stylesheet"
-    />
-    <link
       href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
       rel="stylesheet"
     />
@@ -93,11 +90,8 @@
       type="text/css"
       rel="stylesheet"
     />
-    <link
-      href="{% static 'css/mypage.css' %}"
-      type="text/css"
-      rel="stylesheet"
-    />
+    <link href="{% static 'css/sb-admin-2.css' %}" rel="stylesheet">
+    <link href="{% static 'css/fontawesome-all.min.css'%}" rel="stylesheet">
 
     <style>
       .nav-item.active a.nav-link:hover span {
@@ -113,118 +107,68 @@
   </head>
 
   <body id="page-top">
+
     {% include 'mypage/my_header.html'%}
     
     <!-- Page Wrapper -->
     <div id="wrapper">
-
-      {% include 'mypage/my_sidebar.html'%}
-
+        
+        {% include 'mypage/my_sidebar.html'%}
 
       <!-- Content Wrapper -->
       <div id="content-wrapper" class="d-flex flex-column">
+        {% include 'mypage/my_topbar.html'%}
         <!-- Main Content -->
-        <div id="content">
-          {% include 'mypage/my_topbar.html'%}
-
-          <!-- Begin Page Content -->
-          <div class="container-fluid">
-            <!-- Page Heading -->
-            <div
-              class="d-sm-flex align-items-center justify-content-between mb-4"
-            >
-              <h1 class="h3 mb-0 text-gray-800">내 작성글 보기</h1>
-              
-            </div>
-            
-            <div class="my-post">
-              {%for post in my_posts %}
-                <div class="card shadow mb-4" style="width: 20rem; height: 22rem; max-height: 25rem; z-index: 1;">
-                  <div class="card-header py-3">
-                      <h3 class="m-0 font-weight-bold text-primary"><a href="{%url 'trip:together_detail' post.id%}">{{ post.post_title }}</a></h6>
-                  </div>
-                  <div class="card-body">
-                    <div class="place-img">
-                      {% if post.post_image %}
-                          <img src="{{ post.post_image.url }}" alt="{{post.region}}" style="width: 15rem; max-width: 15rem; height:8rem; max-height: 10rem;">
-                      {% endif %}
-                    </div>
-    
-                    <div class="place-cap">
-                        <div class="place-cap-top">
-                            <div class="one-line">{{ post.post_content }}</div>
-                        </div>
-    
-                        <div class="place-cap-bottom">
-                            <ul>
-                                <li><i class="far fa-clock"> 출발일 : {{ post.start_date|date:"Y년 m월 d일" }}</i></li>
-                                <!-- 날짜계산기를 이용하기 위해 숨김값으로 가져옴 -->
-                                <li><i class="far fa-clock"> 도착일 : {{ post.end_date|date:"Y년 m월 d일" }}</i></li>
-                                <li><i class="fas fa-map-marker-alt"></i>{{ post.region }}</li>
-                            </ul>
-                        </div>
-                    </div>
-                  </div>
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>목차</th>
+                                <th>내가 신고한 유저</th>
+                                <th>신고 내용</th>
+                                <th>작성일</th>
+                                <th>처리 여부</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>목차</th>
+                                <th>내가 신고한 유저</th>
+                                <th>신고 내용</th>
+                                <th>작성일</th>
+                                <th>처리 여부</th>
+                        </tfoot>
+                        <tbody>
+                            {% for report in report_list %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td class="m-0 font-weight-bold text-danger">{{report.reported_user}}</td>
+                                    <td><a class="m-0 font-weight-bold text-primary" href="{%url 'trip:view_user_report' report.id%}">{{report.report_reason|truncatechars:60}}</a></td>
+                                    <td>{{report.created_at|date:'Y-m-d'}}</td>
+                                    <td>{% if report.is_completed %}처리완료{%else%}처리대기중{%endif%}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
-              {% endfor %}
-
             </div>
-          </div>
-          <!-- /.container-fluid -->
         </div>
         <!-- End of Main Content -->
-
-        {% include 'mypage/my_footer.html'%}
         
       </div>
       <!-- End of Content Wrapper -->
+      
     </div>
     <!-- End of Page Wrapper -->
-
+    
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
     </a>
-
-    <!-- Logout Modal-->
-    <div
-      class="modal fade"
-      id="logoutModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">로그아웃</h5>
-            <button
-              class="close"
-              type="button"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            로그아웃 하시겠습니까?
-          </div>
-          <div class="modal-footer">
-            <button
-              class="btn btn-secondary"
-              type="button"
-              data-dismiss="modal"
-            >
-              취소
-            </button>
-            <a class="btn btn-primary" href="{% url 'trip:logout'%}">로그아웃</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
+    {% include 'mypage/my_footer.html'%}
     <!-- Bootstrap core JavaScript-->
     <script src="{% static 'admin_vendor/jquery/jquery.min.js' %}"></script>
     <script src="{% static 'admin_vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
@@ -275,5 +219,7 @@
     <!-- Jquery Plugins, main Jquery -->
     <script src="{% static 'js/plugins.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+
+    <script src="{% static 'js/write.js' %}"></script>
   </body>
 </html>

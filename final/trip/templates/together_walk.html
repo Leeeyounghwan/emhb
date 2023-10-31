@@ -81,8 +81,6 @@
                                             
                                         </div>
                                     </div>
-
-                                    
                                 </div>
                             </div>
                         </form>
@@ -92,58 +90,42 @@
         </div>
      </div>
      <!-- slider Area End-->
-
     <!--================Blog Area =================-->
-    <!-- Favourite Places Start -->
-    <div class="favourite-place place-padding">
-         <div class="container">
-            <!-- Section Tittle -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-tittle text-center">
-                        <span>동행모집</span>
-                        <h2>동행커뮤니티</h2>
-                    </div>
-                </div>
-            </div>
-    
-                
-            <div class="row">
-                {% for post in posts %}
-                <div class="col-xl-4 col-lg-4 col-md-6">
-                    <div class="single-place mb-30">
-                        <div class="place-img">
-                            {% if post.post_image %}
-                            <img src="{{ post.post_image.url }}" alt="{{ post.post_title }}">
-                            {% endif %}
-                        </div>
-    
-                        <div class="place-cap">
-                            <div class="place-cap-top">
-                                <h3><a href="#">{{ post.post_title }}</a></h3>
-                                <p class="dolor">{{ post.post_content|truncatechars:15 }}</p>
+
+    <section class="blog_area section-padding" style="display: flex; flex-wrap: nowrap; overflow-x: auto;">
+        <div class="container" style="justify-content:center; align-items:center;">
+            <div style="max-width: 1500px;">
+                <div>
+                    {% for post in posts %}
+                        <article class="blog_item" style="max-width: 20%;">
+                            <div class="blog_item_img">
+
+                                {% if post.post_image %}
+                                <img class="card-img rounded-0" src="{{ post.post_image.url }}" alt="{{ post.post_title }}">
+                                {% endif %}
+                            </div> 
+
+                            <div class="blog_details" style="margin: 0 auto;">
+                                <a class="d-inline-block" href="{% url 'trip:together_detail' post.id %}">
+                                    <h2 style="font-size: 18px;">{{ post.post_title|truncatechars:12 }}</h2>
+                                </a>
+                                <p style="font-size: 14px;">{{ post.post_content|truncatechars:15 }}</p>
                                 <p class="dolor">{{ post.recuited_people }}<span>명 모집중 / {{ post.region }}</span></p>
-                            </div>
-    
-                            <div class="place-cap-bottom">
                                 <ul>
-                                   <li><span>여행기간</span></li>
-                                   <li><i class="far fa-clock"> <span> </span> {{ post.start_date }}<span> ~ </span>{{ post.end_date }}</i></li>
+                                    <li style="font-size:14px;"><span>여행기간</span></li>
+                                   <li style="font-size:14px;"><i class="far fa-clock"> <span> </span> {{ post.start_date|date:"m/d/Y" }}<span> ~ </span>{{ post.end_date|date:"m/d/Y" }}</i></li>
                                 </ul>
-                                    
                                 <ul class="blog-info-link">
-                                    <li style="font-size: 14px;"><a href="#"><i class="fa fa-user"></i> {{ post.user_id }}</a></li>
-                                    <li style="font-size: 14px;"><a href="#"><i class="fa fa-comments"></i> {{ post.user_id }}</a></li>
+                                    <li style="margin-right: 10px; width:30px; height:30px;"><img class="img-profile rounded-circle" src="{% static 'img/undraw_profile.svg' %}"></li>
+                                    <li style="font-size: 14px;">{{ post.user_id }}</li>
                                 </ul>
-                            </div>                            
-                        </div>
-                    </div>
+                            </div>
+                        </article>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
         </div>
-    </div>
-    
+    </section>
     <nav class="blog-pagination justify-content-center d-flex">
         <ul class="pagination">
             <li class="page-item">
