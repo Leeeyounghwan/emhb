@@ -1,4 +1,4 @@
-from .models import Package, User, Report, Schedule, ScheduleComment, Community, TogetherPost,TogetherComment
+from .models import Package, User, Report, Schedule, ScheduleComment, Community, TogetherPost,TogetherComment, WishList
 from .forms import UserForm, UserLoginForm
 from .forms import UserProfileForm
 
@@ -85,7 +85,11 @@ def myfeadback(request): #내가받은 후기 보기
 
 @login_required
 def like_schedule(request): #찜한 일정 리스트
-    return render(request,'mypage/like_schedule.html',{'schedules' : Schedule.objects.all()})
+    user = request.user
+
+    items =  Package.objects.filter(is_deleted=False)
+    post = WishList.objects.filter(user_id= user.id)
+    return render(request,'mypage/like_test.html',{'items':post})
 
 @login_required
 def chatting_room(request): #채팅방리스트

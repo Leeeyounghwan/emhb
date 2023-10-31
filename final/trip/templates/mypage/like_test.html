@@ -131,46 +131,38 @@
             </div>
       
             <div class="row">
-              {% comment %} {%for post in posts %} {% endcomment %}
-              <div class="col-xl-4 col-lg-4 col-md-6">
-                  <div class="single-place mb-30">
-                    <h1>찜한 일정 리스트</h1>
-                      {% comment %} <div class="place-img">
-                          {% if post.post_image %}
-                              <img src="{{ post.post_image.url }}" alt="{{post.destination}}">
-                          {% endif %}
-                      </div> {% endcomment %}
-                      <div class="place-img">
-                            <img src="./media/고구마.jpg" alt="">이미지
+                {%for item in items %}
+                <div class="col-xl-4 col-lg-4 col-md-6">
+                    <div class="single-place mb-30">
+                        <div class="place-img">
+                            {% if item.image %}
+                                <img src="{{ item.image.url }}" alt="{{ item.destination }}">
+                            {% endif %}
+                        </div>
+
+                        <div class="place-cap">
+                            <div class="place-cap-top">
+                                <span><i class="fas fa-star"></i><span>8.0superb</span></span>
+                                <h3><a href="#">{{ item.title }}</a></h3>
+                                <p class="dolor">{{ item.content }}</p>
+                                <p class="dolor">{{ item.price|intcomma }}원<span>/ 인원 당</span></p>
+                            </div>
+
+                            <div class="place-cap-bottom">
+                                <ul>
+                                    <li><i class="far fa-clock">{{ item.start_date }}</i></li>
+                                    <!-- 날짜계산기를 이용하기 위해 숨김값으로 가져옴 -->
+                                    <li><i class="far fa-clock" style="display:none">{{ item.end_date }}</i></li>
+                                    <li><i class="fas fa-map-marker-alt"></i>{{ item.destination }}</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-
-                      <div class="place-cap">
-                          <div class="place-cap-top">
-                            <h3><a href="#">상품 제목</a></h3>
-                              {% comment %} <h3><a href="#">{{ post.title }}</a></h3> {% endcomment %}
-                              {% comment %} <p class="dolor">{{ post.post_content }}</p>    {% endcomment %}
-                          </div>
-
-                          <div class="place-cap-bottom">
-                              <ul>
-                                <li><i class="far fa-clock">{{ post.price }}</i></li>
-                                  {% comment %} <li><i class="far fa-clock">{{ post.start_date }}</i></li> {% endcomment %}
-                                  <!-- 날짜계산기를 이용하기 위해 숨김값으로 가져옴 -->
-                                  {% comment %} <li><i class="far fa-clock">{{ post.end_date }}</i></li> {% endcomment %}
-                                  <li><i class="fas fa-map-marker-alt"></i>{{ post.destination }}</li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              
-              {% comment %} {% endfor %} {% endcomment %}
+                </div>
+                {% endfor %}
             </div>
-            
-          </div>
-          <!-- /.container-fluid -->
         </div>
-        <!-- End of Main Content -->
+    </div>
 
         {% include 'mypage/my_footer.html' %}
       </div>

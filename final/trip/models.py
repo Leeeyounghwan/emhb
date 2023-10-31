@@ -149,4 +149,12 @@ class Community(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     community_destination = models.CharField(max_length=200, null=True, blank=True)
+
+
+
+class WishList(models.Model):
+    user_id = models.OneToOneField(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Package, on_delete=models.CASCADE, null=False, default="" )
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_deleted = models.BooleanField(default=False)
     
