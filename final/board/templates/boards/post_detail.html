@@ -1,0 +1,86 @@
+<div class="post-wrap">
+    {% csrf_token %}
+    <div class="post-container flex-center">
+        <div class="flex-center card">
+            <!--제목,분류,작성일-->
+            <div class="card-header">
+                <p><strong>{{ post.title }}</strong><span>[게시판]</span></p>
+                <p><span>{{ post.create_at|date:'Y.m.d. H:i' }}</span></p>
+            </div>
+            <div class="card-body">
+                <!--작성자, 조회수-->
+                <div>
+                    <span>작성자 : {{ post.writer }}</span>
+                    <span>조회수 : {{ post.review }}</span>
+                </div>
+                <!--내용-->
+                <div>
+                    {{ post.content|safe }}
+                </div>
+            </div>
+        </div>
+        <div class='content-btn'>
+            <button id="write" class= 'btn btn-sm' onclick="location.href='/board/'">목록으로</button>
+        </div>
+
+    </div>
+    <div class="post_comment">
+        <div class="comment-header">
+            <div class="comment-info">
+                <p>댓글 {{ comment|length }} 개</p>
+            </div>
+            <div class="comment-input">
+                <input type="text" placeholder"댓글을 입력해주세요" name='comment_input' onclik='addComment()'>
+            </div>
+        </div>
+        <div class="comment-content">
+            {% for data in comment %}
+                <div class="comment-box">
+                    <div class="user-profile-img">
+                        <img src="{{data.writer.profile_image.url}}" alt="">
+                    </div>
+                    <div class="user-comment">
+                        <div class="user-info">
+                            <div class="user-name">
+                                {{data.writer.username}}
+                            </div>
+                            <div class="date">
+                                {{data.create_at|timesince:current_time}}
+                            </div>
+                        </div>
+                        <div class="user-comment-content">
+                            {{data.content}}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script>
+        var postPk = "{{post.id}}";
+
+        
+        function addComment(){
+            const input = document.querySelector('input[name="comment_input"]');
+            let value = input.value;
+            var csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value;
+
+            var data = {
+                'content':value,
+            }
+
+            let resp = fetch('/board/add_comment/'+postPk.{
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrf_token,  // CSRF 토큰 설정
+                },
+                body:JSON.stringify(data),
+            })
+            .then(resp => resp.json())
+            .then(data =>{
+                console.log(data)
+            })
+        }
+    </script>
+</div>

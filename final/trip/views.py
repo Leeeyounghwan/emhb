@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404
 
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Package, User, Report,Schedule,ScheduleComment, Community, TogetherPost,TogetherComment
+from .models import Package, User, Report,Schedule,ScheduleComment, Community, TogetherPost,TogetherComment, GroupChat
 from django.contrib.auth.decorators import login_required
 import openai
 from django.http import JsonResponse
@@ -121,6 +121,53 @@ def like_schedule(request): #찜한 일정 리스트
 @login_required
 def chatting_room(request): #채팅방리스트
     return render(request,'mypage/chatting_room.html')
+
+@login_required
+def user_report(request):
+    return render(request, 'mypage/user_report.html')
+
+@login_required
+def report_submit(request):
+    report = Report()
+    if request.method == "POST":
+        report.user_id_id = request.user.id
+        report.reported_user = request.POST['reported_user']
+        report.report_reason = request.POST['report_content']
+        report.save()
+
+    return redirect('trip:view_report')
+
+@login_required
+def view_report(request):
+    report_list = Report.objects.filter(user_id_id=request.user.id, is_deleted=False)
+    context = {
+        "report_list" : report_list
+    }
+    return render(request, "mypage/view_report.html", context)
+
+@login_required
+def view_user_report(request, id) :
+    report_detail = get_object_or_404(Report, id=id)
+    context = {
+        "report_detail" : report_detail
+    }
+    return render(request, "mypage/view_user_report.html", context)
+
+@login_required
+def report_update(request, id):
+    report = get_object_or_404(Report, id=id)
+    if request.method == "POST":
+        action = request.POST.get('action')
+        if action == 'update':
+            report.report_reason = request.POST['report_content']
+            print(report.report_reason)
+            report.save()
+
+        elif action == 'delete':
+            report.is_deleted = True
+            report.save()
+
+    return redirect('trip:view_report')
 
 # 마이페이지 종료
 
@@ -297,7 +344,7 @@ def return_management(request):
 def report_detail(request):
 
     if admin_check(request) == True :
-        reports = Report.objects.all().order_by('is_completed', 'created_at', 'updated_at')
+        reports = Report.objects.all().filter(is_deleted=False).order_by('is_completed', 'created_at', 'updated_at')
         
         context = {
             "reports" : reports
@@ -311,10 +358,12 @@ def view_report_detail(request, id):
 
     if admin_check(request) == True :
         report_detail = Report.objects.filter(id=id)
+        print(report_detail[0].user_id_id)
         # 신고한 유저 정보
         user_info = get_object_or_404(User, id=report_detail[0].user_id_id)
         # 신고당한 유저 정보
-        reported_user_info = get_object_or_404(User, username=report_detail[0].reported_user)
+        reported_user_info = get_object_or_404(User, nickname=report_detail[0].reported_user)
+        print(reported_user_info.username)
         context = {
             "report_detail" : report_detail[0],
             "user_info" : user_info,
@@ -329,7 +378,7 @@ def report_complete(request, id):
 
     if admin_check(request) == True :
         report = get_object_or_404(Report, id=id)
-        reported_user_info = get_object_or_404(User, username=report.reported_user)
+        reported_user_info = get_object_or_404(User, nickname=report.reported_user)
 
         if request.method == "POST":
             action = request.POST.get('action')
@@ -419,6 +468,7 @@ def elements(request):
     return render(request, 'elements.html')
 def main(request):
     return render(request, 'main.html')
+@login_required
 def together_detail(request, id):
     try:
         post = TogetherPost.objects.get(id=id)
@@ -434,7 +484,6 @@ def together_detail(request, id):
             pass  # 댓글이 이미 삭제된 경우 무시
         
         post = TogetherPost.objects.get(id=id)
-
     context = {
         "post": post,
     }
@@ -540,7 +589,7 @@ def chatapi(request, question):
         messages=[
             {
             "role": "system",
-            "content": "너는 우리 트립웹에 Trip봇이야. 답변은 400자 내로 깔끔하게"},
+            "content": "너는 우리 트립웹에 Trip봇이야. 답변은 200자 내로 .으로완결지어 "},
             {"role": "user", "content": f"'{question}'"},
         ],
         temperature=0.5,

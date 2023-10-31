@@ -75,7 +75,7 @@
                                             <tr>
                                                 <td>{{forloop.counter}}</td>
                                                 <td>{{report.user_id}}</td>
-                                                <td><a class="m-0 font-weight-bold text-primary" href="{%url 'trip:view_report_detail' report.id%}">{{report.report_reason}}</a></td>
+                                                <td><a class="m-0 font-weight-bold text-primary" href="{%url 'trip:view_report_detail' report.id%}">{{report.report_reason|truncatechars:60}}</a></td>
                                                 <td>{{report.created_at|date:'Y-m-d'}}</td>
                                                 <td>{% if report.is_completed %}처리완료{%else%}처리대기중{% endif %}</td>
                                             </tr>

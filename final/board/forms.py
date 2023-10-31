@@ -8,7 +8,7 @@ class PostWriteForm(forms.ModelForm):
         self.fields['title'].label = '제목'
         self.fields['title'].widget.attrs.update({
             'placeholder': '제목을 입력해주세요.',
-            'class': 'form-control',
+            'class': 'form-control form-title-input',
             'autofocus': True,
         })
 

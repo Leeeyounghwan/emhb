@@ -11,13 +11,20 @@ urlpatterns = [
     
     # 메인페이지 종료
 
-    # 마이페이지 by 준경
+    # 마이페이지 by 영환
     path('mypage/profile/', views.profile, name='profile'),
     path('mypage/post_detail/<int:post_id>', views.post_detail, name='post_detail'),
     path('mypage/mytopics/', views.mytopics, name='mytopics'),
     path('mypage/myfeadback/', views.myfeadback, name='myfeadback'),
     path('mypage/like_schedule/', views.like_schedule, name='like_schedule'),
     path('mypage/chatting_room/', views.chatting_room, name='chatting_room'),
+    path('mypage/user_report/', views.user_report, name='user_report'),
+    path('mypage/report_submit/', views.report_submit, name='report_submit'),
+    path('mypage/view_report/', views.view_report, name='view_report'),
+    path('mypage/view_user_report/<int:id>', views.view_user_report, name='view_user_report'),
+    path('mypage/report_update/<int:id>', views.report_update, name='report_update'),
+    
+    
     
     # 관리자 페이지 by 영환
     path("admin_page/", views.admin_page, name="admin_page"),
@@ -32,7 +39,7 @@ urlpatterns = [
     path("admin_page/delivery_tracking", views.delivery_tracking, name="delivery_tracking"),
     path("admin_page/return_management", views.return_management, name="return_management"),
     path("admin_page/report_detail", views.report_detail, name="report_detail"),
-    path("admin_page/report_detail/<int:id>", views.view_report_detail, name="view_report_detail"),
+    path("admin_page/view_report_detail/<int:id>", views.view_report_detail, name="view_report_detail"),
     path("admin_page/report_complete/<int:id>", views.report_complete, name="report_complete"),
     path("admin_page/blacklist_management", views.blacklist_management, name="blacklist_management"),
     path("admin_page/black_cancel/<int:blacklist_id>", views.black_cancel, name="black_cancel"),

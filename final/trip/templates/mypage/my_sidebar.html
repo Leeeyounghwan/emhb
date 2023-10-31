@@ -10,31 +10,39 @@ id="accordionSidebar"
   style="background-color: #ffc107"
 >
   <div class="sidebar-brand-icon rotate-n-15">
-    <i class="fas fa-laugh-wink"></i>
+    <i class="fas fa fa-plane"></i>
   </div>
   <div class="sidebar-brand-text mx-3">페이지 바로가기</div>
 </a>
 <!-- Nav Item - Dashboard -->
 <li class="nav-item active">
   <a class="nav-link" href="{% url 'trip:profile' %}">
-    <i class="fas fa-fw fa-tachometer-alt"></i>
+    <i class="fas fa-fw fa fa-user"></i>
     <span>내 정보 수정</span></a
   >
   <a class="nav-link" href="{% url 'trip:mytopics' %}">
-    <i class="fas fa-fw fa-tachometer-alt"></i>
+    <i class="fas fa-fw fa fa-file"></i>
     <span>내 작성글 보기</span></a
   >
   <a class="nav-link" href="{% url 'trip:myfeadback' %}">
-    <i class="fas fa-fw fa-tachometer-alt"></i>
+    <i class="fas fa-fw fa fa-envelope"></i>
     <span>내가 받은 동행 후기</span></a
   >
   <a class="nav-link" href="{% url 'trip:like_schedule' %}">
-    <i class="fas fa-fw fa-tachometer-alt"></i>
+    <i class="fas fa-fw fa fa-suitcase"></i>
     <span>찜한 일정 리스트</span></a
   >
   <a class="nav-link" href="{% url 'trip:chatting_room' %}">
-    <i class="fas fa-fw fa-tachometer-alt"></i>
+    <i class="fas fa-fw fa fa-comments"></i>
     <span>채팅방</span></a
+  >
+  <a class="nav-link" href="{% url 'trip:user_report' %}">
+    <i class="fas fa-fw fa fa-bullhorn"></i>
+    <span>사용자 신고하기</span></a
+  >
+  <a class="nav-link" href="{% url 'trip:view_report' %}">
+    <i class="fas fa-fw fa fa-list-alt"></i>
+    <span>신고내역 확인하기</span></a
   >
 </li>
 
