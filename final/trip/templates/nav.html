@@ -31,7 +31,9 @@
                                             <li><a href="{% url 'trip:logout' %}">로그아웃</a></li>
                                         {%else %}
                                             <li><a href="{% url 'trip:profile' %}">마이페이지</a></li>
+                                            <li><a href="{% url 'trip:community_write' %}">동행 글작성</a></li>
                                             <li><a href="{% url 'trip:logout' %}">로그아웃</a></li>
+
                                         {% endif %}
                                     {% else %}
                                         <li><a href="{% url 'trip:login' %}">로그인</a></li>
