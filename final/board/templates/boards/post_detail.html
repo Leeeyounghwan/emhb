@@ -30,7 +30,7 @@
                 <p>댓글 {{ comment|length }} 개</p>
             </div>
             <div class="comment-input">
-                <input type="text" placeholder"댓글을 입력해주세요" name='comment_input' onclik='addComment()'>
+                <input type="text" placeholder"댓글을 입력해주세요" name='comment_input'>
             </div>
         </div>
         <div class="comment-content">
@@ -58,18 +58,26 @@
     </div>
     <script>
         var postPk = "{{post.id}}";
-
+        const input = document.querySelector('input[name="comment_input"]');
         
-        function addComment(){
-            const input = document.querySelector('input[name="comment_input"]');
-            let value = input.value;
+        console.log(input);
+        
+        input.addEventListener('onkeyup', e =>{
+
+            if 
+            addComment(e);
+        })
+
+        function addComment(e){
+
+            let value = e.value;
             var csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value;
 
             var data = {
                 'content':value,
-            }
+            };
 
-            let resp = fetch('/board/add_comment/'+postPk.{
+            let resp = fetch('/board/add_comment/'+postPk, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
