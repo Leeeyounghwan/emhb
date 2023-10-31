@@ -45,11 +45,12 @@ urlpatterns = [
     path('elements/',views.elements, name='elements'),
     path('main/',views.main, name='main'),
     path('together_walk/',views.together_walk, name='together_walk'),
+    path('add_comment/<int:id>/', views.add_comment, name='add_comment'),
+    path('delete_comment/<int:id>/', views.delete_comment, name='delete_comment'),
   
     # 여행 상품 페이지 By 수현
     path('packages/',views.packages, name='packages'),
     path('together_detail/<int:id>/',views.together_detail, name='together_detail'), 
-    path('add_comment/<int:id>/', views.add_comment, name='add_comment'),
     path('together_detail/',views.together_detail, name='together_detail'),
 
     # 로그인, 회원가입 페이지 by 문정

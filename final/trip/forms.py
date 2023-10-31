@@ -98,7 +98,8 @@ class UserProfileForm(forms.Form):
     password.label = ""
     password_confirm.label = ""
     
-    class CommentForm(forms.ModelForm):
-        class Meta:
-            model = TogetherComment
-            fields = ['content']
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = TogetherComment
+        fields = ['content']
+        labels = {'content': '댓글 내용'}
