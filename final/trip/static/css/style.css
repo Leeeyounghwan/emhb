@@ -7317,6 +7317,8 @@ a.delete-button:hover {
 
 /* 삭제 버튼 모양을 X로 만듭니다. */
 a.delete-button::before {
+
+
     content: "X";
     display: inline-block;
     margin-right: 3px;
