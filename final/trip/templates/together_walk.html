@@ -81,8 +81,6 @@
                                             
                                         </div>
                                     </div>
-
-                                    
                                 </div>
                             </div>
                         </form>
@@ -93,6 +91,7 @@
      </div>
      <!-- slider Area End-->
     <!--================Blog Area =================-->
+
     <section class="blog_area section-padding" style="display: flex; flex-wrap: nowrap; overflow-x: auto;">
         <div class="container" style="justify-content:center; align-items:center;">
             <div style="max-width: 1500px;">
@@ -100,17 +99,25 @@
                     {% for post in posts %}
                         <article class="blog_item" style="max-width: 20%;">
                             <div class="blog_item_img">
-                                <img class="card-img rounded-0" src="{{ post.post_image.url }}" alt="posts.post_title">
+
+                                {% if post.post_image %}
+                                <img class="card-img rounded-0" src="{{ post.post_image.url }}" alt="{{ post.post_title }}">
+                                {% endif %}
                             </div> 
 
                             <div class="blog_details" style="margin: 0 auto;">
                                 <a class="d-inline-block" href="{% url 'trip:together_detail' post.id %}">
-                                    <h2 style="font-size: 18px;">{{ post.post_title }}</h2>
+                                    <h2 style="font-size: 18px;">{{ post.post_title|truncatechars:12 }}</h2>
                                 </a>
                                 <p style="font-size: 14px;">{{ post.post_content|truncatechars:15 }}</p>
+                                <p class="dolor">{{ post.recuited_people }}<span>명 모집중 / {{ post.region }}</span></p>
+                                <ul>
+                                    <li style="font-size:14px;"><span>여행기간</span></li>
+                                   <li style="font-size:14px;"><i class="far fa-clock"> <span> </span> {{ post.start_date|date:"m/d/Y" }}<span> ~ </span>{{ post.end_date|date:"m/d/Y" }}</i></li>
+                                </ul>
                                 <ul class="blog-info-link">
-                                    <li style="font-size: 14px;"><a href="#"><i class="fa fa-user"></i> {{ post.user_id }}</a></li>
-                                    <li style="font-size: 14px;"><a href="#"><i class="fa fa-comments"></i> {{ post.user_id }}</a></li>
+                                    <li style="margin-right: 10px; width:30px; height:30px;"><img class="img-profile rounded-circle" src="{% static 'img/undraw_profile.svg' %}"></li>
+                                    <li style="font-size: 14px;">{{ post.user_id }}</li>
                                 </ul>
                             </div>
                         </article>

@@ -41,51 +41,7 @@
         </div>
     </div>
     <!-- Preloader Start -->
-    <header>
-        <!-- Header Start -->
-       <div class="header-area">
-            <div class="main-header ">
-               <div class="header-bottom  header-sticky">
-                    <div class="container">
-                        <div class="row align-items-center">
-                            <!-- Logo -->
-                            <div class="col-xl-2 col-lg-2 col-md-1">
-                                <div class="logo">
-                                  <a href="{% url 'trip:index' %}"><img src="{% static 'img/logo.png' %}" alt=""></a>
-                                </div>
-                            </div>
-                            <div class="col-xl-10 col-lg-10 col-md-10">
-                                <!-- Main-menu -->
-                                <div class="main-menu f-right d-none d-lg-block">
-                                    <nav>               
-                                        <ul id="navigation">                                                                                                                                     
-                                            <li><a href="{% url 'trip:index' %}">Home</a></li>
-                                            <li><a href="{% url 'trip:about' %}">About US</a></li>
-                                            <li><a href="{% url 'trip:packages'%}">Package</a></li>
-                                            <li><a href="{% url 'trip:together_walk'%}">Blog</a>
-                                                <ul class="submenu">
-                                                    <li><a href="{% url 'trip:together_walk' %}">Blog</a></li>
-                                                    <li><a href="{% url 'trip:together_detail' %}">Blog Details</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="{% url 'trip:profile' %}">My Pages</a>
-                                            </li>
-                                            <li><a href="{% url 'trip:contact' %}">Contact Us</a></li>
-                                        </ul>
-                                    </nav>
-                                </div>
-                            </div>
-                            <!-- Mobile Menu -->
-                            <div class="col-12">
-                                <div class="mobile_menu d-block d-lg-none"></div>
-                            </div>
-                        </div>
-                    </div>
-               </div>
-            </div>
-       </div>
-        <!-- Header End -->
-    </header>
+    {% include 'nav.html' %}
 
     <main>
         <!-- slider Area Start-->
@@ -133,7 +89,7 @@
                             <div class="place-cap">
                                 <div class="place-cap-top">
                                     <span><i class="fas fa-star"></i><span>8.0superb</span></span>
-                                    <h3><a href="#">{{ item.title }}</a></h3>
+                                    <h3><a href="{% url 'trip:package_detail' item.id%}">{{ item.title }}</a></h3>
                                     <p class="dolor">{{ item.content }}</p>
                                     <p class="dolor">{{ item.price|intcomma }}원<span>/ 인원 당</span></p>
                                 </div>

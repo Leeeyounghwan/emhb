@@ -91,10 +91,10 @@
                         <h2 class="contact-title">동행친구찾기</h2>
                     </div>
                     <div class="col-lg-8">
-                        <form class="form-contact contact_form" action="{% url 'trip:set_write' %}" method="post" id="contactForm" novalidate="novalidate">
+                        <form class="form-contact contact_form" action="{% url 'trip:set_write' %}" method="post" id="contactForm" novalidate="novalidate" enctype="multipart/form-data">
                         {% csrf_token %}
                           <!-- 지도 이미지화 -->
-                          <div id="staticMap" name="staticMap" style="width:500px; height:400px; display:none;"></div>
+                          <div id="staticMap" name="staticMap" style="width:270px; height:220px;"></div>
 
                                 <div class="row">
                                   <!-- community_destination -->
@@ -247,6 +247,7 @@
           position: coords
         });
 
+        
         // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
         map.setCenter(coords);
       }
@@ -259,9 +260,17 @@
             marker : marker
           };
     
+
+
+      var x = result[0].x
+      var y = result[0].y
+
+
+      
       // 이미지 지도를 표시할 div와 옵션으로 이미지 지도를 생성합니다
       var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption)
-
+      
+      console.log(staticMap)
       //marker.setDraggable(true); 
     });
     </script>

@@ -15,3 +15,13 @@ class Post(models.Model):
     class Meta:
         db_table = '게시판'
         verbose_name = '게시판'
+        
+class PostComment(models.Model):
+    post_name = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comment')
+    writer = models.ForeignKey(User, on_delete=models.CASCADE)
+    create_at = models.DateTimeField(auto_now_add=True, verbose_name='등록시간')
+    content = models.TextField(max_length=300, verbose_name='댓글내용')
+    is_deleted = models.BooleanField(default=False)
+    
+    class Meta:
+        ordering = ['-create_at']

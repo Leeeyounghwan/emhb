@@ -11,6 +11,7 @@
    <!-- <link rel="manifest" href="site.webmanifest"> -->
    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.png' %}">
    <!-- Place favicon.ico in the root directory -->
+   
   
   <!-- CSS here -->
   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
@@ -142,11 +143,11 @@
                                           <h5>
                                               <a href="#">{{ user.nickname }}</a>
                                           </h5>
-                                          <p class="date">{{ comment.created_at|date:"F j, Y P" }}</p>
+                                          <p class="date">{{ comment.created_at|date:"m/d/Y P" }}</p>
                                       </div>
-                                      <div class="reply-btn">
-                                          <a href="#" class="btn-reply text-uppercase">reply</a>
-                                      </div>
+                                      <div>
+                                       <a href="{% url 'trip:delete_comment' id=comment.id %}" class="delete-button"></a>
+                                    </div>
                                   </div>
                               </div>
                           </div>
@@ -155,10 +156,10 @@
                      {% empty %}
                          <p> 입력된 댓글이 없습니다.</p>
                   {% endfor %}
-                  
+                     
                </div>
                <div class="comment-form">
-                  <form class="form-contact comment_form" method="post">
+                  <form class="form-contact comment_form" action="{% url 'trip:add_comment' id=post.id %}" method="post">
                      {% csrf_token %}
                      {{ form.as_p }}
                      <div class="row">
@@ -189,47 +190,6 @@
                         <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
                            >채팅하기</button>
                   </aside>
-                  <aside class="single_sidebar_widget post_category_widget">
-                     <h4 class="widget_title">Category</h4>
-                     <ul class="list cat-list">
-                        <li>
-                           <a href="#" class="d-flex">
-                              <p>Resaurant food</p>
-                              <p>(37)</p>
-                           </a>
-                        </li>
-                        <li>
-                           <a href="#" class="d-flex">
-                              <p>Travel news</p>
-                              <p>(10)</p>
-                           </a>
-                        </li>
-                        <li>
-                           <a href="#" class="d-flex">
-                              <p>Modern technology</p>
-                              <p>(03)</p>
-                           </a>
-                        </li>
-                        <li>
-                           <a href="#" class="d-flex">
-                              <p>Product</p>
-                              <p>(11)</p>
-                           </a>
-                        </li>
-                        <li>
-                           <a href="#" class="d-flex">
-                              <p>Inspiration</p>
-                              <p>(21)</p>
-                           </a>
-                        </li>
-                        <li>
-                           <a href="#" class="d-flex">
-                              <p>Health Care</p>
-                              <p>(21)</p>
-                           </a>
-                        </li>
-                     </ul>
-                  </aside>
                   <aside class="single_sidebar_widget tag_cloud_widget">
                      <h4 class="widget_title">Tag Clouds</h4>
                      <ul class="list">
@@ -256,41 +216,6 @@
                         </li>
                         <li>
                            <a href="#">illustration</a>
-                        </li>
-                     </ul>
-                  </aside>
-                  <aside class="single_sidebar_widget instagram_feeds">
-                     <h4 class="widget_title">Instagram Feeds</h4>
-                     <ul class="instagram_row flex-wrap">
-                        <li>
-                           <a href="#">
-                              <img class="img-fluid" src="{% static 'img/post/post_5.png' %}" alt="">
-                           </a>
-                        </li>
-                        <li>
-                           <a href="#">
-                              <img class="img-fluid" src="{% static 'img/post/post_6.png' %}" alt="">
-                           </a>
-                        </li>
-                        <li>
-                           <a href="#">
-                              <img class="img-fluid" src="{% static 'img/post/post_7.png' %}" alt="">
-                           </a>
-                        </li>
-                        <li>
-                           <a href="#">
-                              <img class="img-fluid" src="{% static 'img/post/post_8.png' %}" alt="">
-                           </a>
-                        </li>
-                        <li>
-                           <a href="#">
-                              <img class="img-fluid" src="{% static 'img/post/post_9.png' %}" alt="">
-                           </a>
-                        </li>
-                        <li>
-                           <a href="#">
-                              <img class="img-fluid" src="{% static 'img/post/post_10.png' %}" alt="">
-                           </a>
                         </li>
                      </ul>
                   </aside>
