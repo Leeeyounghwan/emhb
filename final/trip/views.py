@@ -1,17 +1,21 @@
-from .models import Package, User, Report, Schedule, ScheduleComment, Community, TogetherPost,TogetherComment
-from .forms import UserForm, UserLoginForm 
-from .forms import UserProfileForm, TogetherPostForm
+from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404
+# from .forms import CommentForm
 
-from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
-from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
-from django.http import JsonResponse
-
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Package, User, Report,Schedule,ScheduleComment, Community, TogetherPost,TogetherComment
+from django.contrib.auth.decorators import login_required
 import openai
+from django.http import JsonResponse
 import json
+from django.contrib import messages
+from .forms import UserForm, UserLoginForm
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import AuthenticationForm
+from django.http import JsonResponse
+from .forms import UserProfileForm
+from django.contrib.auth import update_session_auth_hash
 
 # Create your views here.
 
@@ -37,9 +41,26 @@ def search_trip(request):
 def profile(request): #내 정보 수정
     user = request.user
     form = UserProfileForm(initial={'username': user.username})
+    user_info = get_object_or_404(User, username=user.username)
+    print(user_info.profile_image)
 
-    if request.method == 'POST':
+    if request.method == 'POST' and user_info.profile_image == "":
+        user_info.profile_image = request.FILES['profile_img']
+        user_info.save()
+        return redirect('trip:profile')
+    
+    if request.method == 'POST' and user_info.profile_image != "":
         form = UserProfileForm(request.POST)
+
+        if 'profile_img' in request.FILES:
+            user_info.profile_image = request.FILES['profile_img']
+            user_info.save()
+
+            context = {
+                "form" : form,
+                "user_info" : user_info
+            }
+            return redirect('trip:profile')
 
         if form.is_valid():
             nickname = form.cleaned_data['nickname']
@@ -60,10 +81,18 @@ def profile(request): #내 정보 수정
                     messages.success(request, '비밀번호가 업데이트되었습니다.')
                 else:
                     messages.error(request, '비밀번호와 비밀번호 확인이 일치하지 않습니다.')
+            context = {
+                "form" : form,
+                "user_info" : user_info
+            }
+            return redirect('trip:profile')
 
-            return redirect('trip:index')
+    context = {
+        "form" : form,
+        "user_info" : user_info
+    }
 
-    return render(request, 'mypage/profile.html', {'form': form})
+    return render(request, 'mypage/profile.html', context)
 
 @login_required
 def mytopics(request):#내가 쓴 글 보기
@@ -370,7 +399,13 @@ def black_cancel(request, blacklist_id):
 
 #by 건영
 def index(request):
-    return render(request, 'index.html')
+    together_walk = TogetherPost.objects.all()
+    packages = Package.objects.all()
+    context = {
+        "posts" : together_walk,
+        "packages" : packages
+    }
+    return render(request, 'index.html', context)
 def about(request):
     return render(request, 'about.html')
 def blog(request):

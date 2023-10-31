@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+  <link rel="stylesheet" href="{% static 'css/chatbot.css' %}">
 </head>
 
 <body>
@@ -164,6 +165,7 @@
         </ul>
     </nav>
     <!--================Blog Area =================-->
+    {% include "chatbot.html" %}
     <footer>
         <!-- Footer Start-->
         {% include "footer.html" %}
@@ -206,6 +208,9 @@
 		<!-- Jquery Plugins, main Jquery -->	
         <script src="{% static 'js/plugins.js' %}"></script>
         <script src="{% static 'js/main.js' %}"></script>
+
+        <!-- ChatBot -->
+        <script src="{% static 'js/chatbot.js' %}"></script>
 
 </body>
 </html>
