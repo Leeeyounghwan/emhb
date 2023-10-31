@@ -1,13 +1,19 @@
-function addComment(){
+const input = document.querySelector('input[name="comment_input"]');
+
+input.addEventListener('onkeyup', e =>{
+
+})
+
+function addComment(e){
     const input = document.querySelector('input[name="comment_input"]');
     let value = input.value;
     var csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value;
 
     var data = {
         'content':value,
-    }
+    };
 
-    let resp = fetch('/board/add_comment/'+postPk.{
+    let resp = fetch('/board/add_comment/'+postPk, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',

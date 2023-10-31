@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect
 from .forms import PostWriteForm
 from django.http import JsonResponse
+from datetime import datetime
+from django.core.serializers import serialize
 
 class BoardListView(ListView):
     model = Post
@@ -43,9 +45,11 @@ def post_detail_view(request, pk):
     post.review += 1
     post.save()
     comment = PostComment.objects.filter(post_name=post)
+    current_time = datetime.now()
     context = {
         'post':post,
-        'comment':comment
+        'comment':comment,
+        'current_time':current_time
     }
     return render(request, 'boards/post_test.html', context)
 
@@ -69,7 +73,7 @@ def post_update_view(request):
 @login_required
 def post_comment_add_view(request, pk):
     if request.method == 'POST':
-        post = get_object_or_404(id=pk)
+        post = get_object_or_404(Post, id=pk)
         content = request.POST.get('content')
         if len(content) <= 300 :
             obj= PostComment.objects.create(
@@ -77,9 +81,16 @@ def post_comment_add_view(request, pk):
                 writer = request.user,
                 content = content
             )
+        
+            current_time = datetime.now()
+            
+            serialized_obj = serialize('json', [obj])
             context = {
                 'is_create': True,
-                'comment':obj            
+                'comment':serialized_obj,
+                'current_time':current_time            
             }
+            print(current_time)
+            print(obj.create_at)
             return JsonResponse(context)
     return JsonResponse({'is_create':False})
