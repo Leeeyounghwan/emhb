@@ -1,5 +1,5 @@
 from django import forms
-from .models import Package, Community
+from .models import Package, Community, TogetherPost
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from . models import User
@@ -97,3 +97,9 @@ class UserProfileForm(forms.Form):
     nickname.label = ""
     password.label = ""
     password_confirm.label = ""
+
+class TogetherPostForm(forms.Form):
+    class Meta:
+        model = TogetherPost
+        exclude = ['created_at','updated_at']
+        fields = ['user_id', 'post_title', 'post_content', 'post_image', 'start_date', 'end_date', 'region', 'recuited_people']
