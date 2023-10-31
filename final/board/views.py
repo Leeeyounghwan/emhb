@@ -2,10 +2,11 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.views.generic import ListView
-from .models import Post
+from .models import Post, PostComment
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect
 from .forms import PostWriteForm
+from django.http import JsonResponse
 
 class BoardListView(ListView):
     model = Post
@@ -37,11 +38,14 @@ class BoardListView(ListView):
 
         return context
 
-
 def post_detail_view(request, pk):
     post = get_object_or_404(Post, pk=pk)
+    post.review += 1
+    post.save()
+    comment = PostComment.objects.filter(post_name=post)
     context = {
         'post':post,
+        'comment':comment
     }
     return render(request, 'boards/post_test.html', context)
 
@@ -61,3 +65,21 @@ def post_write_view(request):
 
 def post_update_view(request):
     return
+
+@login_required
+def post_comment_add_view(request, pk):
+    if request.method == 'POST':
+        post = get_object_or_404(id=pk)
+        content = request.POST.get('content')
+        if len(content) <= 300 :
+            obj= PostComment.objects.create(
+                post_name = post,
+                writer = request.user,
+                content = content
+            )
+            context = {
+                'is_create': True,
+                'comment':obj            
+            }
+            return JsonResponse(context)
+    return JsonResponse({'is_create':False})
