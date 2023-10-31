@@ -673,29 +673,41 @@ def set_region(request):
   
 def set_write(request):
     if 'set_write_button' in request.POST:
-        title = request.POST.get('title')
-        start_date = request.POST.get('start_date')
-        end_date = request.POST.get('end_date')
-        content = request.POST.get('messages')
-        image = request.POST.get('staticMap')
-        community_destination = request.POST.get('community_destination')
-        recruitment = request.POST.get('recruitment')
+        Together_post = TogetherPost.objects.create(
+            post_title = request.POST['title'],
+            post_content = request.POST['messages'],
+            start_date = request.POST['start_date'],
+            end_date = request.POST['end_date'],
+            post_image = request.FILES['staticMap'],
+            region =request.POST['community_destination'],
+            recuited_people = request.POST['recruitment'],
+            user_id = request.user,
+        )
 
-        detail = {
-            "community_destination" : community_destination,
-            "recruitment" : recruitment,
-            "title" : title,
-            "start_date" : start_date,
-            "end_date" : end_date,
-            "messages" : content,
-            "image" : image,
-        }
-    
+        print(Together_post)
+
+        Together_post.save()
+        return redirect('trip:blog', pk=id)
+    else:
+        return render(request, 'community_write.html')
+
+
         #확인용(detail)
-        print(detail)
+        # detail = {
+        #     "community_destination" : community_destination,
+        #     "recruitment" : recruitment,
+        #     "title" : title,
+        #     "start_date" : start_date,
+        #     "end_date" : end_date,
+        #     "messages" : content,
+        #     "image" : img,
+        # }
+        # print(detail)
 
-        community_post = Community.objects.create()
-        community_post.detail = detail
+
         
-        community_post.save()
-        return render(request, 'community.html')
+    
+def delete_write(request, id):
+    together_post = get_object_or_404(TogetherPost, id=id)
+    together_post.delete()
+    return redirect('trip:blog')
