@@ -24,14 +24,15 @@
                                             <li><a href="">Blog</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="{% url 'trip:contact' %}">Contact Us</a></li>
-                                    <li><a href="{% url 'trip:profile' %}">마이페이지</a></li>
                                     <!-- 로그인/로그아웃 버튼 -->
                                     {% if user.is_authenticated %}
                                         {% if user.is_staff %}
-                                        <li><a href="{% url 'trip:admin_page' %}">관리자페이지</a></li>
+                                            <li><a href="{% url 'trip:admin_page' %}">관리자페이지</a></li>
+                                            <li><a href="{% url 'trip:logout' %}">로그아웃</a></li>
+                                        {%else %}
+                                            <li><a href="{% url 'trip:profile' %}">마이페이지</a></li>
+                                            <li><a href="{% url 'trip:logout' %}">로그아웃</a></li>
                                         {% endif %}
-                                        <li><a href="{% url 'trip:logout' %}">로그아웃</a></li>
                                     {% else %}
                                         <li><a href="{% url 'trip:login' %}">로그인</a></li>
                                     {% endif %}

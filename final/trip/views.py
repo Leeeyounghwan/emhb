@@ -14,8 +14,10 @@ from .forms import UserForm, UserLoginForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import JsonResponse
-from .forms import UserProfileForm
+from .forms import UserProfileForm, CommentForm
 from django.contrib.auth import update_session_auth_hash
+from django.http import Http404
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -119,6 +121,53 @@ def like_schedule(request): #찜한 일정 리스트
 @login_required
 def chatting_room(request): #채팅방리스트
     return render(request,'mypage/chatting_room.html')
+
+@login_required
+def user_report(request):
+    return render(request, 'mypage/user_report.html')
+
+@login_required
+def report_submit(request):
+    report = Report()
+    if request.method == "POST":
+        report.user_id_id = request.user.id
+        report.reported_user = request.POST['reported_user']
+        report.report_reason = request.POST['report_content']
+        report.save()
+
+    return redirect('trip:view_report')
+
+@login_required
+def view_report(request):
+    report_list = Report.objects.filter(user_id_id=request.user.id, is_deleted=False)
+    context = {
+        "report_list" : report_list
+    }
+    return render(request, "mypage/view_report.html", context)
+
+@login_required
+def view_user_report(request, id) :
+    report_detail = get_object_or_404(Report, id=id)
+    context = {
+        "report_detail" : report_detail
+    }
+    return render(request, "mypage/view_user_report.html", context)
+
+@login_required
+def report_update(request, id):
+    report = get_object_or_404(Report, id=id)
+    if request.method == "POST":
+        action = request.POST.get('action')
+        if action == 'update':
+            report.report_reason = request.POST['report_content']
+            print(report.report_reason)
+            report.save()
+
+        elif action == 'delete':
+            report.is_deleted = True
+            report.save()
+
+    return redirect('trip:view_report')
 
 # 마이페이지 종료
 
@@ -295,7 +344,7 @@ def return_management(request):
 def report_detail(request):
 
     if admin_check(request) == True :
-        reports = Report.objects.all().order_by('is_completed', 'created_at', 'updated_at')
+        reports = Report.objects.all().filter(is_deleted=False).order_by('is_completed', 'created_at', 'updated_at')
         
         context = {
             "reports" : reports
@@ -309,10 +358,12 @@ def view_report_detail(request, id):
 
     if admin_check(request) == True :
         report_detail = Report.objects.filter(id=id)
+        print(report_detail[0].user_id_id)
         # 신고한 유저 정보
         user_info = get_object_or_404(User, id=report_detail[0].user_id_id)
         # 신고당한 유저 정보
-        reported_user_info = get_object_or_404(User, username=report_detail[0].reported_user)
+        reported_user_info = get_object_or_404(User, nickname=report_detail[0].reported_user)
+        print(reported_user_info.username)
         context = {
             "report_detail" : report_detail[0],
             "user_info" : user_info,
@@ -327,7 +378,7 @@ def report_complete(request, id):
 
     if admin_check(request) == True :
         report = get_object_or_404(Report, id=id)
-        reported_user_info = get_object_or_404(User, username=report.reported_user)
+        reported_user_info = get_object_or_404(User, nickname=report.reported_user)
 
         if request.method == "POST":
             action = request.POST.get('action')
@@ -417,28 +468,47 @@ def elements(request):
     return render(request, 'elements.html')
 def main(request):
     return render(request, 'main.html')
-def together_detail(request, id):   
-    post = TogetherPost.objects.get(id=id)
+@login_required
+def together_detail(request, id):
+    try:
+        post = TogetherPost.objects.get(id=id)
+    except TogetherPost.DoesNotExist:
+        raise Http404("포스트를 찾을 수 없습니다.")
+    
+    if request.method == "POST":
+        comment_id = request.POST.get("comment_id")
+        try:
+            comment = TogetherComment.objects.get(id=comment_id)
+            comment.delete()  # 댓글 삭제
+        except TogetherComment.DoesNotExist:
+            pass  # 댓글이 이미 삭제된 경우 무시
+        
+        post = TogetherPost.objects.get(id=id)
     context = {
-        "post" : post
+        "post": post,
     }
     return render(request, 'together_detail.html', context)
 
 @login_required
 def add_comment(request, id):
-    post = TogetherPost.objects.get(id=id)  # 해당 포스트를 가져옵니다
+    post = get_object_or_404(TogetherPost, id=id)
+    form = CommentForm()
+
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.post = post  # 위에서 정의한 post 변수를 사용합니다
+            comment.post_id = post 
             comment.save()
-            return redirect('together_detail', id=id)  # 상세 페이지로 리다이렉트
-    else:
-        form = CommentForm()
+            return redirect('trip:together_detail', id=post.id)
     
-    return render(request, 'together_detail.html', {'form': form, 'id': id})
+    return redirect('trip:together_detail', id=post.id)
 
+@login_required
+def delete_comment(request, id):
+    comment = TogetherComment.objects.get(id=id)
+    comment.delete()
+    return redirect('trip:together_detail', id=comment.post_id.id)
 
 #by 건영 종료
 
