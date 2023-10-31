@@ -68,9 +68,12 @@ urlpatterns = [
 
     #동행모집글 By 수현
     path('community/', views.community, name='community'),
+    
     path('community_write/', views.community_write, name='community_write'),
     path('set_write/', views.set_write, name='set_write'),
     path('set_region/', views.set_region, name='set_region'),
+    
+    path('delete_write/', views.delete_write, name='delete_write'),
 ]
 
 if settings.DEBUG:
