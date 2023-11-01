@@ -17,7 +17,7 @@ from django.http import JsonResponse
 from .forms import UserProfileForm, CommentForm
 from django.contrib.auth import update_session_auth_hash
 from django.http import Http404
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage
 
 from .serializer import GroupChatSerializer
 # Create your views here.
@@ -117,6 +117,7 @@ def myfeadback(request): #내가받은 후기 보기
 
 @login_required
 def like_schedule(request): #찜한 일정 리스트
+    
     return render(request,'mypage/like_schedule.html',{'schedules' : Schedule.objects.all()})
 
 @login_required
@@ -460,9 +461,28 @@ def index(request):
     return render(request, 'index.html', context)
 def about(request):
     return render(request, 'about.html')
+
 def together_walk(request):
     posts = TogetherPost.objects.all()
-    return render(request, 'together_walk.html',{'posts':posts})
+
+    posts_per_page = 6
+
+    page_number = request.GET.get('page')
+    try:
+        page_number = int(page_number)
+    except (ValueError, TypeError):
+        page_number = 1 
+
+    paginator = Paginator(posts, posts_per_page)
+
+    try:
+        current_page = paginator.page(page_number)
+    except EmptyPage:
+        current_page = paginator.page(1)
+
+    return render(request, 'together_walk.html', {'posts': current_page})
+
+
 def contact(request):
     return render(request, 'contact.html')
 def elements(request):
@@ -615,6 +635,7 @@ def packages(request):
   }
   return render(request, 'packages.html', context)
 
+@login_required
 def package_detail(request, id):
     package = get_object_or_404(Package, id=id)
     context = {
@@ -670,15 +691,34 @@ def chat_test(request):
     }
     return render(request, 'chat/test.html', context)
 
+@login_required
 def community(request):
-    return render(request, 'community.html', {"community_items": Community.objects.all()})
+    posts = TogetherPost.objects.all()
 
+    posts_per_page = 6
+
+    page_number = request.GET.get('page')
+    try:
+        page_number = int(page_number)
+    except (ValueError, TypeError):
+        page_number = 1 
+
+    paginator = Paginator(posts, posts_per_page)
+
+    try:
+        current_page = paginator.page(page_number)
+    except EmptyPage:
+        current_page = paginator.page(1)
+
+    return render(request, 'community.html', {'posts': current_page})
+
+@login_required
 def community_write(request):
     return render(request, 'community_write.html')
 
 # def set_write(request):
 
-
+@login_required
 def set_region(request):
   if 'region-button' in request.POST:
     region = request.POST.get('region-setting')
@@ -697,8 +737,12 @@ def set_write(request):
             post_content = request.POST['messages'],
             start_date = request.POST['start_date'],
             end_date = request.POST['end_date'],
-            post_image = request.FILES['staticMap'],
-            region =request.POST['community_destination'],
+            
+            # Lnt, Lat 값 
+            post_lnt = request.POST['lng'],
+            post_lat = request.POST['lat'],
+
+            region = request.POST['community_destination'],
             recuited_people = request.POST['recruitment'],
             user_id = request.user,
         )
@@ -711,21 +755,6 @@ def set_write(request):
         return render(request, 'community_write.html')
 
 
-        #확인용(detail)
-        # detail = {
-        #     "community_destination" : community_destination,
-        #     "recruitment" : recruitment,
-        #     "title" : title,
-        #     "start_date" : start_date,
-        #     "end_date" : end_date,
-        #     "messages" : content,
-        #     "image" : img,
-        # }
-        # print(detail)
-
-
-        
-    
 def delete_write(request, id):
     together_post = get_object_or_404(TogetherPost, id=id)
     together_post.delete()
