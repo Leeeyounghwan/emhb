@@ -22,6 +22,8 @@
         <link rel="stylesheet" href="{% static 'css/slick.css' %}">
         <link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+        <link rel="stylesheet" href="{% static 'css/chatbot.css' %}">
 
         <!-- Kakao Map API-->
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7d5511716523c9fb7d55def390e73d6a&libraries=services"></script>
@@ -37,19 +39,44 @@
       <!-- slider Area Start-->
       <div class="slider-area ">
         <!-- Mobile Menu -->
-        <div class="single-slider slider-height2 d-flex align-items-center" style="background-color:gray;">
-          <div class="container">
-            <div class="row">
-              <div class="col-xl-12">
-                <!-- CSS 확인작업중 -->
-                <div class="hero-cap text-center">
-                  <h2>동행모집</h2>
+        <div class="single-slider slider-height2 d-flex align-items-center" data-background="{% static 'img/blog_images.jpeg' %}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <form method="POST" action="{% url 'trip:search_trip' %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <div class="col-xl-9 col-lg-9 col-md-9">
+                                        <div class="hero__caption">
+                                            <h1>동행을 구해볼까요?</h1>
+                                            <p>가고 싶은 지역을 검색해서 동행을 찾아보세요!</p>
+                                            {% if search_region %}
+                                                <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                                    <input type="text" class="form-control custom-input" value="{{search_region}}" name="region"
+                                                    onfocus="this.placeholder = '{{search_region}}'"
+                                                    onblur="this.placeholder = '{{search_region}}'">
+                                                    <button class="btns" type="submit" value="search" name="action"><i class="ti-search"></i></button>
+                                                </div>
+                                            {% else %}
+                                                <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                                    <input type="text" class="form-control custom-input" placeholder='어디로 떠나시나요?' name="region"
+                                                        onfocus="this.placeholder = ''"
+                                                        onblur="this.placeholder = '어디로 떠나시나요?'">
+                                                    <button class="btns" type="submit" value="search" name="action"><i class="ti-search"></i></button>
+                                                </div>
+                                            {% endif %}
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
+     </div>
       <!-- slider Area End-->
 
       <!-- Favourite Places Start -->
@@ -58,29 +85,29 @@
             <!-- Section Tittle -->
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="section-tittle text-center">
-                        <span>동행모집</span>
-                        <h2>동행커뮤니티</h2>
-                    </div>
+                  <div class="form-group mt-3">
+                    <button type="button" class="button button-contactForm boxed-btn" id="community_write_button" name="community_write_button" value="community_write_button" onClick="location.href='{% url 'trip:community_write' %}'" style="width:100%">동행 모집글 작성하기 </button>
+                  </div>
                 </div>
             </div>
 
             
             <div class="row">
+              {% if community_items %}
                 {%for item in community_items %}
                 <div class="col-xl-4 col-lg-4 col-md-6">
                     <div class="single-place mb-30">
+                        
+                        <!-- Map image -->
                         <div class="place-img">
-                          {% if item.image %}
-                          <img src="{{ item.image.url }}" alt="{{ item.title }}">
-                          {% endif %}
+                          <div id="map_image" style="height:220px; background-color:gray;"></div>
                         </div>
 
                         <div class="place-cap">
                             <div class="place-cap-top">
-                                <h3><a href="#">{{ item.title }}</a></h3>
-                                <p class="dolor">{{ item.content }}</p>
-                                <p class="dolor">{{ item.recruitment }}<span>명 모집중 / {{ item.community_destination }}</span></p>
+                                <h3><a href="{% url 'trip:together_detail' item.id %}">{{ item.post_title|truncatechars:12 }}</a></h3>
+                                <p class="dolor">{{ item.post_content|truncatechars:15 }}</p>
+                                <p class="dolor">{{ item.recuited_people }}<span>명 모집중 / {{ item.region }}</span></p>
                             </div>
 
                             <div class="place-cap-bottom">
@@ -89,122 +116,95 @@
                                     <li><i class="far fa-clock"> <span> </span> {{ item.start_date }}<span> ~ </span>{{ item.end_date }}</i></li>
                                 </ul>
                             </div>
+                            <div class="place-cap-bottom">
+                              <ul class="blog-info-link">
+                                <li style="margin-right: 10px; width:30px; height:30px;"><img class="img-profile rounded-circle" src="{% static 'img/undraw_profile.svg' %}"></li>
+                                <li style="font-size: 14px;">{{ item.user_id }}</li>
+                              </ul>
+                          </div>
                         </div>
                     </div>
                 </div>
                 {% endfor %}
+              {% else %}
+                <div class="no-search-result" style="height: 20rem;"> 조회된 결과가 없습니다.<br>지역명으로 검색해주세요.</div>
+              {% endif %}
             </div>
         </div>
     </div>
     <!-- Favourite Places End -->
-
-      <!-- Pagination-area Start -->
-      <div class="pagination-area pb-100 text-center">
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-12">
-              <div class="single-wrap d-flex justify-content-center">
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination justify-content-start">
-                    <li class="page-item"><a class="page-link" href="#"><span class="flaticon-arrow roted left-arrow"></span></a></li>
-                    <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                    <li class="page-item"><a class="page-link" href="#">02</a></li>
-                    <li class="page-item"><a class="page-link" href="#">03</a></li>
-                    <li class="page-item"><a class="page-link" href="#"><span class="flaticon-arrow right-arrow"></span></a></li>
-                  </ul>
-                </nav>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Pagination-area End -->
     </main>
+
+      <!--================Blog Area =================-->
+      {% include "chatbot.html" %}
 
     <footer>
       <!-- Footer Start-->
-      <div class="footer-area footer-padding footer-bg" data-background="{% static 'img_m/service/footer_bg.jpg' %}">
-          <div class="container">
-              <div class="row d-flex justify-content-between">
-                  <div class="col-xl-3 col-lg-3 col-md-5 col-sm-6">
-                     <div class="single-footer-caption mb-50">
-                       <div class="single-footer-caption mb-30">
-                            <!-- logo -->
-                           <div class="footer-logo">
-                               <a href="index.html"><img src="{% static 'img_m/logo/logo2_footer.png' %}" alt=""></a>
-                           </div>
-                           <div class="footer-tittle">
-                               <div class="footer-pera">
-                                   <p>Lorem iaspsum doldfor sit amvset, consectetur adipisicing cvelit csed do eiusmod tempor incididucvccnt ut labovre.</p>
-                              </div>
-                           </div>
-                       </div>
-                     </div>
-                  </div>
-                  <div class="col-xl-2 col-lg-3 col-md-3 col-sm-5">
-                      <div class="single-footer-caption mb-50">
-                          <div class="footer-tittle">
-                              <h4>Quick Links</h4>
-                              <ul>
-                                  <li><a href="#">About</a></li>
-                                  <li><a href="#"> Offers & Discounts</a></li>
-                                  <li><a href="#"> Get Coupon</a></li>
-                                  <li><a href="#">  Contact Us</a></li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-xl-3 col-lg-3 col-md-4 col-sm-7">
-                      <div class="single-footer-caption mb-50">
-                          <div class="footer-tittle">
-                              <h4>New Products</h4>
-                              <ul>
-                                  <li><a href="#">Woman Cloth</a></li>
-                                  <li><a href="#">Fashion Accessories</a></li>
-                                  <li><a href="#"> Man Accessories</a></li>
-                                  <li><a href="#"> Rubber made Toys</a></li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-xl-3 col-lg-3 col-md-5 col-sm-7">
-                      <div class="single-footer-caption mb-50">
-                          <div class="footer-tittle">
-                              <h4>Support</h4>
-                              <ul>
-                               <li><a href="#">Frequently Asked Questions</a></li>
-                               <li><a href="#">Terms & Conditions</a></li>
-                               <li><a href="#">Privacy Policy</a></li>
-                               <li><a href="#">Privacy Policy</a></li>
-                               <li><a href="#">Report a Payment Issue</a></li>
-                           </ul>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <!-- Footer bottom -->
-              <div class="row pt-padding">
-               <div class="col-xl-7 col-lg-7 col-md-7">
-                  <div class="footer-copy-right">
-                       <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-                  </div>
-               </div>
-                <div class="col-xl-5 col-lg-5 col-md-5">
-                      <!-- social -->
-                      <div class="footer-social f-right">
-                          <a href="https://www.twitter.com/"><i class="fab fa-twitter"></i></a>
-                          <a href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a>
-                          <a href="https://www.behance.net/"><i class="fab fa-behance"></i></a>
-                          <a href="https://www.google.com/"><i class="fas fa-globe"></i></a>
-                      </div>
-               </div>
-           </div>
-          </div>
-      </div>
+      {% include "footer.html" %}
       <!-- Footer End-->
     </footer>
     
-    <script type="text/javascript" src={% static "js/map/map.js" %}></script>
+		<!-- All JS Custom Plugins Link Here here -->
+    <script src="{% static 'js/vendor/modernizr-3.5.0.min.js' %}"></script>
+		
+		<!-- Jquery, Popper, Bootstrap -->
+		<script src="{% static 'js/vendor/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+	  
+    <!-- Jquery Mobile Menu -->
+    <script src="{% static 'js/jquery.slicknav.min.js' %}"></script>
+
+		<!-- Jquery Slick , Owl-Carousel Plugins -->
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/slick.min.js' %}"></script>
+
+		<!-- One Page, Animated-HeadLin -->
+    <script src="{% static 'js/wow.min.js' %}"></script>
+		<script src="{% static 'js/animated.headline.js' %}"></script>
+		
+		<!-- Scrollup, nice-select, sticky -->
+    <script src="{% static 'js/jquery.scrollUp.min.js' %}"></script>
+    <script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+		<script src="{% static 'js/jquery.sticky.js' %}"></script>
+    <script src="{% static 'js/jquery.magnific-popup.js' %}"></script>
+
+    <!-- contact js -->
+    <script src="{% static 'js/contact.js' %}"></script>
+    <script src="{% static 'js/jquery.form.js' %}"></script>
+    <script src="{% static 'js/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'js/mail-script.js' %}"></script>
+    <script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
+        
+		<!-- Jquery Plugins, main Jquery -->	
+    <script src="{% static 'js/plugins.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+    <!-- ChatBot -->
+    <script src="{% static 'js/chatbot.js' %}"></script>
+
+    
+    <!-- JS here -->
+    <script>
+      // JavaScript 코드 수정
+      var staticMapContainers = document.querySelectorAll('.col-xl-4.col-lg-4.col-md-6 .place-img');
+
+      staticMapContainers.forEach(function(container, index) {
+      var staticMapContainer = document.getElementById('map_image');
+      staticMapContainer.id = 'staticMap' + (index + 1); // 각 요소에 고유한 ID 할당
+      container.appendChild(staticMapContainer);
+
+
+      
+      
+
+      var staticMapOption = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 이미지 지도의 중심 좌표
+        level: 5 // 이미지 지도의 확대 레벨
+      };
+
+      // 이미지 지도를 표시할 div와 옵션으로 이미지 지도를 생성합니다
+      var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+    });
+    </script>
   </html>

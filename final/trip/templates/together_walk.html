@@ -99,6 +99,7 @@
         <div class="container" style="justify-content:center; align-items:center;">
             <div style="max-width: 1500px;">
                 <div>
+                  {% if posts %}
                     {% for post in posts %}
                         <article class="blog_item" style="max-width: 20%;">
                             <div class="blog_item_img">
@@ -194,7 +195,7 @@
         <script>
             var staticMapContainer  = document.getElementById('staticMap'), // 이미지 지도를 표시할 div  
                 staticMapOption = { 
-                    center: new kakao.maps.LatLng(lat, lng), // 이미지 지도의 중심좌표
+                    center: new kakao.maps.LatLng(33.450701, 126.570667), // 이미지 지도의 중심좌표
                     level: 3 // 이미지 지도의 확대 레벨
                 };
 

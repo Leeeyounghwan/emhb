@@ -462,6 +462,8 @@ def about(request):
 def together_walk(request):
     posts = TogetherPost.objects.all()
     return render(request, 'together_walk.html',{'posts':posts})
+
+
 def contact(request):
     return render(request, 'contact.html')
 def elements(request):
@@ -652,7 +654,7 @@ def chat_test(request):
     return render(request, 'chat/test.html', context)
 
 def community(request):
-    return render(request, 'community.html', {"community_items": Community.objects.all()})
+    return render(request, 'community.html', {"community_items": TogetherPost.objects.all()})
 
 def community_write(request):
     return render(request, 'community_write.html')
@@ -680,10 +682,10 @@ def set_write(request):
             end_date = request.POST['end_date'],
             
             # Lnt, Lat 값 
-            post_lnt = request.POST['lnt'],
+            post_lnt = request.POST['lng'],
             post_lat = request.POST['lat'],
 
-            region1 =request.POST['community_destination'],
+            region = request.POST['community_destination'],
             recuited_people = request.POST['recruitment'],
             user_id = request.user,
         )
