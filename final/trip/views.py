@@ -116,6 +116,7 @@ def myfeadback(request): #내가받은 후기 보기
 
 @login_required
 def like_schedule(request): #찜한 일정 리스트
+    
     return render(request,'mypage/like_schedule.html',{'schedules' : Schedule.objects.all()})
 
 @login_required

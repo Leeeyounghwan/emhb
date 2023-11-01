@@ -28,12 +28,16 @@ class UserForm(UserCreationForm):
         super().__init__(*args, **kwargs)
         self.fields['username'].widget.attrs['class'] = 'form-control form-control-user'
         self.fields['username'].widget.attrs['id'] = 'username'
+        self.fields['username'].widget.attrs['placeholder'] = '아이디를 입력해주세요.'
         self.fields['password1'].widget.attrs['class'] = 'form-control form-control-user'
         self.fields['password1'].widget.attrs['id'] = 'password1'
+        self.fields['password1'].widget.attrs['placeholder'] = '비밀번호를 입력해주세요.'
         self.fields['password2'].widget.attrs['class'] = 'form-control form-control-user'
         self.fields['password2'].widget.attrs['id'] = 'password2'
+        self.fields['password2'].widget.attrs['placeholder'] = '비밀번호를 다시 입력해주세요.'
         self.fields['nickname'].widget.attrs['class'] = 'form-control form-control-user'
         self.fields['nickname'].widget.attrs['id'] = 'nickname'
+        self.fields['nickname'].widget.attrs['placeholder'] = '사용할 닉네임을 입력해주세요.'
 
 
 class UserLoginForm(AuthenticationForm):
