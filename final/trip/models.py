@@ -127,10 +127,14 @@ class Report(models.Model):
     
 class GroupChat(models.Model):
     room_name = models.AutoField(primary_key=True)
+    room_title = models.CharField(max_length=200, null=True, default='test')
     members = models.ManyToManyField(User, related_name='group_chat_rooms')
     created_at = models.DateTimeField(auto_now_add=True)
     last_message = models.TextField(null=True, blank=True)
     last_message_sender = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='last_message_sender')
+
+    def __str__(self):
+        return self.room_title
 
 class Message(models.Model):
     group_chat = models.ForeignKey(GroupChat, on_delete=models.CASCADE, related_name="chat_messages")

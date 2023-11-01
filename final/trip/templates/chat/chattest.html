@@ -1,3 +1,4 @@
+{% load static %}
 <div id="chatbox">
     <div id="friendslist">
         <div id="topmenu">
@@ -35,9 +36,6 @@
                   <div class="cy"></div>
                   <div class="cx"></div>
               </div>
-              
-              <p>Miro Badev</p>
-              <span>miro@badev@gmail.com</span>
           </div>
           <div id="chat-messages">
                        
@@ -50,7 +48,13 @@
       
       </div>        
   </div>
+  <div class="chattingBtn close-box">
+    <i class="fa-solid fa-xmark fa-4x"></i>
+  </div>
+  <div class="chattingBtn open-box">
+    <i class="fa-regular fa-comments fa-2x"></i>
+  </div>
   <script>
     const username = "{{username}}";
   </script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="{% static 'js/chat/button.js' %}"></script>

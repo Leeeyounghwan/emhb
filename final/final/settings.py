@@ -50,9 +50,10 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.humanize",
     "django.contrib.sites",
-    'board',
+    'board',    
     'django_summernote',
     'social_django',
+    'rest_framework',
 ]
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = social_auth_google_oauth2_key
