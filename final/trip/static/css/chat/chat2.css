@@ -71,16 +71,16 @@ body {
 #topmenu span.chats:hover{background-position:-95px -46px; cursor:pointer;}
 #topmenu span.history{background-position:-190px 24px; cursor:pointer;}
 #topmenu span.history:hover{background-position:-190px -47px; cursor:pointer;}
-.friend{
+.friend-content{
   height:70px;
   border-bottom:1px solid #e7ebee;    
   position:relative;
 }
-.friend:hover{
+.friend-content:hover{
   background:#f1f4f6;
   cursor:pointer;
 }
-.friend img{
+.friend-content img{
   width:40px;
   border-radius:50%;
   margin:15px;
@@ -94,7 +94,7 @@ body {
   left:12px;
   border:3px solid #fff;
 }
-.friend p{
+.friend-cotent p{
   padding:15px 0 0 0;     
   float:left;
   width:220px;
@@ -104,18 +104,18 @@ body {
     justify-content: center;
     align-items: center;
 }
-.friend p strong{
+.friend-content p strong{
   font-weight:600;
   font-size:15px;
   color:#597a96;  
 
 }
-.friend p span{
+.friend-content p span{
   font-size:13px;
   font-weight:400;
   color:#aab8c2;
 }
-.friend .status{
+.friend-content .status{
   background:#26c281;
   border-radius:50%;  
   width:9px;
@@ -124,8 +124,8 @@ body {
   top:31px;
   right:17px;
 }
-.friend .status.away{background:#ffce54;}
-.friend .status.inactive{background:#eaeef0;}
+.friend-content .status.away{background:#ffce54;}
+.friend-content .status.inactive{background:#eaeef0;}
 #search{
   background:#e3e9ed url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/search.png") -11px 0 no-repeat;
   height:60px;

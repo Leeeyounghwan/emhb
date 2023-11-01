@@ -7,9 +7,9 @@
               <span class="history"></span>
           </div>
           
-          <div id="friends">
+          <div id="friends-box">
             {% for chat_room in chat_room_list %}
-                <div class="friend" id="room_{{chat_room.room_name}}" >
+                <div class="friend-content" id="room_{{chat_room.room_name}}" >
                     <img src=""/>
                     <p>
                         <strong>room_{{chat_room.room_name}}</strong>
@@ -29,12 +29,14 @@
           
       </div>  
       
-      <div id="chatview" class="p1">      
-          <div id="profile">
+    <div id="chatview" class="p1">      
+        <div id="profile">
   
               <div id="close">
                   <div class="cy"></div>
-                  <div class="cx"></div>
+                  <div class="cx back-arrow" >
+                    <i class="fa-solid fa-arrow-left"></i>
+                  </div>
               </div>
           </div>
           <div id="chat-messages">

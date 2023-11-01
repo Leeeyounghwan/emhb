@@ -689,7 +689,7 @@ def chat_test(request):
         'username':request.user,
         'chat_room_list':chat_room_list
     }
-    return render(request, 'chat/test.html', context)
+    return render(request, 'chat/chat_merge.html', context)
 
 @login_required
 def community(request):
