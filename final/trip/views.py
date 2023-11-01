@@ -17,7 +17,7 @@ from django.http import JsonResponse
 from .forms import UserProfileForm, CommentForm
 from django.contrib.auth import update_session_auth_hash
 from django.http import Http404
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage
 
 # Create your views here.
 
@@ -53,7 +53,6 @@ def profile(request): #내 정보 수정
     
     if request.method == 'POST' and user_info.profile_image != "":
         form = UserProfileForm(request.POST)
-
         if 'profile_img' in request.FILES:
             user_info.profile_image = request.FILES['profile_img']
             user_info.save()
@@ -461,7 +460,24 @@ def about(request):
     return render(request, 'about.html')
 def together_walk(request):
     posts = TogetherPost.objects.all()
-    return render(request, 'together_walk.html',{'posts':posts})
+
+    posts_per_page = 2
+
+    page_number = request.GET.get('page')
+    try:
+        page_number = int(page_number)
+    except (ValueError, TypeError):
+        page_number = 1 
+
+    paginator = Paginator(posts, posts_per_page)
+
+    try:
+        current_page = paginator.page(page_number)
+    except EmptyPage:
+        current_page = paginator.page(1)
+
+    return render(request, 'together_walk.html', {'posts': current_page})
+
 def contact(request):
     return render(request, 'contact.html')
 def elements(request):
