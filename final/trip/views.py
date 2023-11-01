@@ -89,7 +89,7 @@ def like_schedule(request): #찜한 일정 리스트
 
     items =  Package.objects.filter(is_deleted=False)
     post = WishList.objects.filter(user_id= user.id)
-    return render(request,'mypage/like_test.html',{'items':post})
+    return render(request,'mypage/like_test.html',{'items':items})
 
 @login_required
 def chatting_room(request): #채팅방리스트
