@@ -93,8 +93,8 @@
 
             
             <div class="row">
-              {% if community_items %}
-                {%for item in community_items %}
+              {% if posts %}
+                {%for item in posts %}
                 <div class="col-xl-4 col-lg-4 col-md-6">
                     <div class="single-place mb-30">
                         
@@ -133,6 +133,46 @@
         </div>
     </div>
     <!-- Favourite Places End -->
+    <nav class="blog-pagination justify-content-center d-flex">
+      <ul class="pagination">
+          {% if posts.has_previous %}
+              <li class="page-item">
+                  <a href="?page=1" class="page-link" aria-label="First">
+                      <i class="ti-angle-double-left"></i>
+                  </a>
+              </li>
+              <li class="page-item">
+                  <a href="?page={{ posts.previous_page_number }}" class="page-link" aria-label="Previous">
+                      <i class="ti-angle-left"></i>
+                  </a>
+              </li>
+          {% endif %}
+
+          {% for num in posts.paginator.page_range %}
+              <li class="page-item {% if num == posts.number %}active{% endif %}">
+                  <a href="?page={{ num }}" class="page-link">{{ num }}</a>
+              </li>
+          {% endfor %}
+
+          {% if posts.has_next %}
+              <li class="page-item">
+                  <a href="?page={{ posts.next_page_number }}" class="page-link" aria-label="Next">
+                      <i class="ti-angle-right"></i>
+                  </a>
+              </li>
+              <li class="page-item">
+                  <a href="?page={{ posts.paginator.num_pages }}" class="page-link" aria-label="Last">
+                      <i class="ti-angle-double-right"></i>
+                  </a>
+              </li>
+          {% endif %}
+      </ul>
+    </nav>
+
+    <script>
+      var lng = "{{ lng }}";
+      var lat = "{{ lat }}";
+    </script>
     </main>
 
       <!--================Blog Area =================-->
@@ -194,13 +234,22 @@
       staticMapContainer.id = 'staticMap' + (index + 1); // 각 요소에 고유한 ID 할당
       container.appendChild(staticMapContainer);
 
+      console.log(lng);
+      console.log(lat);
+      
+      // 이미지 지도에서 마커가 표시될 위치입니다
+      var markerPosition  = new kakao.maps.LatLng(lat, lng);
 
-      
-      
+      // 이미지 지도에 표시할 마커입니다
+      // 이미지 지도에 표시할 마커는 Object 형태입니다
+      var marker = {
+        position: markerPosition
+      };
 
       var staticMapOption = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667), // 이미지 지도의 중심 좌표
-        level: 5 // 이미지 지도의 확대 레벨
+        center: new kakao.maps.LatLng(lat, lng), // 이미지 지도의 중심 좌표
+        level: 5, // 이미지 지도의 확대 레벨
+        marker: marker // 이미지 지도에 표시할 마커
       };
 
       // 이미지 지도를 표시할 div와 옵션으로 이미지 지도를 생성합니다

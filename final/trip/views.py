@@ -17,7 +17,7 @@ from django.http import JsonResponse
 from .forms import UserProfileForm, CommentForm
 from django.contrib.auth import update_session_auth_hash
 from django.http import Http404
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage
 
 # Create your views here.
 
@@ -459,9 +459,26 @@ def index(request):
     return render(request, 'index.html', context)
 def about(request):
     return render(request, 'about.html')
+
 def together_walk(request):
     posts = TogetherPost.objects.all()
-    return render(request, 'together_walk.html',{'posts':posts})
+
+    posts_per_page = 6
+
+    page_number = request.GET.get('page')
+    try:
+        page_number = int(page_number)
+    except (ValueError, TypeError):
+        page_number = 1 
+
+    paginator = Paginator(posts, posts_per_page)
+
+    try:
+        current_page = paginator.page(page_number)
+    except EmptyPage:
+        current_page = paginator.page(1)
+
+    return render(request, 'together_walk.html', {'posts': current_page})
 
 
 def contact(request):
@@ -615,6 +632,7 @@ def packages(request):
   }
   return render(request, 'packages.html', context)
 
+@login_required
 def package_detail(request, id):
     package = get_object_or_404(Package, id=id)
     context = {
@@ -653,15 +671,34 @@ def chat_test(request):
     }
     return render(request, 'chat/test.html', context)
 
+@login_required
 def community(request):
-    return render(request, 'community.html', {"community_items": TogetherPost.objects.all()})
+    posts = TogetherPost.objects.all()
 
+    posts_per_page = 6
+
+    page_number = request.GET.get('page')
+    try:
+        page_number = int(page_number)
+    except (ValueError, TypeError):
+        page_number = 1 
+
+    paginator = Paginator(posts, posts_per_page)
+
+    try:
+        current_page = paginator.page(page_number)
+    except EmptyPage:
+        current_page = paginator.page(1)
+
+    return render(request, 'community.html', {'posts': current_page})
+
+@login_required
 def community_write(request):
     return render(request, 'community_write.html')
 
 # def set_write(request):
 
-
+@login_required
 def set_region(request):
   if 'region-button' in request.POST:
     region = request.POST.get('region-setting')
