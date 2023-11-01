@@ -27,7 +27,7 @@
     <div class="container">
 
         <!-- Outer Row -->
-        <div class="row justify-content-center">
+        <div class="row justify-content-center align-items-center">
 
             <div class="col-xl-10 col-lg-12 col-md-9">
 
@@ -54,23 +54,16 @@
                                         <div class="form-group">
                                             {{form.password}}
                                         </div>
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
-                                            </div>
-                                        </div>
                                         <button type="submit" class="btn btn-primary btn-user btn-block">
-                                            Login
+                                            로그인
                                         </button>
                                     </form>
                                     <hr>
                                         <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-google btn-user btn-block">
-                                            <i class="fab fa-google fa-fw"></i> Login with Google
+                                            <img src="{%static 'img/google_btn.svg' %}" class="social-btn"> 구글 아이디로 로그인 하기
                                         </a>
-                                        <a href="#" class="btn btn-facebook btn-user btn-block">
-                                            <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
+                                        <a href="{% url 'social:begin' 'naver' %}" class="btn btn-naver btn-user btn-block">
+                                            <img src="{%static 'img/naver_btn.svg' %}" class="social-btn"> 네이버 아이디로 로그인 하기
                                         </a>
                                     {% if form.non_field_errors %}
                                     <script>
@@ -79,7 +72,7 @@
                                     {% endif %}
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="{% url 'trip:register' %}">Register</a>
+                                        <a class="small" href="{% url 'trip:register' %}">회원가입</a>
                                     </div>
                                 </div>
                             </div>
