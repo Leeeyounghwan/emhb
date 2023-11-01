@@ -326,7 +326,7 @@ hr {
 
 .section-padding {
     padding-top: 120px;
-    padding-bottom: 120px
+    padding-bottom: 120px;
 }
 
 .separator {
@@ -7270,12 +7270,25 @@ form.search-box .search-form button {
     margin: 10px 0;
 }
 
+.profile_detail {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .profile_detail img {
     width: 60px;
     height: 60px;
     border-radius: 50%;
     border: 1px solid #d2bfbf;
     margin: 7px;
+    border: none;
+}
+
+.profile_detail p {
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 0;
 }
 
 .btns {
@@ -7347,4 +7360,23 @@ a.delete-button::before {
     border: none;
     padding: 10px 15px;
     font-size: 20px;
+}
+
+.no-search-result {
+    font-family: "omyu_pretty";
+    font-size: 40px;
+    justify-content: center;
+    display: flex;
+}
+
+.social-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.social-btn {
+    margin-right: 5px;
+    width: 1rem;
+    height: 1rem;
 }

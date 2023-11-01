@@ -27,6 +27,9 @@
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
   <link rel="stylesheet" href="{% static 'css/chatbot.css' %}">
+
+  <!-- Kakao Maps API-->
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=bdb7d9476dcc9d062bc8a8dfc01506b5&libraries=services"></script>
 </head>
 
 <body>
@@ -96,56 +99,50 @@
         <div class="container" style="justify-content:center; align-items:center;">
             <div style="max-width: 1500px;">
                 <div>
+                  {% if posts %}
                     {% for post in posts %}
                         <article class="blog_item" style="max-width: 20%;">
                             <div class="blog_item_img">
-
+                                <!-- 
+                                    {% if post.post_lng %} 
+                                    <div class"card-img rounded-0" id="staticMap" name="staticMap" style="width:270px; height:220px;"></div>
+                                    {% endif %}
+                                -->
                                 {% if post.post_image %}
                                 <img class="card-img rounded-0" src="{{ post.post_image.url }}" alt="{{ post.post_title }}">
                                 {% endif %}
                             </div> 
 
-                            <div class="blog_details" style="margin: 0 auto;">
-                                <a class="d-inline-block" href="{% url 'trip:together_detail' post.id %}">
-                                    <h2 style="font-size: 18px;">{{ post.post_title|truncatechars:12 }}</h2>
-                                </a>
-                                <p style="font-size: 14px;">{{ post.post_content|truncatechars:15 }}</p>
-                                <p class="dolor">{{ post.recuited_people }}<span>명 모집중 / {{ post.region }}</span></p>
-                                <ul>
-                                    <li style="font-size:14px;"><span>여행기간</span></li>
-                                   <li style="font-size:14px;"><i class="far fa-clock"> <span> </span> {{ post.start_date|date:"m/d/Y" }}<span> ~ </span>{{ post.end_date|date:"m/d/Y" }}</i></li>
-                                </ul>
-                                <ul class="blog-info-link">
-                                    <li style="margin-right: 10px; width:30px; height:30px;"><img class="img-profile rounded-circle" src="{% static 'img/undraw_profile.svg' %}"></li>
-                                    <li style="font-size: 14px;">{{ post.user_id }}</li>
-                                </ul>
-                            </div>
-                        </article>
-                    {% endfor %}
+                                <div class="blog_details" style="margin: 0 auto;">
+                                    <a class="d-inline-block" href="{% url 'trip:together_detail' post.id %}">
+                                        <h2 style="font-size: 18px;">{{ post.post_title|truncatechars:12 }}</h2>
+                                    </a>
+                                    <p style="font-size: 14px;">{{ post.post_content|truncatechars:15 }}</p>
+                                    <p class="dolor">{{ post.recuited_people }}<span>명 모집중 / {{ post.region }}</span></p>
+                                    <ul>
+                                        <li style="font-size:14px;"><span>여행기간</span></li>
+                                    <li style="font-size:14px;"><i class="far fa-clock"> <span> </span> {{ post.start_date|date:"m/d/Y" }}<span> ~ </span>{{ post.end_date|date:"m/d/Y" }}</i></li>
+                                    </ul>
+                                    <ul class="blog-info-link">
+                                        <li style="margin-right: 10px; width:30px; height:30px;"><img class="img-profile rounded-circle" src="{% static 'img/undraw_profile.svg' %}"></li>
+                                        <li style="font-size: 14px;">{{ post.user_id }}</li>
+                                    </ul>
+                                </div>
+                            </article>
+                        {% endfor %}
+                    {% else %}
+                        <div class="no-search-result" style="height: 20rem;"> 조회된 결과가 없습니다.<br>지역명으로 검색해주세요.</div>
+                    {% endif %}
                 </div>
             </div>
         </div>
+
+        <script>
+            var lat = "{{lat}}"
+            var lon = "{{lon}}"
+        </script>
+
     </section>
-    <nav class="blog-pagination justify-content-center d-flex">
-        <ul class="pagination">
-            <li class="page-item">
-                <a href="#" class="page-link" aria-label="Previous">
-                    <i class="ti-angle-left"></i>
-                </a>
-            </li>
-            <li class="page-item">
-                <a href="#" class="page-link">1</a>
-            </li>
-            <li class="page-item active">
-                <a href="#" class="page-link">2</a>
-            </li>
-            <li class="page-item">
-                <a href="#" class="page-link" aria-label="Next">
-                    <i class="ti-angle-right"></i>
-                </a>
-            </li>
-        </ul>
-    </nav>
     <!--================Blog Area =================-->
     {% include "chatbot.html" %}
     <footer>
@@ -194,5 +191,16 @@
         <!-- ChatBot -->
         <script src="{% static 'js/chatbot.js' %}"></script>
 
+        <!-- Script -->
+        <script>
+            var staticMapContainer  = document.getElementById('staticMap'), // 이미지 지도를 표시할 div  
+                staticMapOption = { 
+                    center: new kakao.maps.LatLng(33.450701, 126.570667), // 이미지 지도의 중심좌표
+                    level: 3 // 이미지 지도의 확대 레벨
+                };
+
+            // 이미지 지도를 표시할 div와 옵션으로 이미지 지도를 생성합니다
+            var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+        </script>
 </body>
 </html>

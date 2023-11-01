@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import json, os
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,6 +20,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 with open('trip/config.json', 'r') as f:
     json_data = json.load(f)
     secret_key = json_data['SECRET_KEY']
+    social_auth_google_oauth2_key = json_data['SOCIAL_AUTH_GOOGLE_OAUTH2_KEY']
+    social_auth_google_oauth2_secret = json_data['SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET']
+    social_auth_google_oauth2_redirect_uri = json_data['SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI']
+    social_auth_naver_key = json_data['SOCIAL_AUTH_NAVER_KEY']
+    social_auth_naver_secret = json_data['SOCIAL_AUTH_NAVER_SECRET']
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -45,9 +51,40 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
+    
+    # allauth
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # allauth - naver
+    'allauth.socialaccount.providers.naver',
     'board',
     'django_summernote',
+    'social_django',
 ]
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = social_auth_google_oauth2_key
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = social_auth_google_oauth2_secret
+SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = social_auth_google_oauth2_redirect_uri
+
+# allauth site_id
+SITE_ID = 2
+
+LOGIN_URL = reverse_lazy('account_login')
+LOGIN_REDIRECT_URL = reverse_lazy('trip:profile')
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.naver.NaverOAuth2',
+)
+
+SOCIAL_AUTH_NAVER_KEY= social_auth_naver_key
+SOCIAL_AUTH_NAVER_SECRET  = social_auth_naver_secret
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'http://localhost:8000/mypage/profile/'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -57,6 +94,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = "final.urls"
@@ -72,6 +111,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -137,8 +178,8 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 AUTH_USER_MODEL = 'trip.User'
 
@@ -157,3 +198,17 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+
+# AWS Setting
+AWS_REGION = 'ap-northeast-2' #AWS서버의 지역
+AWS_STORAGE_BUCKET_NAME = json_data['AWS_BUCKET_NAME'] #생성한 버킷 이름
+AWS_ACCESS_KEY_ID = json_data['AWS_ACCESS_KEY'] #액서스 키 ID
+AWS_SECRET_ACCESS_KEY = json_data['AWS_SERCRET_ACCESS_KEY'] #액서스 키 PW
+#버킷이름.s3.AWS서버지역.amazonaws.com 형식
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' % (AWS_STORAGE_BUCKET_NAME, AWS_REGION)
+
+#미디어 파일  설정
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+MEDIA_URL = 'https://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
+MEDIA_ROOT = BASE_DIR / "media"
