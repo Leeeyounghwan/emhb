@@ -86,20 +86,18 @@ def myfeadback(request): #내가받은 후기 보기
 @login_required
 def like_schedule(request): #찜한 일정 리스트
     user_id   = request.user.id
-    wish_list = WishList.objects.filter(user_id=user_id)
-    print(wish_list[0].user_id)
-    # package_list = []
+    wish_list = WishList.objects.filter(user_id_id=user_id)
+    package_list = []
 
-    # for wish in wish_list:
-    #     package = get_object_or_404(Package, id=wish.product)
-    #     package_list.append(package)
+    for i in range(0, len(wish_list)):
+        package = get_object_or_404(Package, id=wish_list[i].product_id)
+        package_list.append(package)
     
-    # context = {
-    #     'items' : package_list
-    # }
-
-    # return render(request,'mypage/like_test.html', context)
-    return render(request,'mypage/like_test.html')
+    context = {
+        'items' : package_list
+    }
+    return render(request,'mypage/like_schedule.html', context)
+    # return render(request,'mypage/like_test.html')
 
 @login_required
 def chatting_room(request): #채팅방리스트
