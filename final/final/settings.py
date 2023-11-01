@@ -137,8 +137,8 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 AUTH_USER_MODEL = 'trip.User'
 
@@ -157,3 +157,16 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+
+# AWS Setting
+AWS_REGION = 'ap-northeast-2' #AWS서버의 지역
+AWS_STORAGE_BUCKET_NAME = json_data['AWS_BUCKET_NAME'] #생성한 버킷 이름
+AWS_ACCESS_KEY_ID = json_data['AWS_ACCESS_KEY'] #액서스 키 ID
+AWS_SECRET_ACCESS_KEY = json_data['AWS_SERCRET_ACCESS_KEY'] #액서스 키 PW
+#버킷이름.s3.AWS서버지역.amazonaws.com 형식
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' % (AWS_STORAGE_BUCKET_NAME, AWS_REGION)
+
+#미디어 파일  설정
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+MEDIA_URL = 'https://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
