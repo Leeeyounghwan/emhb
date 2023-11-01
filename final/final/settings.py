@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import json, os
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,6 +20,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 with open('trip/config.json', 'r') as f:
     json_data = json.load(f)
     secret_key = json_data['SECRET_KEY']
+    social_auth_google_oauth2_key = json_data['SOCIAL_AUTH_GOOGLE_OAUTH2_KEY']
+    social_auth_google_oauth2_secret = json_data['SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET']
+    social_auth_google_oauth2_redirect_uri = json_data['SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI']
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -45,9 +49,23 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
+    "django.contrib.sites",
     'board',
     'django_summernote',
+    'social_django',
 ]
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = social_auth_google_oauth2_key
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = social_auth_google_oauth2_secret
+SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = social_auth_google_oauth2_redirect_uri
+
+LOGIN_URL = reverse_lazy('account_login')
+LOGIN_REDIRECT_URL = reverse_lazy('trip:profile')
+
+AUTHENTICATION_BACKENDS = (
+         'social_core.backends.google.GoogleOAuth2',
+         'django.contrib.auth.backends.ModelBackend',
+)
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
