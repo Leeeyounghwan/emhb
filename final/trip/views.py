@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Package, User, Report,Schedule,ScheduleComment, Community, TogetherPost,TogetherComment, GroupChat
+from  .forms import TogetherPostForm
 from django.contrib.auth.decorators import login_required
 import openai
 from django.http import JsonResponse
@@ -671,38 +672,41 @@ def set_region(request):
     return render(request, 'community_write.html', area)
 
   
+# def set_write(request):
+#     if 'set_write_button' in request.POST:
+#         Together_post = TogetherPost.objects.create(
+#             post_title = request.POST['title'],
+#             post_content = request.POST['messages'],
+#             start_date = request.POST['start_date'],
+#             end_date = request.POST['end_date'],
+            
+#             # # Lnt, Lat 값 
+#             # post_lnt = request.POST['lnt'],
+#             # post_lat = request.POST['lat'],
+
+#             region1 =request.POST['community_destination'],
+#             recuited_people = request.POST['recruitment'],
+#             user_id = request.user,
+#         )
+
+#         print(Together_post)
+
+#         Together_post.save()
+#         return redirect('trip:blog', pk=id)
+#     else:
+#         return render(request, 'community_write.html')
+
 def set_write(request):
     if 'set_write_button' in request.POST:
-        Together_post = TogetherPost.objects.create(
-            post_title = request.POST['title'],
-            post_content = request.POST['messages'],
-            start_date = request.POST['start_date'],
-            end_date = request.POST['end_date'],
-            post_image = request.FILES['staticMap'],
-            region =request.POST['community_destination'],
-            recuited_people = request.POST['recruitment'],
-            user_id = request.user,
-        )
+        form = TogetherPostForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
 
-        print(Together_post)
-
-        Together_post.save()
-        return redirect('trip:blog', pk=id)
+        return redirect('trip:together_walk')
     else:
-        return render(request, 'community_write.html')
+        form = TogetherPostForm()
+        return render(request, 'trip:community_write', {'form': form})
 
-
-        #확인용(detail)
-        # detail = {
-        #     "community_destination" : community_destination,
-        #     "recruitment" : recruitment,
-        #     "title" : title,
-        #     "start_date" : start_date,
-        #     "end_date" : end_date,
-        #     "messages" : content,
-        #     "image" : img,
-        # }
-        # print(detail)
 
 
         

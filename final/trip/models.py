@@ -28,18 +28,22 @@ class TogetherPost(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     post_title = models.CharField(max_length=40)
     post_content = models.TextField()
+    
+    # Lnt, Lat 값을 가져오기로 함(주석처리)
     post_image = models.ImageField(upload_to="TogetherPost_images/", null=True, blank=True)
+    
     start_date = models.DateField()
     end_date = models.DateField()
     region = models.CharField(max_length=20)
     recuited_people =models.CharField(max_length=5)
+    
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
 
-    # 이미지 업로드를 위한 칼럼 추가 BY수현
-    post_lnt = models.CharField(max_length=50)
-    post_lat = models.CharField(max_length=50)
+    # # 이미지 업로드를 위한 칼럼 추가 BY수현
+    # post_lnt = models.CharField(max_length=50)
+    # post_lat = models.CharField(max_length=50)
     
 
 class TogetherComment(models.Model):
