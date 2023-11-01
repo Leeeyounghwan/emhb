@@ -1,0 +1,110 @@
+/*공통 */
+.fixed {
+    position:fixed;
+}
+.bottom-right {
+    bottom : 150px;
+    right: 50px;
+ }
+.shadow {
+    box-shadow: 5px 5px 3px 3px gray;
+}
+.flex-center{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.input-box-style{
+    width:90%;
+    height:90%;
+    padding : 3px 3px 3px 3px;
+}
+
+/* 채팅 버튼 */
+#open-chat{
+    text-align: center;
+    width:40px;
+    height:40px;
+    border-radius: 10px;
+}
+
+/* 채팅모달창 */
+.chat-modal{
+    position:fixed;
+    bottom:200px;
+    right:50px;
+    width:400px;
+    height:600px;
+}
+
+#chat-log{
+    width:100%;
+    height:80%;
+    overflow: hidden;
+}
+
+/* 스크롤바 삭제*/
+#chat-log::-webkit-scrollbar{
+    display:none;
+  }
+
+/* 채팅 말풍선 */
+.other-message-box{
+    display:flex;
+    height:40px;
+    gap: 3px;
+}
+.your-message-box{
+    display:flex;
+    flex-direction: row-reverse;
+    height:40px;
+    gap: 3px;
+}
+
+/* 채팅룸 리스트 */
+.chatroom-box{
+    width:100%;
+    height:70px;
+}
+.chatroom{
+    width:100%;
+    height:35px;
+}
+.last-message{
+    width:100%;
+    height:35px;
+}
+
+/* 실시간 채팅 윈도우 */
+#chat-window{
+    display: none;
+    flex-direction: column;
+}
+
+.chat-header{
+    position:absolute;
+    width:100%;
+    top:0;
+    height:10%;
+}
+.back{
+    width:100%;
+    height:100%;
+}
+.rt-window{
+    width:100%;
+    position:absolute;
+    top:10%;
+    overflow: auto;
+    height:80%;
+}
+.input-box{
+    position:absolute;
+    width:100%;
+    bottom:0;
+    height:10%;
+}
+.rt-window::-webkit-scrollbar{
+    display:none;
+  }
