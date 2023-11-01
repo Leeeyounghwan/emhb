@@ -30,7 +30,7 @@ class TogetherPost(models.Model):
     post_content = models.TextField()
     
     # Lnt, Lat 값을 가져오기로 함(주석처리)
-    post_image = models.ImageField(upload_to="TogetherPost_images/", null=True, blank=True)
+    # post_image = models.ImageField(upload_to="TogetherPost_images/", null=True, blank=True)
     
     start_date = models.DateField()
     end_date = models.DateField()

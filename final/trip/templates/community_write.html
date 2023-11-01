@@ -91,11 +91,13 @@
                         <h2 class="contact-title">동행친구찾기</h2>
                     </div>
                     <div class="col-lg-8">
-                        <form class="form-contact contact_form" action="{% url 'trip:set_write' %}" method="post" enctype="multipart/form-data" id="contactForm" novalidate="novalidate" enctype="multipart/form-data">
+                        <form class="form-contact contact_form" action="{% url 'trip:set_write' %}" method="post" enctype="multipart/form-data" id="contactForm" novalidate="novalidate">
                         {% csrf_token %}
-                          <!-- 지도 이미지화 -->
-                          <div id="staticMap" name="staticMap" style="width:270px; height:220px;"></div>
-
+                          <div>
+                            <!-- 경도, 위도 -->
+                            <input type="text" id="lat" name="lat" value="">
+                            <input type="text" id="lng" name="lng" value="">
+                          </div>
                                 <div class="row">
                                   <!-- community_destination -->
                                   <div class="col-sm-6">
@@ -252,26 +254,14 @@
         map.setCenter(coords);
       }
 
-      // 카카오맵 이미지화
-      var staticMapContainer  = document.getElementById('staticMap'), // 이미지 지도를 표시할 div  
-          staticMapOption = { 
-            center: new kakao.maps.LatLng(result[0].y, result[0].x), // 이미지 지도의 중심좌표
-            level: 6, // 이미지 지도의 확대 레벨
-            marker : marker
-          };
-    
+      var lat = result[0].x
+      var lng = result[0].y
 
+      console.log(lat);
+      console.log(lng);
 
-      var x = result[0].x
-      var y = result[0].y
-
-
-      
-      // 이미지 지도를 표시할 div와 옵션으로 이미지 지도를 생성합니다
-      var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption)
-      
-      console.log(staticMap)
-      //marker.setDraggable(true); 
+      document.getElementById('lat').value = lat;
+      document.getElementById('lng').value = lng;
     });
     </script>
   </body>
