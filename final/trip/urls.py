@@ -19,6 +19,11 @@ urlpatterns = [
     path('mypage/like_schedule/', views.like_schedule, name='like_schedule'),
     path('mypage/chatting_room/', views.chatting_room, name='chatting_room'),
     
+    # 위시리스트 추가
+    # path('packages/package_detail/add_wishlist/<int:id>/', views.add_wishlist, name='add_wishlist'),
+    path('add_wishlist/<int:id>', views.add_wishlist, name='add_wishlist'),
+
+
     # 관리자 페이지 by 영환
     path("admin_page/", views.admin_page, name="admin_page"),
     path("admin_page/admin_management", views.admin_management, name="admin_management"),
@@ -48,6 +53,7 @@ urlpatterns = [
   
     # 여행 상품 페이지 By 수현
     path('packages/',views.packages, name='packages'),
+    path('packages/package_detail/<int:id>',views.package_detail, name='package_detail'),
     path('single_blog/<int:id>/',views.single_blog, name='single_blog'), 
     path('add_comment/<int:id>/', views.add_comment, name='add_comment'),
     path('single_blog/',views.single_blog, name='single_blog'),
