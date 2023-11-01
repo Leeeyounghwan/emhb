@@ -96,32 +96,36 @@
         <div class="container" style="justify-content:center; align-items:center;">
             <div style="max-width: 1500px;">
                 <div>
-                    {% for post in posts %}
-                        <article class="blog_item" style="max-width: 20%;">
-                            <div class="blog_item_img">
+                    {% if posts%}
+                        {% for post in posts %}
+                            <article class="blog_item" style="max-width: 20%;">
+                                <div class="blog_item_img">
 
-                                {% if post.post_image %}
-                                <img class="card-img rounded-0" src="{{ post.post_image.url }}" alt="{{ post.post_title }}">
-                                {% endif %}
-                            </div> 
+                                    {% if post.post_image %}
+                                    <img class="card-img rounded-0" src="{{ post.post_image.url }}" alt="{{ post.post_title }}">
+                                    {% endif %}
+                                </div> 
 
-                            <div class="blog_details" style="margin: 0 auto;">
-                                <a class="d-inline-block" href="{% url 'trip:together_detail' post.id %}">
-                                    <h2 style="font-size: 18px;">{{ post.post_title|truncatechars:12 }}</h2>
-                                </a>
-                                <p style="font-size: 14px;">{{ post.post_content|truncatechars:15 }}</p>
-                                <p class="dolor">{{ post.recuited_people }}<span>명 모집중 / {{ post.region }}</span></p>
-                                <ul>
-                                    <li style="font-size:14px;"><span>여행기간</span></li>
-                                   <li style="font-size:14px;"><i class="far fa-clock"> <span> </span> {{ post.start_date|date:"m/d/Y" }}<span> ~ </span>{{ post.end_date|date:"m/d/Y" }}</i></li>
-                                </ul>
-                                <ul class="blog-info-link">
-                                    <li style="margin-right: 10px; width:30px; height:30px;"><img class="img-profile rounded-circle" src="{% static 'img/undraw_profile.svg' %}"></li>
-                                    <li style="font-size: 14px;">{{ post.user_id }}</li>
-                                </ul>
-                            </div>
-                        </article>
-                    {% endfor %}
+                                <div class="blog_details" style="margin: 0 auto;">
+                                    <a class="d-inline-block" href="{% url 'trip:together_detail' post.id %}">
+                                        <h2 style="font-size: 18px;">{{ post.post_title|truncatechars:12 }}</h2>
+                                    </a>
+                                    <p style="font-size: 14px;">{{ post.post_content|truncatechars:15 }}</p>
+                                    <p class="dolor">{{ post.recuited_people }}<span>명 모집중 / {{ post.region }}</span></p>
+                                    <ul>
+                                        <li style="font-size:14px;"><span>여행기간</span></li>
+                                    <li style="font-size:14px;"><i class="far fa-clock"> <span> </span> {{ post.start_date|date:"m/d/Y" }}<span> ~ </span>{{ post.end_date|date:"m/d/Y" }}</i></li>
+                                    </ul>
+                                    <ul class="blog-info-link">
+                                        <li style="margin-right: 10px; width:30px; height:30px;"><img class="img-profile rounded-circle" src="{% static 'img/undraw_profile.svg' %}"></li>
+                                        <li style="font-size: 14px;">{{ post.user_id }}</li>
+                                    </ul>
+                                </div>
+                            </article>
+                        {% endfor %}
+                    {% else %}
+                        <div class="no-search-result" style="height: 20rem;"> 조회된 결과가 없습니다.<br>지역명으로 검색해주세요.</div>
+                    {% endif %}
                 </div>
             </div>
         </div>

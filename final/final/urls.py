@@ -26,6 +26,7 @@ urlpatterns = [
     path('board/', include('board.urls')),
     path('favicon.ico', RedirectView.as_view(url='/static/trip_app/favicon.ico', permanent=True)),
     path('summernote/', include('django_summernote.urls')),
+    path('', include('social_django.urls')),
 ] 
 
 if settings.DEBUG:
