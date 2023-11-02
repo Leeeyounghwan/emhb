@@ -753,12 +753,7 @@ def community(request):
     except EmptyPage:
         current_page = paginator.page(1)
 
-    information = {
-        'posts': current_page
-    }
-
-
-    return render(request, 'community.html', information)
+    return render(request, 'community.html', {'posts': current_page})
 
 @login_required
 def community_write(request):
@@ -794,9 +789,11 @@ def set_write(request):
             recuited_people = request.POST['recruitment'],
             user_id = request.user,
         )
+
+        print(Together_post)
+
         Together_post.save()
-        
-        return redirect('trip:community')
+        return redirect('trip:blog', pk=id)
     else:
         return render(request, 'community_write.html')
 

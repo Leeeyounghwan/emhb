@@ -97,21 +97,22 @@
                 {%for item in posts %}
                 <div class="col-xl-4 col-lg-4 col-md-6">
                     <div class="single-place mb-30">
-      <script>
-        var lng = {{ item.post_lnt }};
-        var lat = {{ item.post_lat }};
-
-        // Map
-        var container = document.getElementById('map_image');
-        var options = {
-	        center: new kakao.maps.LatLng(lat, lng),
-	        level: 5,
-        };
-        var map = new kakao.maps.Map(container, options); // 지도 생성
-      </script>
+                      <script>
+                        var lng = {{ item.post_lnt }};
+                        var lat = {{ item.post_lat }};
+                
+                        // Map
+                        var container = document.getElementById('map_image');
+                        var options = {
+                          center: new kakao.maps.LatLng(lat, lng),
+                          level: 5,
+                        };
+                        var map = new kakao.maps.Map(container, options); // 지도 생성
+                      </script>
+                        
                         <!-- Map image -->
                         <div class="place-img">
-                          <div id="map_image" style="height:220px; width:100%; background-color:gray;"></div>
+                          <div id="map_image" style="height:220px; background-color:gray;"></div>
                         </div>
 
                         <div class="place-cap">
@@ -181,7 +182,8 @@
     </nav>
     {% include 'chat/chat_merge.html' %}
     <script>
-      
+      var lng = "{{ lng }}";
+      var lat = "{{ lat }}";
     </script>
     </main>
 
@@ -237,7 +239,7 @@
       <script src="https://kit.fontawesome.com/b02373c6ac.js" crossorigin="anonymous"></script>
     
     <!-- JS here -->
-    {% comment %} <script>
+    <script>
       // JavaScript 코드 수정
       var staticMapContainers = document.querySelectorAll('.col-xl-4.col-lg-4.col-md-6 .place-img');
 
@@ -248,14 +250,6 @@
 
       console.log(lng);
       console.log(lat);
-
-      // Map
-      var container = document.getElementById('map_image');
-      var options = {
-	      center: new kakao.maps.LatLng(lat, lng),
-	      level: 5,
-      };
-      var map = new kakao.maps.Map(container, options); // 지도 생성
       
       // 이미지 지도에서 마커가 표시될 위치입니다
       var markerPosition  = new kakao.maps.LatLng(lat, lng);
@@ -275,5 +269,5 @@
       // 이미지 지도를 표시할 div와 옵션으로 이미지 지도를 생성합니다
       var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
     });
-    </script> {% endcomment %}
+    </script>
   </html>
