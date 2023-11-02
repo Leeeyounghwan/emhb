@@ -59,6 +59,9 @@ urlpatterns = [
     path('together_detail/<int:id>/',views.together_detail, name='together_detail'), 
     path('together_detail/',views.together_detail, name='together_detail'),
 
+    # 위시리스트 추가 by 문정
+    path('add_wishlist/<int:id>', views.add_wishlist, name='add_wishlist'),
+
     # 로그인, 회원가입 페이지 by 문정
     path('login/', views.user_login, name = 'login'),
     path('logout/', views.user_logout, name= 'logout'),

@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404
 
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Package, User, Report,Schedule,ScheduleComment, Community, TogetherPost,TogetherComment, GroupChat
+from .models import Package, User, Report,Schedule,ScheduleComment, Community, TogetherPost,TogetherComment, GroupChat, WishList
 from django.contrib.auth.decorators import login_required
 import openai
 from django.http import JsonResponse
@@ -116,8 +116,46 @@ def myfeadback(request): #내가받은 후기 보기
 
 @login_required
 def like_schedule(request): #찜한 일정 리스트
+    user_id   = request.user.id
+    wish_list = WishList.objects.filter(user_id_id=user_id)
+    package_list = []
+
+    for i in range(0, len(wish_list)):
+        package = get_object_or_404(Package, id=wish_list[i].product_id)
+        package_list.append(package)
     
-    return render(request,'mypage/like_schedule.html',{'schedules' : Schedule.objects.all()})
+    context = {
+        'items' : package_list
+    }
+    return render(request,'mypage/like_schedule.html', context)
+    # return render(request,'mypage/like_test.html')
+
+
+@login_required
+def add_wishlist(request,id): # 위시리스트 추가
+    user_id = request.user.id
+
+    if not WishList.objects.filter(user_id_id = user_id, product_id = id).exists():
+        add_wishlist = WishList(user_id_id = user_id,product_id = id,created_at = timezone.now())
+        add_wishlist.save()
+
+        # wish_list = WishList.objects.filter(user_id_id=user_id)
+        # package_list = []
+
+        # for i in range(0, len(wish_list)):
+        #     package = get_object_or_404(Package, id=wish_list[i].product_id)
+        #     package_list.append(package)
+        
+        # context = {
+        #     'package' : package_list
+        # }
+    
+    else:
+        WishList.objects.get(user_id_id = user_id, product_id = id).delete()
+        return redirect("trip:package_detail", id)
+    return redirect("trip:package_detail", id)
+    # return render (request, "mypage/like_schedule.html",context)
+
 
 @login_required
 def chatting_room(request): #채팅방리스트
@@ -637,7 +675,13 @@ def packages(request):
 @login_required
 def package_detail(request, id):
     package = get_object_or_404(Package, id=id)
+    user_id = request.user.id
+    check_wish = True # 위시리스트에 있으면 
+
+    if not WishList.objects.filter(product_id = id, user_id_id = user_id):
+        check_wish = False
     context = {
+        "check_wish" : check_wish,
         "package" : package
     }
     return render(request, 'package_detail.html', context)
