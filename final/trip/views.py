@@ -676,7 +676,7 @@ def check_room(request, room_name, room_title):
     
 @login_required
 def room_list(request):
-    chat_list = GroupChat.objects.filter(members=request.user)
+    chat_list = GroupChat.objects.filter(members=request.user).order_by('-created_at')
     serializer = GroupChatSerializer(chat_list, many=True)
     data = serializer.data
     return JsonResponse(data, safe=False)

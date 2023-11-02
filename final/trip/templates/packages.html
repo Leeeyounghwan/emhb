@@ -25,7 +25,10 @@
             <link rel="stylesheet" type="text/css" href="{% static 'css/nice-select.css' %}"/>
             <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
             <link rel="stylesheet" type="text/css" href="{% static 'admin_vendor/fontawesome-free/css/all.min.css'%}">
+            <!-- 챗봇 -->
             <link rel="stylesheet" href="{% static 'css/chatbot.css' %}">
+            <link rel="stylesheet" href="{% static "css/chat/chat2.css" %}">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
    </head>
 
    <body>
@@ -133,7 +136,7 @@
         </div>
         <!-- Pagination-area End -->
     </main>
-    {% include "chatbot.html" %}
+    {% include "chat/chat_merge.html" %}
     <footer>
         
         <!-- Footer Start-->
@@ -258,6 +261,7 @@
         <script src="{% static 'js/main.js' %}"></script>
 
         <!-- ChatBot -->
+        <script src="https://kit.fontawesome.com/b02373c6ac.js" crossorigin="anonymous"></script>
         <script src="{% static 'js/chatbot.js' %}"></script>
 
         <!-- 날짜계산기 -->
