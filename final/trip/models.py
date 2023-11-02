@@ -42,9 +42,8 @@ class TogetherPost(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
 
-    # # 이미지 업로드를 위한 칼럼 추가 BY수현
-    # post_lnt = models.CharField(max_length=50)
-    # post_lat = models.CharField(max_length=50)
+    post_lnt = models.CharField(max_length=50)
+    post_lat = models.CharField(max_length=50)
     
 
 class TogetherComment(models.Model):
