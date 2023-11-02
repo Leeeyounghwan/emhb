@@ -7403,3 +7403,11 @@ a.delete-button::before {
 .excert {
     width: 45rem;
 }
+
+.one-line {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin: 5px 0px;
+}
