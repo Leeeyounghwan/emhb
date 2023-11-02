@@ -86,12 +86,10 @@
                         <div class="form-group">
                            <div class="input-group mb-3">
                               <div class="profile_detail">
-                                 {% if user.profile_image %}
-                                    <img class="img-profile rounded-circle" src="{{user.profile_image.url}}" alt="...">
-                                 {% else %}
-                                    <img class="img-profile rounded-circle" src="{% static 'img/oreumi.jpg' %}" alt="...">
+                                 {% if post_author.profile_image %}
+                                    <img class="img-profile rounded-circle" src="{{post_author.profile_image.url}}" alt="...">
                                  {% endif %}
-                                 <p>{{ user.nickname }}</p>
+                                 <p>{{ post_author.nickname }}</p>
                               </div>
                            </div>
                         </div>

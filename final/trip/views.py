@@ -279,6 +279,7 @@ def create_product(request):
             package.start_date = request.POST['start_date']
             package.end_date = request.POST['end_date']
             package.content = request.POST['content']
+            package.post_author_id = request.user.id
             if 'package_image' in request.FILES:
                 package.image = request.FILES['package_image']
             package.save()
@@ -675,6 +676,8 @@ def packages(request):
 @login_required
 def package_detail(request, id):
     package = get_object_or_404(Package, id=id)
+
+    post_author = get_object_or_404(User, id=package.post_author_id)
     user_id = request.user.id
     check_wish = True # 위시리스트에 있으면 
 
@@ -682,7 +685,8 @@ def package_detail(request, id):
         check_wish = False
     context = {
         "check_wish" : check_wish,
-        "package" : package
+        "package" : package,
+        "post_author" : post_author 
     }
     return render(request, 'package_detail.html', context)
 

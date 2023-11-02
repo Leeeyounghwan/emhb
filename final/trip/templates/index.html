@@ -224,7 +224,7 @@
                         <div class="single-place mb-30">
                             <div class="place-img">
                                 {% if package.image %}
-                                    <img src="{{ package.image.url }}" alt="{{ package.destination }}">
+                                    <a href="{% url 'trip:package_detail' package.id%}"><img src="{{ package.image.url }}" alt="{{ package.destination }}"></a>
                                 {% endif %}
                             </div>
 
