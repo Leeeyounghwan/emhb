@@ -147,9 +147,9 @@
                       <div style="display:flex; justify-content: center;">
                         <label class="border-bottom-primary write-img">
                           {% if user_info.profile_image %}
-                          <img src="{{user_info.profile_image.url}}" alt="이미지 설명" id="imagePreview" style="width:15rem;">
+                          <img src="{{user_info.profile_image.url}}" alt="이미지 설명" id="imagePreview" class="img-upload-fit">
                           {% else %}
-                          <img src="{% static 'img/icon_photo.png' %}" alt="이미지 설명" id="imagePreview" style="width:15rem;">
+                          <img src="{% static 'img/icon_photo.png' %}" alt="이미지 설명" id="imagePreview" class="img-upload-fit">
                           {% endif %}
                           <input type="file" name="profile_img" accept="image/*" style="display: none;" onchange="previewImage(event);"  id="productImage">
                         </label>
