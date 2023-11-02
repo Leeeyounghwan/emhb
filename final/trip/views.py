@@ -541,6 +541,9 @@ def main(request):
 def together_detail(request, id):
     try:
         post = TogetherPost.objects.get(id=id)
+        comments = TogetherComment.objects.filter(post_id_id=post.id)
+        post_writer = get_object_or_404(User, id=post.user_id_id)
+
     except TogetherPost.DoesNotExist:
         raise Http404("포스트를 찾을 수 없습니다.")
     
@@ -556,6 +559,8 @@ def together_detail(request, id):
     context = {
         "post": post,
         'username':request.user,
+        "comments" : comments,
+        "post_writer" : post_writer
     }
     return render(request, 'together_detail.html', context)
 
@@ -569,6 +574,8 @@ def add_comment(request, id):
         if form.is_valid():
             comment = form.save(commit=False)
             comment.post_id = post 
+            comment.content_writer_id = request.user.id
+            comment.writer_nickname = request.user.nickname
             comment.save()
             return redirect('trip:together_detail', id=post.id)
     

@@ -60,7 +60,7 @@
                      <h2>{{ post.post_title }}</h2>
                      <ul class="blog-info-link mt-3 mb-4">
                         <li>지역 {{ post.region }}</a></li>
-                        <li>모집인원 {{ post.recuited_people }}명</li>
+                        <li>모집인원 {{ post.recuited_people }}명</li><br>
                         <br>
                         {{ post.start_date|date:"Y.m.d" }} ~ {{ post.end_date|date:"Y.m.d" }}
                      </ul>
@@ -129,7 +129,7 @@
                {% block content %}
                <div class="comments-area">
                   <h4></h4>
-                  {% for comment in post.togethercomment_set.all %}
+                  {% for comment in comments %}
                   <div class="comment-list">
                       <div class="single-comment justify-conte nt-between d-flex">
                           <div class="user justify-content-between d-flex">
@@ -146,8 +146,7 @@
                                   </p>
                                   <div class="d-flex justify-content-between">
                                       <div class="d-flex align-items-center">
-                                          <h5>
-                                              <a href="#">{{ user.nickname }}</a>
+                                          <h5>{{ comment.writer_nickname }}
                                           </h5>
                                           <p class="date">{{ comment.created_at|date:"m/d/Y P" }}</p>
                                       </div>
@@ -189,7 +188,7 @@
                            <div class="input-group mb-3">
                               <div class="profile_detail">
                                  <img class="img-profile rounded-circle" src="{% static 'img/undraw_profile.svg' %}" alt="...">
-                                 {{ user.nickname }}
+                                 {{ post_writer.nickname }}
                               </div>
                            </div>
                         </div>
