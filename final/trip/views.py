@@ -105,13 +105,8 @@ def add_wishlist(request,id): # 위시리스트 추가
     user_id = request.user.id
 
     if not WishList.objects.filter(user_id_id = user_id, product_id = id).exists():
-        data = {
-            'message': 'SUCCESS',
-            'flag': True,
-        }
-        return JsonResponse(data)
-        # add_wishlist = WishList(user_id_id = user_id,product_id = id,created_at = timezone.now())
-        # add_wishlist.save()
+        add_wishlist = WishList(user_id_id = user_id,product_id = id,created_at = timezone.now())
+        add_wishlist.save()
 
         # wish_list = WishList.objects.filter(user_id_id=user_id)
         # package_list = []
@@ -123,12 +118,11 @@ def add_wishlist(request,id): # 위시리스트 추가
         # context = {
         #     'package' : package_list
         # }
+    
     else:
-        data = {
-            'message': 'already exists',
-            'flag': False,
-        }
-        return JsonResponse(data)
+        WishList.objects.get(user_id_id = user_id, product_id = id).delete()
+        return redirect("trip:package_detail", id)
+    return redirect("trip:package_detail", id)
     # return render (request, "mypage/like_schedule.html",context)
 
 @login_required
@@ -547,10 +541,17 @@ def packages(request):
 
 def package_detail(request, id):
     package = get_object_or_404(Package, id=id)
+    user_id = request.user.id
+    check_wish = True # 위시리스트에 있으면 
+
+    if not WishList.objects.filter(product_id = id, user_id_id = user_id):
+        check_wish = False
     context = {
+        "check_wish" : check_wish,
         "package" : package
     }
     return render(request, 'package_detail.html', context)
+    # return JsonResponse({"check_wish" : check_wish})
 
 # 실시간 채팅 뷰
 def chatting(request):

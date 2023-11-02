@@ -57,9 +57,12 @@
                   </div>
                   <div class="blog_details">
                      <h2>{{ package.title }}</h2>
-                     {% comment %} <form method = "post" action= ""> {% endcomment %}
-                     <a href = "{% url 'trip:add_wishlist' package.id %}">♡</a> 
-                     {{ package.id }}
+                     {% if check_wish %}   
+                        <a href = "{% url 'trip:add_wishlist' package.id %}" style="font-size: 2.0em;">♥</a> 
+                     {% else %}
+                        <a href = "{% url 'trip:add_wishlist' package.id %}" style="font-size: 2.0em;" >♡</a> 
+                     {% endif %}
+                     {% comment %} {{ package.id }}{{ check_wish }} {% endcomment %}
                      <ul class="blog-info-link mt-3 mb-4">
                         <li>지역 {{ package.destination }}</a></li>
                         <br>

@@ -19,7 +19,7 @@ urlpatterns = [
     path('mypage/like_schedule/', views.like_schedule, name='like_schedule'),
     path('mypage/chatting_room/', views.chatting_room, name='chatting_room'),
     
-    # 위시리스트 추가
+    # 위시리스트 추가 by 문정
     # path('packages/package_detail/add_wishlist/<int:id>/', views.add_wishlist, name='add_wishlist'),
     path('add_wishlist/<int:id>', views.add_wishlist, name='add_wishlist'),
 
