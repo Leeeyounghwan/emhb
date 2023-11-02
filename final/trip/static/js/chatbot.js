@@ -1,4 +1,4 @@
-const modal = document.getElementById("modal");
+const chatbotmodal = document.getElementById("chatbot-modal");
 const openModalBtn = document.getElementById("open-modal");
 const closeModalBtn = document.getElementById("close-modal");
 const closeBox = document.getElementById("close-box");
@@ -12,7 +12,7 @@ let scroll = function (div) {
 
 // 모달창 열기
 openModalBtn.addEventListener("click", () => {
-    modal.style.display = "flex";
+    chatbotmodal.style.display = "flex";
     openModalBtn.style.display = 'none';
     //   document.body.style.overflow = "hidden"; // 스크롤바 제거
     closeBox.style.display = 'flex';
@@ -20,7 +20,7 @@ openModalBtn.addEventListener("click", () => {
 
 // 모달창 닫기
 closeBox.addEventListener("click", () => {
-    modal.style.display = "none";
+    chatbotmodal.style.display = "none";
     document.body.style.overflow = "auto"; // 스크롤바 보이기
     closeBox.style.display = 'none';
     openModalBtn.style.display = 'flex';

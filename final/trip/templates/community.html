@@ -168,7 +168,7 @@
           {% endif %}
       </ul>
     </nav>
-
+    {% include 'chat/chat_merge.html' %}
     <script>
       var lng = "{{ lng }}";
       var lat = "{{ lat }}";
@@ -176,7 +176,6 @@
     </main>
 
       <!--================Blog Area =================-->
-      {% include "chatbot.html" %}
 
     <footer>
       <!-- Footer Start-->
@@ -223,6 +222,9 @@
     <!-- ChatBot -->
     <script src="{% static 'js/chatbot.js' %}"></script>
 
+    {% comment %} 채팅 {% endcomment %}
+    <script src="{% static "js/chat/chat_detail.js" %}"></script>
+      <script src="https://kit.fontawesome.com/b02373c6ac.js" crossorigin="anonymous"></script>
     
     <!-- JS here -->
     <script>
