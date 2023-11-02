@@ -1,3 +1,5 @@
+like_schedule.html
+
 <!DOCTYPE html>
 {% load static %}
 {% load humanize %}
@@ -130,8 +132,9 @@
               
             </div>
 
-            <div class="my-post">
-                {%for post in items %}
+            <div class="my-post" style="display: flex; flex-direction: row;">
+                  
+              {%for post in items %}
                   <div class="card shadow mb-4" style="width: 20rem; height: 22rem; max-height: 25rem; z-index: 1;">
                     <div class="card-header py-3">
                         <h3 class="m-0 font-weight-bold text-primary"><a href="{% url 'trip:package_detail' post.id %}">{{ post.title }}</a></h6>

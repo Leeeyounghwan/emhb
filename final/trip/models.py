@@ -151,7 +151,7 @@ class Community(models.Model):
     community_destination = models.CharField(max_length=200, null=True, blank=True)
 
 
-
+# 위시리스트 모델 추가 by 문정
 class WishList(models.Model):
     user_id = models.OneToOneField(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Package, on_delete=models.CASCADE, null=False, default="" )

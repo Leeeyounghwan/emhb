@@ -539,19 +539,19 @@ def packages(request):
   }
   return render(request, 'packages.html', context)
 
+# 위시리스트 기능 추가 
 def package_detail(request, id):
     package = get_object_or_404(Package, id=id)
     user_id = request.user.id
-    check_wish = True # 위시리스트에 있으면 
+    check_wish = True # 위시리스트에 상품이 있으면 
 
     if not WishList.objects.filter(product_id = id, user_id_id = user_id):
-        check_wish = False
+        check_wish = False 
     context = {
         "check_wish" : check_wish,
         "package" : package
     }
     return render(request, 'package_detail.html', context)
-    # return JsonResponse({"check_wish" : check_wish})
 
 # 실시간 채팅 뷰
 def chatting(request):
