@@ -2,24 +2,39 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from datetime import datetime
-
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 # Create your models here.
 
-default_img_url = "https://triporeumibucket.s3.ap-northeast-2.amazonaws.com/test_profile.jpg"
-
+def get_default_profile_image():
+    return "test_profile.jpg"  # 기본 이미지의 상대 경로
 
 class User(AbstractUser):
     nickname = models.CharField(max_length=40, blank=True)
-    profile_image = models.ImageField(upload_to="", null=True, default=default_img_url)
+    profile_image = models.ImageField(upload_to="profile", null=True)
     review = models.IntegerField(default=0)
     number_of_written = models.IntegerField(default=0)
     is_black = models.BooleanField(default=False)
     caution_cnt = models.IntegerField(default=0)
 
-    # 경고 횟수 관련 내용 추가 - 2023.10.23 by 영환
-    caution_cnt = models.IntegerField(default=0)
-
-
+# post_save 신호를 수신하여 모델이 저장될 때 실행할 함수 정의
+@receiver(post_save, sender=User)
+def set_default_profile_image(sender, instance, created, **kwargs):
+    if created and not instance.profile_image:
+        instance.profile_image.name = get_default_profile_image()
+        instance.save()
+    
+    # AbstractUser 기본 필드
+    # username_validator = UnicodeUsernameValidator()
+    # username = models.CharField(_('username'), max_length=150, unique=True,…)
+    # first_name = models.CharField(_('first name'), max_length=30, blank=True)
+    # last_name = models.CharField(_('last name'), max_length=150, blank=True)
+    # email = models.EmailField(_('email address'), blank=True)
+    # is_staff = models.BooleanField(_('staff status'), default=False,…)
+    # is_active = models.BooleanField(_('active'), default=True,…)
+    # date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
+    
+    
 class TogetherPost(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     post_title = models.CharField(max_length=40)
