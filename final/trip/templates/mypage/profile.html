@@ -124,12 +124,13 @@
           <!-- Begin Page Content -->
           <div class="container-fluid">
             <!-- Page Heading -->
-            <div
-              class="d-sm-flex align-items-center justify-content-between mb-4"
-            >
+            <div class="d-sm-flex align-items-center mb-4">
               <h1 class="h3 mb-0 text-gray-800">내 정보 수정</h1>
-              
+              <br>
             </div>
+            {% if request.user.nickname == ""%}
+              <h5 class="h5 mb-2 text-primary font-weight-bold">네이버나 구글로 로그인 하신 분들은 프로필 이미지와 닉네임을 설정해주세요</h5>
+            {% endif %}
       
             <!-- Content Row -->
             <div class="row">
