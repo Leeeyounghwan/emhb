@@ -72,6 +72,8 @@ urlpatterns = [
     path('chat/', views.chatting, name='chatting'),
     path('chat/<str:room_name>/', views.room, name='room'),
     path('test/', views.chat_test, name="chat_test"),
+    path('check_room/<int:room_name>/<str:room_title>', views.check_room, name='check_room'),
+    path('room_list', views.room_list, name='room_list'),
 
     #동행모집글 By 수현
     path('community/', views.community, name='community'),

@@ -25,9 +25,12 @@
   <link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+   {% comment %} 채팅 {% endcomment %}
+  <link rel="stylesheet" href="{% static "css/chat/chat2.css" %}">
 </head>
 
 <body>
+   {% include 'chat/chat_merge.html' %}
    <!-- Preloader Start -->
    <div id="preloader-active">
       <div class="preloader d-flex align-items-center justify-content-center">
@@ -187,7 +190,7 @@
                               </div>
                            </div>
                         </div>
-                        <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
+                        <button name = 'chatbtn' class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
                            >채팅하기</button>
                   </aside>
                   <aside class="single_sidebar_widget tag_cloud_widget">
@@ -233,7 +236,8 @@
   </footer>
    
 <!-- JS here -->
-	
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
 		<!-- All JS Custom Plugins Link Here here -->
       <script src="{% static 'js/vendor/modernizr-3.5.0.min.js' %}"></script>
 		
@@ -270,5 +274,8 @@
       <script src="{% static 'js/plugins.js' %}"></script>
       <script src="{% static 'js/main.js' %}"></script>
       
+      <!-- 채팅 -->
+      <script src="{% static "js/chat/chat_detail.js" %}"></script>
+      <script src="https://kit.fontawesome.com/b02373c6ac.js" crossorigin="anonymous"></script>
 </body>
 </html>

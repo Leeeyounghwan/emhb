@@ -19,6 +19,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.http import Http404
 from django.core.paginator import Paginator, EmptyPage
 
+from .serializer import GroupChatSerializer
 # Create your views here.
 
 # 메인페이지 시작 By 영환
@@ -505,6 +506,7 @@ def together_detail(request, id):
         post = TogetherPost.objects.get(id=id)
     context = {
         "post": post,
+        'username':request.user,
     }
     return render(request, 'together_detail.html', context)
 
@@ -663,13 +665,30 @@ def room(request, room_name):
     return redirect("trip:main")
 
 @login_required
+def check_room(request, room_name, room_title):
+    chat_room , is_created = GroupChat.objects.get_or_create(room_name=room_name)
+    chat_room.members.add(request.user)
+    if is_created:
+        chat_room.room_title = room_title
+        chat_room.save()
+        
+    return JsonResponse({'is_ok':is_created})
+    
+@login_required
+def room_list(request):
+    chat_list = GroupChat.objects.filter(members=request.user)
+    serializer = GroupChatSerializer(chat_list, many=True)
+    data = serializer.data
+    return JsonResponse(data, safe=False)
+
+@login_required
 def chat_test(request):
     chat_room_list = GroupChat.objects.filter(members=request.user)
     context = {
         'username':request.user,
         'chat_room_list':chat_room_list
     }
-    return render(request, 'chat/test.html', context)
+    return render(request, 'chat/chat_merge.html', context)
 
 @login_required
 def community(request):
