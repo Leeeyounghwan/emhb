@@ -326,7 +326,7 @@ hr {
 
 .section-padding {
     padding-top: 120px;
-    padding-bottom: 120px
+    padding-bottom: 120px;
 }
 
 .separator {
@@ -7255,12 +7255,25 @@ form.search-box .search-form button {
     margin: 10px 0;
 }
 
+.profile_detail {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .profile_detail img {
     width: 60px;
     height: 60px;
     border-radius: 50%;
     border: 1px solid #d2bfbf;
     margin: 7px;
+    border: none;
+}
+
+.profile_detail p {
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 0;
 }
 
 .btns {
@@ -7278,4 +7291,65 @@ form.search-box .search-form button {
     font-family: "omyu_pretty";
     font-size: 20px;
     align-items: center;
+}
+
+a.delete-button {
+    color: #888;
+    /* 연한 회색 */
+    text-decoration: none;
+    /* 링크 밑줄 제거 */
+    font-size: 16px;
+    /* 버튼 텍스트 크기 줄이기 */
+    padding: 5px 10px;
+    /* 버튼 패딩 조절 (크기 조절) */
+    position: relative;
+    /* 위치 조정을 위해 상대 위치 설정 */
+    top: 2px;
+    /* 위로 조금 이동 (선택 사항) */
+}
+
+a.delete-button:hover {
+    color: red;
+    /* 이동 시 빨간색으로 변경 (선택 사항) */
+}
+
+/* 삭제 버튼 모양을 X로 만듭니다. */
+a.delete-button::before {
+
+
+    content: "X";
+    display: inline-block;
+    margin-right: 3px;
+    /* X와 텍스트 사이의 간격을 조절 (선택 사항) */
+}
+
+.single-post {
+    border-bottom: 1px solid #c2c2c2;
+}
+
+.pay-area {
+    margin-top: 10px;
+    display: flex;
+    float: right;
+    font-size: 25px;
+    font-weight: 500;
+    align-items: center;
+}
+
+.pay-btn {
+    margin-left: 20px;
+    float: right;
+    border-radius: 5px;
+    outline: none;
+    box-shadow: none;
+    border: none;
+    padding: 10px 15px;
+    font-size: 20px;
+}
+
+.no-search-result {
+    font-family: "omyu_pretty";
+    font-size: 40px;
+    justify-content: center;
+    display: flex;
 }

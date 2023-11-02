@@ -61,29 +61,23 @@
                                                     Me</label>
                                             </div>
                                         </div>
-                                        {% comment %} <a href="#" class="btn btn-primary btn-user btn-block">
-                                            Login
-                                        </a> {% endcomment %}
                                         <button type="submit" class="btn btn-primary btn-user btn-block">
                                             Login
                                         </button>
-                                        <hr>
-                                        <a href="#" class="btn btn-google btn-user btn-block">
+                                    </form>
+                                    <hr>
+                                        <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google fa-fw"></i> Login with Google
                                         </a>
                                         <a href="#" class="btn btn-facebook btn-user btn-block">
                                             <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
                                         </a>
-                                    </form>
                                     {% if form.non_field_errors %}
                                     <script>
                                         alert("{{ form.non_field_errors|join:' ' }}");
                                     </script>
                                     {% endif %}
                                     <hr>
-                                    {% comment %} <div class="text-center">
-                                        <a class="small" href="forgot-password.html">비밀번호 찾기</a>
-                                    </div> {% endcomment %}
                                     <div class="text-center">
                                         <a class="small" href="{% url 'trip:register' %}">Register</a>
                                     </div>
@@ -98,16 +92,6 @@
         </div>
 
     </div>
-
-    {% comment %} <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script> {% endcomment %}
 
 </body>
 
