@@ -33,7 +33,7 @@ with open('trip/config.json', 'r') as f:
 SECRET_KEY = secret_key
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -62,6 +62,8 @@ INSTALLED_APPS = [
     'board',
     'django_summernote',
     'social_django',
+    #cors
+    'corsheaders',
 ]
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = social_auth_google_oauth2_key
@@ -96,6 +98,8 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
     'social_django.middleware.SocialAuthExceptionMiddleware',
+    #cords 미들웨어
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = "final.urls"
@@ -215,4 +219,7 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 MEDIA_URL = 'https://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-CSRF_TRUSTED_ORIGINS = ['https://triporeumi.site/']
+CSRF_TRUSTED_ORIGINS = ['https://triporeumi.site']
+CORS_ALLOWED_ORIGINS = [
+    "https://triporeumi.site",
+]

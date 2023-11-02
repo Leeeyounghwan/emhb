@@ -15,7 +15,7 @@ function changeWindow(e) {
     rtwindow.innerHTML = '';
     const roomName = e.currentTarget.id.split('_')[1];
 
-    const chatSocket = new WebSocket('ws://' + window.location.host + '/ws/chat/' + roomName + '/')
+    const chatSocket = new WebSocket('wss://' + window.location.host + '/ws/chat/' + roomName + '/')
 
     const scroll = function (div) {
         div.scrollTop = div.scrollHeight;

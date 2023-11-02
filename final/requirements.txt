@@ -19,6 +19,7 @@ daphne==4.0.0
 defusedxml==0.7.1
 Django==4.2.6
 django-allauth==0.58.1
+django-cors-headers==4.3.0
 django-storages==1.14.2
 django-summernote==0.8.20.0
 frozenlist==1.4.0
