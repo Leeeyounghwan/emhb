@@ -814,7 +814,7 @@ def set_write(request):
         print(Together_post)
 
         Together_post.save()
-        return redirect('trip:blog', pk=id)
+        return redirect('trip:community')
     else:
         return render(request, 'community_write.html')
 
