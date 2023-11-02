@@ -134,7 +134,11 @@
                       <div class="single-comment justify-conte nt-between d-flex">
                           <div class="user justify-content-between d-flex">
                               <div class="thumb">
-                                 <img src="{{ user.profile_image.url }}" alt="">
+                                 {% if user.profile_image %}
+                                    <img src="{{ user.profile_image.url }}" alt="">
+                                 {% else %}
+                                    <img src="{% static 'img/oreumi.jpg'%}" alt="">
+                                 {% endif %}
                               </div>
                               <div class="desc">
                                   <p class="comment">

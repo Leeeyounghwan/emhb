@@ -114,6 +114,7 @@ class Package(models.Model):
     end_date = models.DateField()
     # 삭제관련 컬럼 추가 - 2023.10.19 by 영환
     is_deleted = models.BooleanField(default=False)
+    post_author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
 # 신고 관련 모델 추가 - 2023.10.19 by 영환
 # default관련 옵션 변경 - 2023.10.23 by 영환
