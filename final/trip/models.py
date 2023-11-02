@@ -49,6 +49,8 @@ class TogetherPost(models.Model):
 
 class TogetherComment(models.Model):
     post_id = models.ForeignKey(TogetherPost, on_delete=models.CASCADE)
+    content_writer = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    writer_nickname = models.CharField(max_length=50, null=True)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
