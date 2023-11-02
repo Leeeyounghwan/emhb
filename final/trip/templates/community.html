@@ -97,6 +97,18 @@
                 {%for item in posts %}
                 <div class="col-xl-4 col-lg-4 col-md-6">
                     <div class="single-place mb-30">
+                      <script>
+                        var lng = {{ item.post_lnt }};
+                        var lat = {{ item.post_lat }};
+                
+                        // Map
+                        var container = document.getElementById('map_image');
+                        var options = {
+                          center: new kakao.maps.LatLng(lat, lng),
+                          level: 5,
+                        };
+                        var map = new kakao.maps.Map(container, options); // 지도 생성
+                      </script>
                         
                         <!-- Map image -->
                         <div class="place-img">
