@@ -96,33 +96,24 @@
               {% if posts %}
                 {%for item in posts %}
                 <div class="col-xl-4 col-lg-4 col-md-6">
-                    <div class="single-place mb-30">
-                      <script>
-                        var lng = {{ item.post_lnt }};
-                        var lat = {{ item.post_lat }};
-                
-                        // Map
-                        var container = document.getElementById('map_image');
-                        var options = {
-                          center: new kakao.maps.LatLng(lat, lng),
-                          level: 5,
-                        };
-                        var map = new kakao.maps.Map(container, options); // 지도 생성
-                      </script>
-                        
+                    <div class="single-place mb-30">                        
                         <!-- Map image -->
-                        <div class="place-img">
-                          <div id="map_image" style="height:220px; background-color:gray;"></div>
+                        <div class="place-img" style="width:100%;">
+                          <div class="map_image" id="map_image" style="height:220px; width:100%; background-color:gray;"></div>
+                          
                         </div>
 
-                        <div class="place-cap">
-                            <div class="place-cap-top">
+                        <input type="text" class="lng" id="lng" value='{{item.post_lnt}}'>
+                        <input type="text" class='lat' id="lat" value='{{item.post_lat}}'>
+                        
+                        <div class="place-cap" style="width:100%; padding-right:0px; padding-left:0px;">
+                            <div class="place-cap-top" style="width:100%;">
                                 <h3><a href="{% url 'trip:together_detail' item.id %}">{{ item.post_title|truncatechars:12 }}</a></h3>
                                 <p class="dolor">{{ item.post_content|truncatechars:15 }}</p>
                                 <p class="dolor">{{ item.recuited_people }}<span>명 모집중 / {{ item.region }}</span></p>
                             </div>
 
-                            <div class="place-cap-bottom">
+                            <div class="place-cap-bottom" style="width:100%;">
                                 <ul>
                                   <li><span>여행기간</span></li>
                                     <li><i class="far fa-clock"> <span> </span> {{ item.start_date }}<span> ~ </span>{{ item.end_date }}</i></li>
@@ -181,10 +172,6 @@
       </ul>
     </nav>
     {% include 'chat/chat_merge.html' %}
-    <script>
-      var lng = "{{ lng }}";
-      var lat = "{{ lat }}";
-    </script>
     </main>
 
       <!--================Blog Area =================-->
@@ -194,6 +181,68 @@
       {% include "footer.html" %}
       <!-- Footer End-->
     </footer>
+
+    <script>
+      var lng = document.getElementById('lng').value;
+      var lat = document.getElementById('lat').value;
+
+      console.log(lng, lat);
+
+      // JavaScript 코드 수정
+      var staticMapContainers = document.querySelectorAll('.col-xl-4.col-lg-4.col-md-6 .place-img');
+      staticMapContainers.forEach(function(container, index) {
+      var staticMapContainer = document.getElementById('map_image');      
+      staticMapContainer.id = 'staticMap' + (index + 1); // 각 요소에 고유한 ID 할당
+        
+        var staticMapContainers1 = document.querySelectorAll('.map_image');
+        
+        staticMapContainers1.forEach(function(container, index) {
+        var staticMapContainer1 = document.getElementById('staticMap1');
+        
+            // 이미지 지도에서 마커가 표시될 위치입니다
+        var markerPosition  = new kakao.maps.LatLng(lat, lng);
+
+    // 이미지 지도에 표시할 마커입니다
+    // 이미지 지도에 표시할 마커는 Object 형태입니다
+    var marker = {
+        position: markerPosition
+      }
+
+    var staticMapOption = {
+        center: new kakao.maps.LatLng(lat, lng), // 이미지 지도의 중심 좌표
+        level: 5, // 이미지 지도의 확대 레벨
+        marker: marker // 이미지 지도에 표시할 마커
+      };
+
+    // 이미지 지도를 표시할 div와 옵션으로 이미지 지도를 생성합니다
+    var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+
+      });
+
+      container.appendChild(staticMapContainer);       
+    });
+
+    {% comment %} // Map
+    var staticMapContainer = document.getElementById('staticMap');
+
+    // 이미지 지도에서 마커가 표시될 위치입니다
+    var markerPosition  = new kakao.maps.LatLng(37.566826004661, 126.978652258309);
+
+    // 이미지 지도에 표시할 마커입니다
+    // 이미지 지도에 표시할 마커는 Object 형태입니다
+    var marker = {
+        position: markerPosition
+      }
+
+    var staticMapOption = {
+        center: new kakao.maps.LatLng(37.566826004661, 126.978652258309), // 이미지 지도의 중심 좌표
+        level: 5, // 이미지 지도의 확대 레벨
+        marker: marker // 이미지 지도에 표시할 마커
+      };
+
+    // 이미지 지도를 표시할 div와 옵션으로 이미지 지도를 생성합니다
+    var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption); {% endcomment %}
+    </script>
     
 		<!-- All JS Custom Plugins Link Here here -->
     <script src="{% static 'js/vendor/modernizr-3.5.0.min.js' %}"></script>
@@ -236,38 +285,7 @@
 
     {% comment %} 채팅 {% endcomment %}
     <script src="{% static "js/chat/chat_detail.js" %}"></script>
-      <script src="https://kit.fontawesome.com/b02373c6ac.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/b02373c6ac.js" crossorigin="anonymous"></script>
     
     <!-- JS here -->
-    <script>
-      // JavaScript 코드 수정
-      var staticMapContainers = document.querySelectorAll('.col-xl-4.col-lg-4.col-md-6 .place-img');
-
-      staticMapContainers.forEach(function(container, index) {
-      var staticMapContainer = document.getElementById('map_image');
-      staticMapContainer.id = 'staticMap' + (index + 1); // 각 요소에 고유한 ID 할당
-      container.appendChild(staticMapContainer);
-
-      console.log(lng);
-      console.log(lat);
-      
-      // 이미지 지도에서 마커가 표시될 위치입니다
-      var markerPosition  = new kakao.maps.LatLng(lat, lng);
-
-      // 이미지 지도에 표시할 마커입니다
-      // 이미지 지도에 표시할 마커는 Object 형태입니다
-      var marker = {
-        position: markerPosition
-      };
-
-      var staticMapOption = {
-        center: new kakao.maps.LatLng(lat, lng), // 이미지 지도의 중심 좌표
-        level: 5, // 이미지 지도의 확대 레벨
-        marker: marker // 이미지 지도에 표시할 마커
-      };
-
-      // 이미지 지도를 표시할 div와 옵션으로 이미지 지도를 생성합니다
-      var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
-    });
-    </script>
   </html>
