@@ -3103,6 +3103,7 @@ hr {
     .blog_details h2 {
         font-size: 24px;
         margin-bottom: 15px;
+        width: 45rem;
     }
 }
 
@@ -7351,6 +7352,12 @@ a.delete-button::before {
     align-items: center;
 }
 
+.pay-area a {
+    color: #ff8b23;
+    font-size: 3rem;
+    margin-right: 15px;
+}
+
 .pay-btn {
     margin-left: 20px;
     float: right;
@@ -7379,4 +7386,28 @@ a.delete-button::before {
     margin-right: 5px;
     width: 1rem;
     height: 1rem;
+}
+
+.img-upload-fit {
+    width: 100%;
+    height: 100%;
+}
+
+.dolor {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+}
+
+.excert {
+    width: 45rem;
+}
+
+.one-line {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin: 5px 0px;
 }

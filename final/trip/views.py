@@ -279,6 +279,7 @@ def create_product(request):
             package.start_date = request.POST['start_date']
             package.end_date = request.POST['end_date']
             package.content = request.POST['content']
+            package.post_author_id = request.user.id
             if 'package_image' in request.FILES:
                 package.image = request.FILES['package_image']
             package.save()
@@ -489,12 +490,22 @@ def black_cancel(request, blacklist_id):
 
 #by 건영
 def index(request):
-    together_walk = TogetherPost.objects.all()
-    packages = Package.objects.all()
+    together_walk = TogetherPost.objects.all().order_by('created_at')
+    packages = Package.objects.all().order_by('-created_at')
+
+    together_list = []
+    package_list = []
+
+    for i in range(0, 8) :
+        together_list.append(together_walk[i])
+    for j in range(0, 6) :
+        package_list.append(packages[j])
+
     context = {
-        "posts" : together_walk,
-        "packages" : packages
+        "posts" : together_list,
+        "packages" : package_list
     }
+
     return render(request, 'index.html', context)
 def about(request):
     return render(request, 'about.html')
@@ -530,6 +541,9 @@ def main(request):
 def together_detail(request, id):
     try:
         post = TogetherPost.objects.get(id=id)
+        comments = TogetherComment.objects.filter(post_id_id=post.id)
+        post_writer = get_object_or_404(User, id=post.user_id_id)
+
     except TogetherPost.DoesNotExist:
         raise Http404("포스트를 찾을 수 없습니다.")
     
@@ -545,6 +559,8 @@ def together_detail(request, id):
     context = {
         "post": post,
         'username':request.user,
+        "comments" : comments,
+        "post_writer" : post_writer
     }
     return render(request, 'together_detail.html', context)
 
@@ -558,6 +574,8 @@ def add_comment(request, id):
         if form.is_valid():
             comment = form.save(commit=False)
             comment.post_id = post 
+            comment.content_writer_id = request.user.id
+            comment.writer_nickname = request.user.nickname
             comment.save()
             return redirect('trip:together_detail', id=post.id)
     
@@ -675,6 +693,8 @@ def packages(request):
 @login_required
 def package_detail(request, id):
     package = get_object_or_404(Package, id=id)
+
+    post_author = get_object_or_404(User, id=package.post_author_id)
     user_id = request.user.id
     check_wish = True # 위시리스트에 있으면 
 
@@ -682,7 +702,8 @@ def package_detail(request, id):
         check_wish = False
     context = {
         "check_wish" : check_wish,
-        "package" : package
+        "package" : package,
+        "post_author" : post_author 
     }
     return render(request, 'package_detail.html', context)
 
@@ -793,7 +814,7 @@ def set_write(request):
         print(Together_post)
 
         Together_post.save()
-        return redirect('trip:blog', pk=id)
+        return redirect('trip:community')
     else:
         return render(request, 'community_write.html')
 

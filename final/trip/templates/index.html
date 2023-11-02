@@ -12,20 +12,22 @@
 		<link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
 
 		<!-- CSS here -->
-            <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-            <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
-            <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
-            <link rel="stylesheet" href="{% static 'css/slicknav.css' %}">
-            <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
-            <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
-            <link rel="stylesheet" href="{% static 'css/fontawesome-all.min.css' %}">
-            <link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
-            <link rel="stylesheet" href="{% static 'css/slick.css' %}">
-            <link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
-            <link rel="stylesheet" href="{% static 'css/style.css' %}">
-            <link rel="stylesheet" href="{% static 'admin_vendor/fontawesome-free/css/all.min.css'%}">
-            <link rel="stylesheet" href="{% static 'css/chatbot.css' %}">
-
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+        <link rel="stylesheet" href="{% static 'css/slicknav.css' %}">
+        <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+        <link rel="stylesheet" href="{% static 'css/fontawesome-all.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
+        <link rel="stylesheet" href="{% static 'css/slick.css' %}">
+        <link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'admin_vendor/fontawesome-free/css/all.min.css'%}">
+        <link rel="stylesheet" href="{% static 'css/chatbot.css' %}">
+        
+        <!-- Kakao Map API-->
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7d5511716523c9fb7d55def390e73d6a&libraries=services"></script>
    </head>
     <!-- Preloader Start -->
     <div id="preloader-active">
@@ -140,32 +142,47 @@
                         </div>
                     </div>
                 </div>
-                <section class="blog_area section-padding" style="display: flex; flex-wrap: nowrap; overflow-x: auto;">
-                    <div class="container" style="justify-content:center; align-items:center;">
-                        <div style="max-width: 1500px;">
-                            <div>
-                                {% for post in posts %}
-                                    <article class="blog_item" style="max-width: 20%;">
-                                        <div class="blog_item_img">
-                                            <img class="card-img rounded-0" src="{{ post.post_image.url }}" alt="posts.post_title">
-                                        </div> 
-            
-                                        <div class="blog_details" style="margin: 0 auto;">
-                                            <a class="d-inline-block" href="{% url 'trip:together_detail' post.id %}">
-                                                <h2 style="font-size: 18px;">{{ post.post_title }}</h2>
-                                            </a>
-                                            <p style="font-size: 14px;">{{ post.post_content|truncatechars:15 }}</p>
-                                            <ul class="blog-info-link">
-                                                <li style="font-size: 14px;"><a href="#"><i class="fa fa-user"></i> {{ post.user_id }}</a></li>
-                                                <li style="font-size: 14px;"><a href="#"><i class="fa fa-comments"></i> {{ post.user_id }}</a></li>
-                                            </ul>
-                                        </div>
-                                    </article>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                <div class="row">
+                    {% if posts %}
+                      {%for item in posts %}
+                      <div class="col-xl-4 col-lg-4 col-md-6">
+                          <div class="single-place mb-30">                        
+                              <!-- Map image -->
+                              <div class="place-img" style="width:100%;">
+                                <div class="map_image" id="map_image" style="height:220px; width:100%; background-color:gray;"></div>
+                                
+                              </div>
+      
+                              <input type="text" class="lng" id="lng" value='{{item.post_lnt}}' style="display:none;">
+                              <input type="text" class='lat' id="lat" value='{{item.post_lat}}' style="display:none;">
+                              
+                              <div class="place-cap" style="width:100%; padding-right:0px; padding-left:0px;">
+                                  <div class="place-cap-top" style="width:100%;">
+                                      <h3><a href="{% url 'trip:together_detail' item.id %}">{{ item.post_title|truncatechars:12 }}</a></h3>
+                                      <p class="dolor">{{ item.post_content|truncatechars:15 }}</p>
+                                      <p class="dolor">{{ item.recuited_people }}<span>명 모집중 / {{ item.region }}</span></p>
+                                  </div>
+      
+                                  <div class="place-cap-bottom" style="width:100%;">
+                                      <ul>
+                                        <li><span>여행기간</span></li>
+                                          <li><i class="far fa-clock"> <span> </span> {{ item.start_date }}<span> ~ </span>{{ item.end_date }}</i></li>
+                                      </ul>
+                                  </div>
+                                  <div class="place-cap-bottom">
+                                    <ul class="blog-info-link">
+                                      <li style="margin-right: 10px; width:30px; height:30px;"><img class="img-profile rounded-circle" src="{% static 'img/undraw_profile.svg' %}"></li>
+                                      <li style="font-size: 14px;">{{ item.user_id }}</li>
+                                    </ul>
+                                </div>
+                              </div>
+                          </div>
+                      </div>
+                      {% endfor %}
+                    {% else %}
+                      <div class="no-search-result" style="height: 20rem;"> 조회된 결과가 없습니다.<br>지역명으로 검색해주세요.</div>
+                    {% endif %}
+                  </div>
             </div>
         </div>
         <!-- 동행모집글 End -->
@@ -185,16 +202,6 @@
                                         <p>아래는 저희 사이트와 제휴를 맺은 업체들의 여행 상품 입니다.<br>
                                             여행 일정을 계획하는게 귀찮다면 아래의 상품들로 여행을 떠나보세요!
                                         </p>
-                                    </div>
-                                    <!-- founder -->
-                                    <div class="testimonial-founder d-flex align-items-center justify-content-center">
-                                        <div class="founder-img">
-                                            <img src="{% static 'img/testmonial/Homepage_testi.png' %}" alt="">
-                                        </div>
-                                        <div class="founder-text">
-                                            <span>Jessya Inn</span>
-                                            <p>Co Founder</p>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -222,9 +229,9 @@
                     {%for package in packages %}
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="single-place mb-30">
-                            <div class="place-img">
+                            <div class="place-img" style="height:220px; width:100%">
                                 {% if package.image %}
-                                    <img src="{{ package.image.url }}" alt="{{ package.destination }}">
+                                    <a href="{% url 'trip:package_detail' package.id%}"><img src="{{ package.image.url }}" alt="{{ package.destination }}"></a>
                                 {% endif %}
                             </div>
 
@@ -259,7 +266,71 @@
     {% include 'footer.html'%}
 
 	<!-- JS here -->
-	
+    <script>
+        var lng = document.getElementById('lng').value;
+        var lat = document.getElementById('lat').value;
+  
+        console.log(lng, lat);
+  
+        // JavaScript 코드 수정
+        var staticMapContainers = document.querySelectorAll('.col-xl-4.col-lg-4.col-md-6 .place-img');
+        staticMapContainers.forEach(function(container, index) {
+        var staticMapContainer = document.getElementById('map_image');      
+        staticMapContainer.id = 'staticMap' + (index + 1); // 각 요소에 고유한 ID 할당
+          
+          var staticMapContainers1 = document.querySelectorAll('.map_image');
+          
+          staticMapContainers1.forEach(function(container, index) {
+          var staticMapContainer1 = document.getElementById('staticMap1');
+          
+              // 이미지 지도에서 마커가 표시될 위치입니다
+          var markerPosition  = new kakao.maps.LatLng(37.566826004661, 126.978652258309);
+  
+      // 이미지 지도에 표시할 마커입니다
+      // 이미지 지도에 표시할 마커는 Object 형태입니다
+      var marker = {
+          position: markerPosition
+        }
+  
+      var staticMapOption = {
+          center: new kakao.maps.LatLng(37.566826004661, 126.978652258309), // 이미지 지도의 중심 좌표
+          level: 5, // 이미지 지도의 확대 레벨
+          marker: marker // 이미지 지도에 표시할 마커
+        };
+  
+      // 이미지 지도를 표시할 div와 옵션으로 이미지 지도를 생성합니다
+      var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+  
+        });
+  
+        container.appendChild(staticMapContainer);       
+      });
+  
+      {% comment %} // Map
+      var staticMapContainer = document.getElementById('staticMap');
+  
+      // 이미지 지도에서 마커가 표시될 위치입니다
+      var markerPosition  = new kakao.maps.LatLng(37.566826004661, 126.978652258309);
+  
+      // 이미지 지도에 표시할 마커입니다
+      // 이미지 지도에 표시할 마커는 Object 형태입니다
+      var marker = {
+          position: markerPosition
+        }
+  
+      var staticMapOption = {
+          center: new kakao.maps.LatLng(37.566826004661, 126.978652258309), // 이미지 지도의 중심 좌표
+          level: 5, // 이미지 지도의 확대 레벨
+          marker: marker // 이미지 지도에 표시할 마커
+        };
+  
+      // 이미지 지도를 표시할 div와 옵션으로 이미지 지도를 생성합니다
+      var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption); {% endcomment %}
+      </script>
+
+
+
+
 		<!-- All JS Custom Plugins Link Here here -->
         <script src="{% static 'js/vendor/modernizr-3.5.0.min.js' %}"></script>
 		
@@ -295,7 +366,7 @@
         <script src="{% static 'js/main.js' %}"></script>
 
         <!-- ChatBot -->
-        <script src="{% static 'js/chatbot.js' %}"></script>
-        
+        {% comment %} <script src="{% static 'js/chatbot.js' %}"></script> {% endcomment %}
+
     </body>
 </html>

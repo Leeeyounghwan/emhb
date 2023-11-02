@@ -60,19 +60,17 @@
                      <h2>{{ post.post_title }}</h2>
                      <ul class="blog-info-link mt-3 mb-4">
                         <li>지역 {{ post.region }}</a></li>
-                        <li>모집인원 {{ post.recuited_people }}명</li>
+                        <li>모집인원 {{ post.recuited_people }}명</li><br>
                         <br>
                         {{ post.start_date|date:"Y.m.d" }} ~ {{ post.end_date|date:"Y.m.d" }}
                      </ul>
-                     <p class="excert">
+                     <p class="excert" style="margin-top:100px;margin-bottom:100px;">
                         {{ post.post_content }}
                      </p>
                   </div>
                </div>
                <div class="navigation-top">
                   <div class="d-sm-flex justify-content-between text-center">
-                     <p class="like-info"><span class="align-middle"><i class="fa fa-heart"></i></span> Lily and 4
-                        people like this</p>
                      <div class="col-sm-4 text-center my-2 my-sm-0">
                         <!-- <p class="comment-count"><span class="align-middle"><i class="fa fa-comment"></i></span> 06 Comments</p> -->
                      </div>
@@ -83,58 +81,20 @@
                         <li><a href="#"><i class="fab fa-behance"></i></a></li>
                      </ul>
                   </div>
-                  <div class="navigation-area">
-                     <div class="row">
-                        <div
-                           class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
-                           <div class="thumb">
-                              <a href="#">
-                                 <img class="img-fluid" src="{% static 'img/post/preview.png' %}" alt="">
-                              </a>
-                           </div>
-                           <div class="arrow">
-                              <a href="#">
-                                 <span class="lnr text-white ti-arrow-left"></span>
-                              </a>
-                           </div>
-                           <div class="detials">
-                              <p>Prev Post</p>
-                              <a href="#">
-                                 <h4>Space The Final Frontier</h4>
-                              </a>
-                           </div>
-                        </div>
-                        <div
-                           class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
-                           <div class="detials">
-                              <p>Next Post</p>
-                              <a href="#">
-                                 <h4>Telescopes 101</h4>
-                              </a>
-                           </div>
-                           <div class="arrow">
-                              <a href="#">
-                                 <span class="lnr text-white ti-arrow-right"></span>
-                              </a>
-                           </div>
-                           <div class="thumb">
-                              <a href="#">
-                                 <img class="img-fluid" src="{% static 'img/post/next.png' %}" alt="">
-                              </a>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
                </div>
                {% block content %}
                <div class="comments-area">
                   <h4></h4>
-                  {% for comment in post.togethercomment_set.all %}
+                  {% for comment in comments %}
                   <div class="comment-list">
                       <div class="single-comment justify-conte nt-between d-flex">
                           <div class="user justify-content-between d-flex">
                               <div class="thumb">
-                                 <img src="{{ user.profile_image.url }}" alt="">
+                                 {% if user.profile_image %}
+                                    <img src="{{ user.profile_image.url }}" alt="">
+                                 {% else %}
+                                    <img src="{% static 'img/oreumi.jpg'%}" alt="">
+                                 {% endif %}
                               </div>
                               <div class="desc">
                                   <p class="comment">
@@ -142,8 +102,7 @@
                                   </p>
                                   <div class="d-flex justify-content-between">
                                       <div class="d-flex align-items-center">
-                                          <h5>
-                                              <a href="#">{{ user.nickname }}</a>
+                                          <h5>{{ comment.writer_nickname }}
                                           </h5>
                                           <p class="date">{{ comment.created_at|date:"m/d/Y P" }}</p>
                                       </div>
@@ -185,7 +144,7 @@
                            <div class="input-group mb-3">
                               <div class="profile_detail">
                                  <img class="img-profile rounded-circle" src="{% static 'img/undraw_profile.svg' %}" alt="...">
-                                 {{ user.nickname }}
+                                 {{ post_writer.nickname }}
                               </div>
                            </div>
                         </div>

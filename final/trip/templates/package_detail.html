@@ -47,21 +47,16 @@
       <!-- Header End -->
   </header>
 
-   <section class="blog_area single-post-area section-padding" style="height: 60rem;">
+   <section class="blog_area single-post-area section-padding" style="height: 80rem;">
       <div class="container">
          <div class="row">
             <div class="col-lg-8 posts-list">
                <div class="single-post">
                   <div class="feature-img">
-                     <img class="img-fluid" src="{{ package.image.url }}" alt="{{package.title}}">
+                     <img class="img-fluid" src="{{ package.image.url }}" alt="{{package.title}}" style="width: 80%; height: 80%;">
                   </div>
                   <div class="blog_details">
                      <h2>{{ package.title }}</h2>
-                     {% if check_wish %}   
-                        <a href = "{% url 'trip:add_wishlist' package.id %}" style="font-size: 2.0em;">♥</a> 
-                     {% else %}
-                        <a href = "{% url 'trip:add_wishlist' package.id %}" style="font-size: 2.0em;" >♡</a> 
-                     {% endif %}
                      <ul class="blog-info-link mt-3 mb-4">
                         <li>지역 {{ package.destination }}</a></li>
                         <br>
@@ -73,7 +68,15 @@
                   </div>
                </div>
                <div>
-                <p class="pay-area">{{ package.price |intcomma}}원 / 명 <button onclick="requestPay()" class="btn-primary pay-btn">결제하기</button></p>
+                  {% comment %} <div style="display: flex; flex-directions: row; align-items: center; float: right;"> {% endcomment %}
+                  <div class="pay-area">
+                     {% if check_wish %}   
+                        <a href = "{% url 'trip:add_wishlist' package.id %}">♥</a> 
+                     {% else %}
+                        <a href = "{% url 'trip:add_wishlist' package.id %}">♡</a> 
+                     {% endif %}
+                     <p class="pay-area">{{ package.price |intcomma}}원 / 명 <button onclick="requestPay()" class="btn-primary pay-btn">결제하기</button></p>
+                  </div>
             </div>
             </div>
             
@@ -83,12 +86,10 @@
                         <div class="form-group">
                            <div class="input-group mb-3">
                               <div class="profile_detail">
-                                 {% if user.profile_image %}
-                                    <img class="img-profile rounded-circle" src="{{user.profile_image.url}}" alt="...">
-                                 {% else %}
-                                    <img class="img-profile rounded-circle" src="{% static 'img/oreumi.jpg' %}" alt="...">
+                                 {% if post_author.profile_image %}
+                                    <img class="img-profile rounded-circle" src="{{post_author.profile_image.url}}" alt="...">
                                  {% endif %}
-                                 <p>{{ user.nickname }}</p>
+                                 <p>{{ post_author.nickname }}</p>
                               </div>
                            </div>
                         </div>
