@@ -104,6 +104,7 @@
       #accordionSidebar {
         background-color: #0e1c35;
       }
+
     </style>
   </head>
 
@@ -121,7 +122,7 @@
           {% include 'mypage/my_topbar.html'%}
 
           <!-- Begin Page Content -->
-          <div class="container-fluid">
+          <div class="container">
             <!-- Page Heading -->
             <div
               class="d-sm-flex align-items-center justify-content-between mb-4"
@@ -129,43 +130,37 @@
               <h1 class="h3 mb-0 text-gray-800">찜한 일정 리스트</h1>
               
             </div>
-      
             <div class="row">
-              {%for post in posts %}
-              <div class="col-xl-4 col-lg-4 col-md-6">
-                  <div class="single-place mb-30">
-                      <div class="place-img">
-                          {% if post.post_image %}
-                              <img src="{{ post.post_image.url }}" alt="{{post.region}}">
+                {% for post in items %}
+                <div class="col-xl-4 col-lg-4 col-md-6">
+                    <div class="single-place mb-30">
+                        
+                        <!-- image -->
+                        <div class="place-img">
+                          {% if post.image %}
+                              <img src="{{ post.image.url }}" alt="{{post.destination}}" style="width: 15rem; max-width: 15rem; height:8rem; max-height: 10rem;">
                           {% endif %}
-                      </div>
+                        </div>
 
-                      <div class="place-cap">
-                          <div class="place-cap-top">
-                              
-                              <h3><a href="#">{{ post.post_title }}</a></h3>
-                              <p class="dolor">{{ post.post_content }}</p>   
-                          </div>
+                        <div class="place-cap">
+                            <div class="place-cap-top">
+                                <h3><a href="{% url 'trip:package_detail' post.id %}">{{ post.title }}</a></h3>
+                                {% comment %} <div class="post_content">{{ post.content }}</div> {% endcomment %}
+                            </div>
 
-                          <div class="place-cap-bottom">
+                            <div class="place-cap-bottom">
                               <ul>
-                                  <li><i class="far fa-clock">{{ post.start_date }}</i></li>
+                                  <li><i class="far fa-clock"> 출발일 : {{ post.start_date|date:"Y년 m월 d일" }}</i></li>
                                   <!-- 날짜계산기를 이용하기 위해 숨김값으로 가져옴 -->
-                                  <li><i class="far fa-clock">{{ post.end_date }}</i></li>
-                                  <li><i class="fas fa-map-marker-alt"></i>{{ post.region }}</li>
+                                  <li><i class="far fa-clock"> 도착일 : {{ post.end_date|date:"Y년 m월 d일" }}</i></li>
+                                  <li><i class="fas fa-map-marker-alt"></i>{{ post.destination }}</li>
                               </ul>
                           </div>
-                      </div>
-                  </div>
-              </div>
-              
-              {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
-            
-          </div>
-          <!-- /.container-fluid -->
-        </div>
-        <!-- End of Main Content -->
 
         {% include 'mypage/my_footer.html' %}
       </div>

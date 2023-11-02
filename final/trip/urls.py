@@ -59,6 +59,9 @@ urlpatterns = [
     path('together_detail/<int:id>/',views.together_detail, name='together_detail'), 
     path('together_detail/',views.together_detail, name='together_detail'),
 
+    # 위시리스트 추가 by 문정
+    path('add_wishlist/<int:id>', views.add_wishlist, name='add_wishlist'),
+
     # 로그인, 회원가입 페이지 by 문정
     path('login/', views.user_login, name = 'login'),
     path('logout/', views.user_logout, name= 'logout'),
@@ -72,6 +75,8 @@ urlpatterns = [
     path('chat/', views.chatting, name='chatting'),
     path('chat/<str:room_name>/', views.room, name='room'),
     path('test/', views.chat_test, name="chat_test"),
+    path('check_room/<int:room_name>/<str:room_title>', views.check_room, name='check_room'),
+    path('room_list', views.room_list, name='room_list'),
 
     #동행모집글 By 수현
     path('community/', views.community, name='community'),

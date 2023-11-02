@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
+from datetime import datetime
 # Create your models here.
 class User(AbstractUser):
     nickname = models.CharField(max_length=40, blank=True)
@@ -135,16 +136,26 @@ class Report(models.Model):
     
 class GroupChat(models.Model):
     room_name = models.AutoField(primary_key=True)
+    room_title = models.CharField(max_length=200, null=True, default='test')
     members = models.ManyToManyField(User, related_name='group_chat_rooms')
     created_at = models.DateTimeField(auto_now_add=True)
     last_message = models.TextField(null=True, blank=True)
     last_message_sender = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='last_message_sender')
+
+    def __str__(self):
+        return self.room_title
+
+def user_profile_upload_path(instance, filename):
+    # 현재 날짜를 기반으로 디렉토리 경로 생성
+    today = datetime.today()
+    return f"message/userprofile/{today.year}/{today.month}/{today.day}/{filename}"
 
 class Message(models.Model):
     group_chat = models.ForeignKey(GroupChat, on_delete=models.CASCADE, related_name="chat_messages")
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    user_profile = models.ImageField(null=True, upload_to=user_profile_upload_path)
 
 # 동행모집글 관련 모델 추가 2023-10-23 by 수현
 class Community(models.Model):

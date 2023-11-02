@@ -1,3 +1,4 @@
+{% load static %}
 <div id="chatbox">
     <div id="friendslist">
         <div id="topmenu">
@@ -6,9 +7,9 @@
               <span class="history"></span>
           </div>
           
-          <div id="friends">
+          <div id="friends-box">
             {% for chat_room in chat_room_list %}
-                <div class="friend" id="room_{{chat_room.room_name}}" >
+                <div class="friend-content" id="room_{{chat_room.room_name}}" >
                     <img src=""/>
                     <p>
                         <strong>room_{{chat_room.room_name}}</strong>
@@ -28,29 +29,34 @@
           
       </div>  
       
-      <div id="chatview" class="p1">      
-          <div id="profile">
+    <div id="chatview" class="p1">      
+        <div id="profile">
   
               <div id="close">
                   <div class="cy"></div>
-                  <div class="cx"></div>
+                  <div class="cx back-arrow" >
+                    <i class="fa-solid fa-arrow-left"></i>
+                  </div>
               </div>
-              
-              <p>Miro Badev</p>
-              <span>miro@badev@gmail.com</span>
           </div>
           <div id="chat-messages">
                        
           </div>
         
           <div id="sendmessage">
-                <input type="text" value="Send message..." />
+                <input type="text" placeholder="Send message..." />
                 <button id="send"></button>
           </div>
       
       </div>        
   </div>
+  <div class="chattingBtn close-box">
+    <i class="fa-solid fa-xmark fa-4x"></i>
+  </div>
+  <div class="chattingBtn open-box">
+    <i class="fa-regular fa-comments fa-2x"></i>
+  </div>
   <script>
     const username = "{{username}}";
   </script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="{% static 'js/chat/button.js' %}"></script>

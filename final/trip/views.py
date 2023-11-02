@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404
 
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Package, User, Report,Schedule,ScheduleComment, Community, TogetherPost,TogetherComment, GroupChat
+from .models import Package, User, Report,Schedule,ScheduleComment, Community, TogetherPost,TogetherComment, GroupChat, WishList
 from django.contrib.auth.decorators import login_required
 import openai
 from django.http import JsonResponse
@@ -19,6 +19,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.http import Http404
 from django.core.paginator import Paginator, EmptyPage
 
+from .serializer import GroupChatSerializer
 # Create your views here.
 
 # 메인페이지 시작 By 영환
@@ -53,7 +54,6 @@ def profile(request): #내 정보 수정
     
     if request.method == 'POST' and user_info.profile_image != "":
         form = UserProfileForm(request.POST)
-
         if 'profile_img' in request.FILES:
             user_info.profile_image = request.FILES['profile_img']
             user_info.save()
@@ -116,8 +116,46 @@ def myfeadback(request): #내가받은 후기 보기
 
 @login_required
 def like_schedule(request): #찜한 일정 리스트
+    user_id   = request.user.id
+    wish_list = WishList.objects.filter(user_id_id=user_id)
+    package_list = []
+
+    for i in range(0, len(wish_list)):
+        package = get_object_or_404(Package, id=wish_list[i].product_id)
+        package_list.append(package)
     
-    return render(request,'mypage/like_schedule.html',{'schedules' : Schedule.objects.all()})
+    context = {
+        'items' : package_list
+    }
+    return render(request,'mypage/like_schedule.html', context)
+    # return render(request,'mypage/like_test.html')
+
+
+@login_required
+def add_wishlist(request,id): # 위시리스트 추가
+    user_id = request.user.id
+
+    if not WishList.objects.filter(user_id_id = user_id, product_id = id).exists():
+        add_wishlist = WishList(user_id_id = user_id,product_id = id,created_at = timezone.now())
+        add_wishlist.save()
+
+        # wish_list = WishList.objects.filter(user_id_id=user_id)
+        # package_list = []
+
+        # for i in range(0, len(wish_list)):
+        #     package = get_object_or_404(Package, id=wish_list[i].product_id)
+        #     package_list.append(package)
+        
+        # context = {
+        #     'package' : package_list
+        # }
+    
+    else:
+        WishList.objects.get(user_id_id = user_id, product_id = id).delete()
+        return redirect("trip:package_detail", id)
+    return redirect("trip:package_detail", id)
+    # return render (request, "mypage/like_schedule.html",context)
+
 
 @login_required
 def chatting_room(request): #채팅방리스트
@@ -464,6 +502,7 @@ def about(request):
 def together_walk(request):
     posts = TogetherPost.objects.all()
 
+
     posts_per_page = 6
 
     page_number = request.GET.get('page')
@@ -480,7 +519,6 @@ def together_walk(request):
         current_page = paginator.page(1)
 
     return render(request, 'together_walk.html', {'posts': current_page})
-
 
 def contact(request):
     return render(request, 'contact.html')
@@ -506,6 +544,7 @@ def together_detail(request, id):
         post = TogetherPost.objects.get(id=id)
     context = {
         "post": post,
+        'username':request.user,
     }
     return render(request, 'together_detail.html', context)
 
@@ -636,7 +675,13 @@ def packages(request):
 @login_required
 def package_detail(request, id):
     package = get_object_or_404(Package, id=id)
+    user_id = request.user.id
+    check_wish = True # 위시리스트에 있으면 
+
+    if not WishList.objects.filter(product_id = id, user_id_id = user_id):
+        check_wish = False
     context = {
+        "check_wish" : check_wish,
         "package" : package
     }
     return render(request, 'package_detail.html', context)
@@ -664,13 +709,30 @@ def room(request, room_name):
     return redirect("trip:main")
 
 @login_required
+def check_room(request, room_name, room_title):
+    chat_room , is_created = GroupChat.objects.get_or_create(room_name=room_name)
+    chat_room.members.add(request.user)
+    if is_created:
+        chat_room.room_title = room_title
+        chat_room.save()
+        
+    return JsonResponse({'is_ok':is_created})
+    
+@login_required
+def room_list(request):
+    chat_list = GroupChat.objects.filter(members=request.user).order_by('-created_at')
+    serializer = GroupChatSerializer(chat_list, many=True)
+    data = serializer.data
+    return JsonResponse(data, safe=False)
+
+@login_required
 def chat_test(request):
     chat_room_list = GroupChat.objects.filter(members=request.user)
     context = {
         'username':request.user,
         'chat_room_list':chat_room_list
     }
-    return render(request, 'chat/test.html', context)
+    return render(request, 'chat/chat_merge.html', context)
 
 @login_required
 def community(request):
