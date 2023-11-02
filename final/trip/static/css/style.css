@@ -7351,6 +7351,12 @@ a.delete-button::before {
     align-items: center;
 }
 
+.pay-area a {
+    color: #ff8b23;
+    font-size: 3rem;
+    margin-right: 15px;
+}
+
 .pay-btn {
     margin-left: 20px;
     float: right;
