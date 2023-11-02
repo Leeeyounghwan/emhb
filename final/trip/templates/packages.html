@@ -30,7 +30,18 @@
             <link rel="stylesheet" href="{% static "css/chat/chat2.css" %}">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
    </head>
-
+   <style>
+    .dolor_content{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+    .place-img img{
+        height: 20em;
+    }
+    </style>
    <body>
     <!-- Preloader Start -->
     <div id="preloader-active">
@@ -93,7 +104,7 @@
                                 <div class="place-cap-top">
                                     <span><i class="fas fa-star"></i><span>8.0superb</span></span>
                                     <h3><a href="{% url 'trip:package_detail' item.id%}">{{ item.title }}</a></h3>
-                                    <p class="dolor">{{ item.content }}</p>
+                                    <p class="dolor_content">{{ item.content }}</p>
                                     <p class="dolor">{{ item.price|intcomma }}원<span>/ 인원 당</span></p>
                                 </div>
 
