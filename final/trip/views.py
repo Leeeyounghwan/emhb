@@ -53,7 +53,6 @@ def profile(request): #내 정보 수정
     
     if request.method == 'POST' and user_info.profile_image != "":
         form = UserProfileForm(request.POST)
-
         if 'profile_img' in request.FILES:
             user_info.profile_image = request.FILES['profile_img']
             user_info.save()
@@ -464,6 +463,7 @@ def about(request):
 def together_walk(request):
     posts = TogetherPost.objects.all()
 
+
     posts_per_page = 6
 
     page_number = request.GET.get('page')
@@ -480,7 +480,6 @@ def together_walk(request):
         current_page = paginator.page(1)
 
     return render(request, 'together_walk.html', {'posts': current_page})
-
 
 def contact(request):
     return render(request, 'contact.html')
