@@ -490,12 +490,22 @@ def black_cancel(request, blacklist_id):
 
 #by 건영
 def index(request):
-    together_walk = TogetherPost.objects.all()
-    packages = Package.objects.all()
+    together_walk = TogetherPost.objects.all().order_by('created_at')
+    packages = Package.objects.all().order_by('-created_at')
+
+    together_list = []
+    package_list = []
+
+    for i in range(0, 8) :
+        together_list.append(together_walk[i])
+    for j in range(0, 6) :
+        package_list.append(packages[j])
+
     context = {
-        "posts" : together_walk,
-        "packages" : packages
+        "posts" : together_list,
+        "packages" : package_list
     }
+
     return render(request, 'index.html', context)
 def about(request):
     return render(request, 'about.html')
